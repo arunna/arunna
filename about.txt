@@ -1,0 +1,34 @@
+ABOUT ARUNNA
+
+Arunna pada awalnya adalah sebuah project CMS yang ingin dikembangkan untuk membantu para web designer dan web developer dalam mengembangkan aplikasi agar lebih cepat dan efisien. Dalam perjalanan pengembangan, muncul ide untuk menambah beberapa fitur baru sehingga akhirnya Arunna tidak hanya untuk CMS, tetapi bisa juga digunakan sebagai media untuk bersosialisasi baik dengan client, staff atau teman - teman Anda. Perubahan prilaku di internet yang pada awalnya adalah "mencari" telah berubah menjadi "bertanya" adalah salah satu hal yang juga memicu kami untuk membuat Arunna. Dan hal yang paling penting adalah, Anda yang memutuskan dengan siapa Anda akan berbagi dan apa yang akan anda bagi. Seluruh informasi termasuk profile teman, foto, pesan, status atau artikel menjadi hak milik Anda sendiri karena Arunna bersifat opensource.
+
+PRIVASI DI TANGAN ANDA /PRIVACY IS IN YOUR HAND
+Anda yang berhak melakukan kontrol terhadap informasi yang Anda miliki. Anda yang memutuskan kepada siapa Anda ingin membagi informasi yang Anda miliki. Jika Anda memiliki foto,artikel atau status dan Anda hanya ingin membaginya kepada keluarga Anda atau hanya kepada staff Anda, Arunna akan membantu Anda untuk hal itu.
+
+KEPEMILIKAN DATA / DATA OWNERSHIP
+Karena Arunna bersifat opensource, dan Anda bisa melakukan installasi pada server hosting yang Anda sewa sendiri, seluruh informasi baik itu foto, article, desain web, data teman dan lain sebagainya menjadi hak milik Anda sendiri. Anda tidak perlu lagi khawatir jika album foto yang Anda sudah susun sedemikian banyak hilang hanya karena akun Anda di blok.
+
+TEKNOLOGI YANG BERKEMBANG / FUTURE PROFF TECHNOLOGY
+Arunna bersifat terbuka dan akan dikembangkan oleh komunitas developer di seluruh dunia. Setiap perubahan kecil akan selalu dipertimbangkan dengan tujuan merubah dan menciptakan dunia ke arah yang lebih baik.
+
+PASAR SOSIAL / SOSIAL MARKETPLACE
+Dengan disediakannya Content Management System, diharapakan para developer akan mengembangkan berbagai macam applikasi yang menarik baik itu company profile, blog, portal, online shop dan lain sebagainya. Dengan terciptanya konten - konten yang menarik dan dilengkapi dengan sistem komunikasi antar komunitas tersebut, diharapkan akan tercipta komunikasi antar komunitas maupun anggota komunitas yang saling menguntungkan tanpa sistem pencarian yang rumit. Dengan adanya sistem seperti itu diharapkan akan tercipta pasar yang juga saling menguntungkan. Kedepan, kami juga akan mengembankan konten yang beragam seperti misalnya online shop, hotels availibilty system dan lain sebagainya.
+
+KETERLIBATAN / ENGAGING
+Arunna akan membantu Anda mencari teman - teman yang menginginkan topik informasi yang sama atau memiliki keahlian yang sama dan mendorong mereka ikut bergabung dalam percakapan social. Dengan demikian informasi tidak hanya datang dari pemiliki Arunna, tetapi juga datang dari mereka yang bergabung dalam komunitas yang Anda bangun. Dengan melibatkan orang - orang dalam komunitas Anda tersebut, tentu akan mengangkat kesadaran mereka terhadap Brand Anda sendiri atau malah mampu memperbaiki produk Anda sesuai dengan permintaan pasar.
+
+Ada istilah mengatakan, "memancinglah di mana ikan itu banyak berada". Banyak perusahaan pada saat ini membuat halaman facebook atau twitter untuk melakukan komunikasi dengan customer mereka. Langkah awal yang bagus. Tetapi ada beberapa hal yang dilupakan bahwa hal tersebut tidak hanya sekedar menghitung banyaknya fans atau follower yang dimiliki, tetapi ada celah pasar disana, brand awarners dan brand loyalty. Tidakkah terasa lebih nyaman jika Anda membicarakan hal - hal yang penting di rumah Anda sendiri?
+
+CONTENT MANAGEMENT SYSTEM
+Arunna tidak hanya satu website saja dan tidak khusus untuk social media saja. Arunna bisa dikembangkan menjadi berbagai macam applikasi sesuai dengan ketertarikan masing - masing pemilik website. Para developer bisa mengatur design rumah mereka sendiri sesuai dengan keinginan, sehingga tampak menarik dengan menggunakan fasilitas template management. Anda bisa mengatur tata letak rumah (website) Anda sendiri dan membuat orang merasa nyaman untuk melakukan pembicaraan. Dengan demikian diharapkan bisa merubah pembicaraan menjadi transaksi (trun conversation into sales atau commerce)
+
+Akan tercipta banyak website - website yang menggunakan Arunna. Kami menyebut website - website tersebut dengan "Spod". Kami sendiri akan membuat offical Spod di http://www.arunna.com yang berfungsi memfasilitasi komunikasi antar "Spod". Offical "Spod" ini kamu sebut dengan "Hub". 
+
+Jika Anda tidak ingin dipusingkan dengan masalah - masalah teknis server dan lain sebagainya dan hanya ingin berkonstrasi pada konten yang Anda miliki, Anda bisa bergabung pada "Hub" yang kami kembangkan dan mengatur konten yang Anda miliki. Kami menyebutnya sebagai "virtual spod".
+
+Jika "Spod" yang Anda miliki telah terhubng dengan "Hub", Anda tidak perlu lagi mengkhawatirkan dari "Spod" mana Anda akan berkomunikasi. Anda bisa berkomunikasi dengan "Spod" lain yang terhubung dengan "Hub" dan berteman dengan siapa saja pada "Spod" atau "Hub" tersebut.
+
+
+Kami sadar bahwa masih banyak hal - hal yang belum kami ketahui. Tujuan kami hanya ingin membuat dunia ini menjadi lebih baik. Hanya dengan berbagi kita bisa menciptakan dunia yang lebih baik. Jika Anda menemukan bugs atau exploit silahkan kirimkan email ke exploit@arunna.com atau laporkan bugs yang Anda temui di Github (git@github.com:wahya/arunna.git). Ikuti selurh proses pengembangan selanjutnya di Github (git@github.com:wahya/arunna.git).
+
+

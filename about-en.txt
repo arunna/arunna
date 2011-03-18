@@ -1,0 +1,40 @@
+ABOUT ARUNNA
+Arunna is initially a CMS project that wishes to be developed to assist the web designer and web developer in developing application as for faster and efficient. 
+
+In the course of its development, an idea to add some new features was emerged that eventually Arunna is not only for CMS, but also can be used as social media with client, staff or your friends. A change of behaviour on internet which was primarily "searching" becomes "questioning" is one of our triggers to create Arunna. In this case the most important thing is you decide with whom you are going to share and what you are going to share. 
+
+All information including friends profile, photos, messages, status or article shall be your own property since Arunna is an opensource.
+
+PRIVACY IS IN YOUR HAND
+You are entitled to control the information you have. You are the one who decide as with whom you want to share your information. If you have pictures, articles or status and you just want to share them with your family or only with your staff, then you can do it in Arunna.
+
+DATA OWNERSHIP
+Since Arunna is an opensource and you may perform the installation on hosting server that you rent, all information such as photos, articles, web designs, friends data and etc, shall be your own property. You no longer need to worry about losing many compiled photo album just because your account is blocked.
+
+FUTURE PROOF TECHNOLOGY
+Arunna is very open and will be developed by developer communities worldwide. Any minor changes will always be considered with an objective of transforming and creating Arunna to the better.
+
+SOCIAL MARKETPLACE
+By providing Content Management System, it is expected that the developers will develop various attractive applications either company profiles, blogs, portals, online shops and so on.
+
+By the creation of attractive contents and completed by communication system among those communities, hopefully it will build a mutually beneficial communication among communities and community members without complicated search system. By the existence of such system, it is also expected to create a mutually beneficial marketplace. In the future, we will also develop various features such as online shop, hotels availability system, etc.
+
+ENGAGING
+Arunna will help you to find friends wishing for the same information topics or having similar skills and encourage them to join the social conversation. 
+
+Thus, information does not only come from Arunna owner, but also from those who join the community you build. By involving people in your community, it will definitely build up your own brand image or even improve your product according to market demands.
+
+A proverb said, "memancinglah di mana ikan itu banyak berada". Many companies are currently making a facebook or twitter page in order to communicate with their customers. A good first step. But there are some forgotten things that is not merely counting up the number of fans or followers to be had, but there is a market prospect, brand awareness and brand loyalty. Don’t you feel more comfortable when you talk about important things in your own home?
+
+CONTENT MANAGEMENT SYSTEM
+Arunna is not just a website and not specifically for social media. It can be developed into various applications based on the interest of each website owner. Developer may set the design by their own wishes, thus it looks attractive by using template management facility.
+
+You may set your own website layout that provides convenience to people in making a conversation. Thus it is projected to turn conversation into transaction (sales or commerce).
+
+By the numerous website using Arunna, we called those websites as “Spod”, we will establish Official Spod at www.arunna.com functioning to facilitate communication among “Spod”. We simply call this official “Spod” as “Hub”.
+
+If you don’t want to be confused by technical server issues and other matters and just want to be focus on your content, you may join on the “Hub” we develop and set your own content. We called it as a “Virtual Spod”.
+
+If your “Spod” has been connected to “Hub”, you don’t need to worry as from which “Spod” you will communicate. You can communicate with other “Spods” connected to “Hub” and make friend with anyone on those “Spods” or “Hub”.
+
+We realize that there are many things we do not know so far. Our purpose just wants to make a better world. By sharing we can make the world a better place. If you find any bugs or exploit, please send your email to exploit@arunna.com or report your bugs to Github (https://github.com/wahya/arunna). Follow all further development process in Github (https://github.com/wahya/arunna)
