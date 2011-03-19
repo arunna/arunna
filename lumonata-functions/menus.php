@@ -787,17 +787,17 @@
 	    }
 	    $menuset=get_meta_data('menu_set','menus');
 	    $menuset=json_decode($menuset,TRUE);
-	    if(is_array($menuset)){
-    	    foreach($menuset as $key=>$val){
-    	    	if(strtolower($val)==strtolower($var['menuset'])){
-    	    		$menuset_key=$key;
-    	    		$set_name=$val;
-    	    		break;
-    	    	}
-    	    }
-    	    if(!isset($menuset_key))
-    	    return;
-	    }else return;
+	    
+	    foreach($menuset as $key=>$val){
+	    	if(strtolower($val)==strtolower($var['menuset'])){
+	    		$menuset_key=$key;
+	    		$set_name=$val;
+	    		break;
+	    	}
+	    }
+	    if(!isset($menuset_key))
+	    return;
+	    
 		$menu_items=get_meta_data('menu_items_'.$menuset_key,'menus');
 		$menu_items=json_decode($menu_items,TRUE);
 		
@@ -844,10 +844,18 @@
 			}
 			foreach ($menu_order as $key=>$val){
 				 $items_val=array_match($menu_items,'id', $val['id']);
-				 if(is_permalink())
-				 	$link='http://'.site_url().'/'.$items_val[0]['permalink'];
-				 else 
-				 	$link='http://'.site_url().$items_val[0]['link'];
+				 
+				 if(is_permalink()){
+				 	if(substr($items_val[0]['permalink'],0, 4)=="http")
+				 		$link=$items_val[0]['permalink'];
+				 	else
+				 		$link='http://'.site_url().'/'.$items_val[0]['permalink'];
+				 }else{ 
+				 	if(substr($items_val[0]['permalink'],0, 4)=="http")
+				 		$link=$items_val[0]['link'];
+				 	else
+				 		$link='http://'.site_url().$items_val[0]['link'];
+				 }
 				 
 				 if($style=='li'){
 				 	$return.="<li><a href=\"".$link."\">".$items_val[0]['label']."</a>";
