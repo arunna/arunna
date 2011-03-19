@@ -18,7 +18,7 @@ function facebook_like_button(){
 
 function twitter_share_button($article_title=''){
     return "<div style=\"width:55px;height:65px;text-align:center;overflow:hidden;border:1px solid #f0f0f0;float:right;padding:5px;margin:0 5px;\">
-    			<a href=\"http://twitter.com/share\" class=\"twitter-share-button\" data-url=\"http://localhost/arunna/about-us/\" data-text=\"".$article_title."\" data-count=\"vertical\">Tweet</a>
+    			<a href=\"http://twitter.com/share\" class=\"twitter-share-button\" data-url=\"".cur_pageURL()."\" data-text=\"".$article_title."\" data-count=\"vertical\">Tweet</a>
     			<script type=\"text/javascript\" src=\"http://platform.twitter.com/widgets.js\"></script>
     		</div>";
 }
