@@ -1,0 +1,87 @@
+/*Comment*/
+.comment_box{
+    margin:5px 0 0 0;
+    padding:0;
+}
+.the_comment{
+    padding:5px 5px 5px 5px;
+    width:98%;
+    height:auto;
+    background:#ffece9;
+    margin:0px 0 1px 0;
+    font-size: 11px;
+    
+}
+.commentator_name,.commentator_name a{
+    font-size:13px;
+    color:#333;
+    text-decoration:none;
+    font-weight:bold;
+    margin:5px 0 0 0;
+}
+.commentator_name a:hover{
+    text-decoration:underline;
+}
+.comment{
+    padding:0px 0px 0px 45px;
+    margin-top:-40px;
+}
+.the_comment_content{
+	margin:5px 0;
+	color:#333;
+}
+.the_comment_content a{
+	text-decoration: none;
+	background: #ccc;
+}
+.the_avatar{
+    margin-left:0px;
+    width:32px;
+    height:32px;
+    overflow: hidden;
+}
+.comment_button{
+	text-align:right;
+}
+.commentview{
+	text-decoration: none;
+	color:#ef451e;
+	font-size: 11px;
+}
+textarea.comment_area{
+	/*width:727px;*/
+	width:100%;
+	margin:10px 0 0 0;
+    font-family:inherit;
+    font-size: inherit;
+    color:inherit;
+    padding:3px;
+    line-height:inherit;
+}
+.comment_area_loged{
+    /*width:727px;*/
+    width:98%;
+	margin:10px 0 0 0;
+    font-family:inherit;
+    font-size: inherit;
+    color:inherit;
+    padding:3px;
+    line-height:inherit;
+    border: 1px solid #bbb;
+}
+.comment_date{
+    font-size:10px;
+    color:#666;
+}
+
+.inputtext{
+    height:25px;
+    font-family:inherit;
+    font-size: inherit;
+    color:inherit;
+    padding:3px;
+    line-height:inherit;
+}
+.comment_button{
+	margin:10px 0 0 0;
+}

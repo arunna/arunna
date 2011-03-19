@@ -1,0 +1,9 @@
+
+@font-face {
+	font-family: 'ArialRegular';
+	src: url('arial-webfont.eot');
+	src: local('☺'), url('arial-webfont.woff') format('woff'), url('arial-webfont.ttf') format('truetype'), url('arial-webfont.svg#') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+

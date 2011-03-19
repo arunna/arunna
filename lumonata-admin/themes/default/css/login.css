@@ -1,0 +1,67 @@
+/*LOGIN FORM*/
+.login_form{
+	margin:50px auto 0 auto;
+	border:1px solid #ccc;
+	width:284px;
+	height:auto;
+	background:#ffffff url(../images/logo-med.png) no-repeat 120px 50px;
+	padding:77px 10px 25px 10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+
+}
+.login_yellow{
+	background:#fcaf17;
+	width:230px;
+	height:auto;
+	margin:3px auto;
+	padding:5px;
+	color:#ffffff;
+	font-size:15px;
+	
+}
+
+.login_text{
+	font-size:18px;	
+	height:30px;
+	width:220px;
+}
+.login_btn_wrp{
+	margin:0 auto;
+	width:240px;
+	height:auto;
+}
+.login_btn{
+	background:#f26531;
+	font-size:18px;
+	color:#ffffff;
+	border:0;
+	padding:5px;
+	margin:0;
+
+}
+.alert_login{
+	margin:10px auto 10px auto;
+	width:240px;
+	height:auto;
+}
+.lost_password{
+	width:284px;
+	height:auto;
+	margin:10px auto 0 auto;
+	padding:0;
+	
+}
+.lost_password a{
+	color:#ef571e;
+	font-size:12px;
+}
+.signup_form{
+	margin:50px auto 0 auto;
+	border:1px solid #ccc;
+	width:450px;
+	background:#ffffff url(../images/logo-login.jpg) no-repeat right top;
+	padding:77px 10px 25px 20px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+}

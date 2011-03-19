@@ -1,0 +1,263 @@
+<!-- BEGIN genSetting -->
+<h1>Global Settings</h1>
+<ul class="tabs">
+   {tab}
+</ul>
+<div class="tab_container">
+    <div id="general" class="tab_content">
+	<form name="glb" action="" method="post">
+	    {alert}
+	    <div class="button_wrapper clearfix">
+	       <ul class="button_navigation">
+		   <li>{save_changes_botton}</li>
+	       </ul>
+	    </div>
+	    <fieldset>
+		<p><label>Organization/Website Name:</label></p>
+		<input type="text" id="web_name" name="web_name" value="{web_name}" class="medium_textbox" />
+	    </fieldset>
+	    <fieldset>
+		<p><label>Website Title:</label></p>
+		<input type="text" id="web_title" name="web_title" value="{web_title}" class="medium_textbox" />
+	    </fieldset>
+		
+	    <fieldset>
+		<p><label>Tagline:</label></p>
+		<input type="text" id="tagline" name="web_tagline" value="{tagline}" class="medium_textbox" />
+	    </fieldset>
+		
+	    <fieldset>
+		<p><label>Website Address:</label></p>
+		<input type="text" id="website_address" name="site_url" value="{site_url}" class="medium_textbox" />
+	    </fieldset>
+		
+	    <fieldset>
+		<p><label>Email:</label></p>
+		<input type="text" id="email" name="email" value="{email}" class="medium_textbox" /> <em>This address is used for admin purposes, like new user notification.</em>
+	    </fieldset>
+	    <fieldset>
+		<p><label>SMTP Server Address:</label></p>
+		<input type="text" id="smtp" name="smtp" value="{smtp}" class="medium_textbox" /> <em>SMTP address is used for sending an email.</em>
+	    </fieldset>
+	    <fieldset>
+		<p><label>Timezone:</label></p>
+		<select id="time_zone"  name="time_zone">
+		    {timezone}
+		</select><br />
+		<em>Choose a city in the same timezone as you. </em>. <em>UTC time is <span class="alert_yellow">{utc_time}</span>  Local time is <span class="alert_yellow">{local_time}</span> </em>
+			
+	    </fieldset>
+	    <fieldset>
+		<p><label>Date Format:</label></p>
+		{date_format}
+		<br />
+		<em>Click &quot; Save Changes &quot; to update sample output.</em>
+	    </fieldset>
+	    <fieldset>
+		<p><label>Time Format:</label></p>
+		{time_format}<br />
+		<em>Click &quot; Save Changes &quot; to update sample output.</em>
+	    </fieldset>
+	    <fieldset>
+		<p><label>Invitation Limit:</label></p>
+		<input type="text" id="invitation_limit" name="invitation_limit" value="{invitation_limit}" class="small_textbox" /> <em>Set <strong>-1</strong> for unlimited invitation limit</em>
+	    </fieldset>
+	    <input type="hidden" name="update" value="true" />
+	    <div class="button_wrapper clearfix">
+	       <ul class="button_navigation">
+		   <li>{save_changes_botton}</li>
+	       </ul>
+	    </div>
+	</form>
+    </div>
+</div>
+<!-- END genSetting -->
+
+<!-- BEGIN readingSettings -->
+<h1>Global Settings</h1>
+<ul class="tabs">
+   {tab}
+</ul>
+<div class="tab_container">
+ <div id="reading" class="tab_content">
+    <form name="reading" action="" method="post">
+	{alert}
+	 <div class="button_wrapper clearfix">
+	    <ul class="button_navigation">
+		<li>{save_changes_botton}</li>
+	    </ul>
+	 </div>
+    <fieldset>
+	    <p><label>Default number of posts viewed:</label></p>
+	    <input type="text" id="post_view" name="post_viewed" value="{post_viewed}" class="small_textbox" /> <em>posts</em>
+	</fieldset>
+	<fieldset>
+	    <p><label>The most recent RSS viewed:</label></p>
+	    <input type="text" id="rss_view" name="rss_viewed" value="{rss_viewed}" class="small_textbox" /> <em>posts</em>
+	</fieldset>
+	<fieldset>
+	    <p><label>Default number of status viewed:</label></p>
+	    <input type="text" id="status_view" name="status_viewed" value="{status_viewed}" class="small_textbox" /> <em> status posts</em>
+	</fieldset>
+	<fieldset>
+	    <p><label>For each article in a feed, show:</label></p>
+	    {rss_view_format}
+	</fieldset>
+	<fieldset>
+	    <p><label>Use Search Engine Friendly URL:</label></p>
+	    {sef_format}
+	</fieldset>
+	 <input type="hidden" name="update" value="true" />
+	 <div class="button_wrapper clearfix">
+	    <ul class="button_navigation">
+		<li>{save_changes_botton}</li>
+	    </ul>
+	 </div>
+    </form>
+</div>
+</div>
+<!-- END readingSettings -->
+
+<!-- BEGIN writingSettings -->
+<h1>Global Settings</h1>
+<ul class="tabs">
+   {tab}
+</ul>
+<div class="tab_container">
+<div id="writing" class="tab_content">
+    {alert}
+    <form name="writing" method="post" action="">
+	 <div class="button_wrapper clearfix">
+	    <ul class="button_navigation">
+		<li>{save_changes_botton}</li>
+	    </ul>
+	 </div>
+	<fieldset>
+	    <p><label>Default number of list viewed:</label></p>
+	    <input type="text" id="lists_view" name="list_viewed" value="{list_viewed}" class="small_textbox" /> <em>posts</em>
+	</fieldset>
+	<fieldset>
+	    <p><label>Email format:</label></p>
+	    {email_format}
+	</fieldset>
+	<fieldset>
+	    <p><label>Text Editor:</label></p>
+	    {text_editor}
+	</fieldset>
+	<fieldset>
+	    <h2>Image sizes</h2>
+	    <p><label>Default thumbnail size:</label></p>
+	    <p>
+		<em>Width</em> <input type="text" name="thumbnail_image_width" value="{thumbnail_image_width}" class="small_textbox" />
+		<em>Height</em> <input type="text" name="thumbnail_image_height" value="{thumbnail_image_height}" class="small_textbox" />
+	    </p>
+	    <p><label>Default medium image size:</label></p>
+	    <p>
+		<em>Max Width</em> <input type="text" name="medium_image_width" value="{medium_image_width}" class="small_textbox" />
+		<em>Max Height</em> <input type="text" name="medium_image_height" value="{medium_image_height}" class="small_textbox" />
+	    </p>
+	    <p><label>Default large image size:</label></p>
+	    <p>
+		<em>Max Width</em> <input type="text" name="large_image_width" value="{large_image_width}" class="small_textbox" />
+		<em>Max Height</em> <input type="text" name="large_image_height" value="{large_image_height}" class="small_textbox" />
+	    </p>
+	</fieldset>
+	<input type="hidden" name="update" value="true" />
+	 <div class="button_wrapper clearfix">
+	    <ul class="button_navigation">
+	       <li>{save_changes_botton}</li>
+	    </ul>
+	 </div>
+    </form>
+</div>
+</div>
+<!-- END writingSettings -->
+
+<!-- BEGIN commentsSettings -->
+<h1>Global Settings</h1>
+<ul class="tabs">
+   {tab}
+</ul>
+<div class="tab_container">
+    <div id="comments" class="tab_content">
+	{alert}
+	<form name="comments" action="" method="post">
+	    <div class="button_wrapper clearfix">
+	       <ul class="button_navigation">
+		   <li>{save_changes_botton}</li>
+	       </ul>
+	    </div>
+	    <fieldset>
+		<h2>Comments Settings</h2>
+		<p>
+		<input type="checkbox"  name="is_allow_comment" {is_allow_comment} /><label>Allow Comment on new post</label>
+		</p>
+		<p><input type="checkbox"  name="is_login_to_comment" {is_login_to_comment} /><label>Users must be registered and logged in to comment</label></p>
+		<p>
+		   <input type="checkbox"  name="is_auto_close_comment" {is_auto_close_comment} />Automatically close comments on articles older than 
+		   <input type="text" name="days_auto_close_comment" value="{days_auto_close_comment}" class="small_textbox"  />  days
+		</p>
+		<p>
+		    <input type="checkbox"  name="is_break_comment" {is_break_comment} />	
+		    View  the <select name="comment_page_displayed">{comment_page_displayed}</select> <input type="text" name="comment_per_page" class="small_textbox" value="{comment_per_page}" /> comments on a list of articles
+		</p>
+	    </fieldset>
+	    <fieldset>
+	    	<h2>Likes Settings</h2>
+	    	<p>
+				<input type="checkbox"  name="is_allow_post_like" {is_allow_post_like} /><label>Allow Like on new post</label>
+			</p>
+			<p>
+				<input type="checkbox"  name="is_allow_comment_like" {is_allow_comment_like} /><label>Allow Like on comment</label>
+			</p>
+	    </fieldset>
+	    <input type="hidden" name="update_comment_settings" value="true" />
+	    <div class="button_wrapper clearfix">
+	       <ul class="button_navigation">
+		   <li>{save_changes_botton}</li>
+	       </ul>
+	    </div>
+	</form>
+    </div>
+</div>
+<!-- END commentsSettings -->
+
+<!-- BEGIN notificationSettings -->
+<h1>Global Settings</h1>
+<ul class="tabs">
+   {tab}
+</ul>
+<div class="tab_container">
+    <div id="comments" class="tab_content">
+	{alert}
+	<form name="comments" action="" method="post">
+	    <div class="button_wrapper clearfix">
+	       <ul class="button_navigation">
+		   <li>{save_changes_botton}</li>
+	       </ul>
+	    </div>
+	    <fieldset>
+		<h2>Notifications Settings</h2>
+		<p><strong>Send a notification when someone:</strong></p>
+		<p>
+		<input type="checkbox"  name="alert_on_register" {alert_on_register} /><label>Register as a new user</label>
+		</p>
+		<p>
+		<input type="checkbox"  name="alert_on_comment" {alert_on_comment} /><label>Comment on a post</label>
+		</p>
+		<p>
+		<input type="checkbox"  name="alert_on_comment_reply" {alert_on_comment_reply} /><label>Reply comment</label>
+		</p>
+		<p><input type="checkbox"  name="alert_on_liked_post" {alert_on_liked_post} /><label>Comment on a post you like</label></p>
+		<p><input type="checkbox"  name="alert_on_liked_comment" {alert_on_liked_comment} /><label>Reply on a comment you like</label></p>
+	    </fieldset>
+	    <input type="hidden" name="update_notifications_settings" value="true" />
+	    <div class="button_wrapper clearfix">
+	       <ul class="button_navigation">
+		   <li>{save_changes_botton}</li>
+	       </ul>
+	    </div>
+	</form>
+    </div>
+</div>
+<!-- END notificationSettings -->

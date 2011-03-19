@@ -1,0 +1,50 @@
+<!-- BEGIN thecomments -->
+<h1>Edit Comments</h1>
+<ul class="tabs">
+   {tab}
+</ul>
+<div class="tab_container">
+	{alert}
+    <form method="post" action="#">
+    	{is_edit_all}
+   		<div class="button_wrapper clearfix">
+               <div class="button_left">
+                   <ul class="button_navigation">
+                       {button}
+                   </ul>   
+               </div>
+         </div>
+         <!-- BEGIN loopingComments -->
+         <fieldset>
+		    <p>Name</p>
+		    <p><input type="text" class="medium_textbox" name="name[{i}]" value="{name}" /></p>
+		</fieldset>
+		<fieldset>
+		    <p>Email</p>
+		    <p><input type="text" class="medium_textbox" name="email[{i}]" value="{email}" /></p>
+		</fieldset>
+		<fieldset>
+		    <p>URL</p>
+		    <p><input type="text" class="medium_textbox" name="url[{i}]" value="{url}" /></p>
+		</fieldset>
+		<fieldset>
+			<p><strong>Status:</strong> {status}</p>
+		</fieldset>
+		<fieldset>
+			<p><strong>IP: {ip}</strong></p>
+		</fieldset>
+		<fieldset>
+		    {textarea}
+		</fieldset>
+		<input type="hidden" name="id[{i}]" value="{id}" />
+		 <!-- END loopingComments -->
+		<div class="button_wrapper clearfix">
+               <div class="button_left">
+                   <ul class="button_navigation">
+                       {button}
+                   </ul>   
+               </div>
+         </div>
+    </form>
+</div>
+<!-- END thecomments -->

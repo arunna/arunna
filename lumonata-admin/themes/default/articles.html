@@ -1,0 +1,209 @@
+<!-- BEGIN articleAddNew -->
+<h1>{app_title}</h1>
+<ul class="tabs">
+   {tab}
+</ul>
+<div class="tab_container">
+	{alert}
+        <form method="post" action="#">
+	     {is_edit_all}
+	     {is_saved}
+            <div class="button_wrapper clearfix">
+                <div class="button_left">
+                    <ul class="button_navigation">
+                       <li>{button}</li>
+                    </ul>   
+                </div>
+           </div>
+	    <!-- BEGIN loopArticle  -->
+	    <script type="text/javascript">
+		//Tabs
+		$(document).ready(function() {
+			//When page loads...
+			$(".tabcontent_{i}").hide(); //Hide all content
+			$(".catcontent_{i}").hide(); //Hide all content
+			$("ul#cat_tab_{i} li:first").addClass("active").show(); //Activate first category tab
+			$("ul#tag_tab_{i} li:first").addClass("active").show(); //Activate first tag tab
+			$(".catcontent_{i}:first").show(); //Show first category tab content
+			$(".tabcontent_{i}:first").show(); //Show first tag tab content
+			
+			//On Click Category Tab Event
+			$("ul#cat_tab_{i} li").click(function() {
+		
+				$("ul#cat_tab_{i} li").removeClass("active"); //Remove any "active" class
+				$(this).addClass("active"); //Add "active" class to selected tab
+				$(".catcontent_{i}").hide(); //Hide all tab content
+		
+				var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+				$(activeTab).fadeIn(); //Fade in the active ID content
+				return false;
+			});
+			
+			$("ul#tag_tab_{i} li").click(function() {
+				$("ul#tag_tab_{i} li").removeClass("active"); //Remove any "active" class
+				$(this).addClass("active"); //Add "active" class to selected tab
+				$(".tabcontent_{i}").hide(); //Hide all tab content
+		
+				var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+				$(activeTab).fadeIn(); //Fade in the active ID content
+				return false;
+			});
+			
+			//ON new category textbox click
+			$("input[name=new_category[{i}]]").focus(function(){
+				$(this).val("");
+			});
+			
+			$("input[name=new_category[{i}]]").blur(function(){
+				$(this).val($(this).val()==''?'New category name':$(this).val());
+			});
+			
+			//ON new tag textbox click
+			$("input[name=new_tag[{i}]]").focus(function(){
+				$(this).val("");
+			});
+			
+			$("input[name=new_tag[{i}]]").blur(function(){
+				$(this).val($(this).val()==''?'New tag':$(this).val());
+			});
+			
+			//Add Category Button Click
+			$("input[name=add_category_btn[{i}]]").click(function(){
+			    if($("input[name=new_category[{i}]]").val()!="New category name" && $("input[name=new_category[{i}]]").val()!=""){
+				
+				var parent=$("select[name=parent[{i}]]").val();
+				var name=$("input[name=new_category[{i}]]").val();
+				var description="";
+				var rule="categories";
+				var group="{group}";
+				var selected=$("span#selected_category_{i}").text();
+				
+				$(this).attr("disabled","disabled");
+				$(this).val("Adding...");
+				var parameter="parent="+parent+"&name="+name+"&description="+description+"&rule="+rule+"&group="+group+"&index={i}&insert_rules=true&selected="+selected;
+				$.post("taxonomy.php",parameter,function(data){
+				    $("#all_categories_{i}").html(data);
+							 
+				});
+				var parameter2="rule="+rule+"&group="+group+"&index={i}&update_parent=true";
+				$.post("taxonomy.php",parameter2,function(data){
+				    $("#select_parent_{i}").html(data);
+							 
+				});
+				$(this).val("Add");
+				$(this).removeAttr('disabled');
+				$("input[name=new_category[{i}]]").val("New category name");
+			    }
+			});
+			
+			//Add Tags Button Click
+			$("input[name=add_tag[{i}]]").click(function(){
+			   
+			   var input_tags=$("input[name=new_tag[{i}]]").val();
+			   var taglabel=input_tags.split(",");
+			   if(input_tags!='' && input_tags!='New tags'){
+			      
+			      $(this).attr("disabled","disabled");
+			      $(this).val("Adding...");
+			      
+			      for(i=0;i<taglabel.length;i++){
+				 var count_child=$(".tag_index_{i}").size();
+				 
+				 var thetag="<div class=\"tag_list tag_index_{i} clearfix\" id=\"the_tag_list_{i}_"+count_child+"\">";
+				 thetag+="<div class=\"tag_name\">"+$.trim(taglabel[i])+"</div>";
+				 thetag+="<div class=\"tag_action\">";
+				 thetag+="<a href=\"javascript:;\" id=\"remove_tag_"+count_child+"\" onclick=\"$('the_tag_list_{i}_"+count_child+"').animate({'backgroundColor':'#FF6666' },500);$('#the_tag_list_{i}_"+count_child+"').remove();\">X</a>";
+				 thetag+="</div>";
+				 thetag+="<input type=\"hidden\" name=\"tags[{i}][]\" value=\""+$.trim(taglabel[i])+"\" />";
+				 thetag+="</div>";
+				 
+				 if(count_child==0){
+				    
+				    $("#tag_list_{i}").html('');
+				    $("#tag_list_{i}").append(thetag);
+				 }else{
+				   $(".tag_index_{i}:first").before(thetag);
+				 }
+			      }
+			      
+			      $(this).val("Add");
+			      $(this).removeAttr('disabled');
+			      var input_tags=$("input[name=new_tag[{i}]]").val("New tags");
+			   }
+			});
+		});
+	    </script>
+	    
+	    <div class="list_edit">
+		<fieldset>
+		    <p>Title<br /></p>
+		    <p><input type="text" class="textbox" name="title[{i}]" value="{title}" /></p>
+		    {sef_scheme}
+		</fieldset>
+		<fieldset>
+		    {textarea}
+		</fieldset>
+		<fieldset>
+		    <div class="categories_tags clearfix">
+			<div class="categories">
+			    <h2>Categories</h2>
+			    <div class="tags_cat_content clearfix" >
+				<div class="tags_cat_nav">
+				    <ul class="cat_tab" id="cat_tab_{i}">
+					<li><a href="#all_categories_{i}">All Categories</a></li>
+					<li><a href="#mostused_category_{i}">Most Used</a></li>
+				    </ul>
+				</div>
+				<div class="tags_cat_val">
+				   <div id="all_categories_{i}" class="catcontent_{i}">
+					{all_categories}
+				   </div>
+				   <div id="mostused_category_{i}" class="catcontent_{i}">
+					{most_used_categories}
+				   </div>
+				</div>
+				{add_new_category}
+			    </div>
+			    
+			</div>
+			<div class="tags">
+			    <h2>Tags</h2>
+			    <div class="tags_cat_content clearfix">
+				<div class="tags_cat_nav">
+				   <ul class="tag_tab" id="tag_tab_{i}">
+					<li><a href="#the_tags_{i}" id="add_tags_button_{i}">Add Tags</a></li>
+					<li><a href="#mostused_tabs_{i}">Most Used</a></li>
+				    </ul>
+				</div>
+				<div class="tags_cat_val">
+				   <div id="the_tags_{i}" class="tabcontent_{i}">
+					{all_tags}
+				   </div> 
+				   <div id="mostused_tabs_{i}" class="tabcontent_{i}">
+					{most_used_tags}
+				   </div>
+				</div>
+				{add_new_tag}
+			    </div>
+			</div>
+		    </div>
+		</fieldset>
+		<fieldset>
+		    {comments_settings}
+		    {share_to}
+		    {application_additional_data}
+		    {additional_data}
+		</fieldset>
+	    </div>
+	    <!-- END loopArticle -->
+            <div class="button_wrapper clearfix">
+                <div class="button_left">
+                    <ul class="button_navigation">
+                       {button}
+                    </ul>   
+                </div>
+           </div>
+        </form>
+        
+</div>
+<!-- END articleAddNew -->

@@ -1,0 +1,41 @@
+<!-- BEGIN ruleAddNew -->
+<h1>{app_title}</h1>
+<ul class="tabs">
+   {tab}
+</ul>
+<div class="tab_container">
+	{alert}
+        <form method="post" action="#">
+	     {is_edit_all}
+	     {is_saved}
+            <div class="button_wrapper clearfix">
+                <div class="button_left">
+                    <ul class="button_navigation">
+                        {button}
+                    </ul>   
+                </div>
+           </div>
+	    <!-- BEGIN loopRule -->
+	    <div class="list_edit">
+		<fieldset>
+		    </p>Name :<p>
+		    <p><input type="text" class="textbox" name="name[]" value="{name}" /></p>
+		</fieldset>
+		{parent}
+		<fieldset>
+		   </p>Description :<p>
+		    <p><textarea name="description[]" class="textarea">{description}</textarea></p>
+		</fieldset>
+		<input type="hidden" class="textbox" name="rule_id[]" value="{rule_id}" />
+	    </div>
+	    <!-- END loopRule -->
+            <div class="button_wrapper clearfix">
+                <div class="button_left">
+                    <ul class="button_navigation">
+                       {button}
+                    </ul>   
+                </div>
+           </div>
+        </form>
+</div>
+<!-- END ruleAddNew -->

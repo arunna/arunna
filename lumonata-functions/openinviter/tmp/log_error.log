@@ -1,0 +1,1000 @@
+[2011-01-06 17:33:11] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwahya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwahya@gmail.com
+			Passwd=p455word
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-06 17:33:32] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwahya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwahya@gmail.com
+			Passwd=p455word
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-06 17:33:50] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwahya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwahya@gmail.com
+			Passwd=p455word
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-06 17:45:21] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: 
+USER: 
+PASSWORD: 
+STEPS: 
+	send_message :
+		URL: http://mobile.twitter.com/inbox
+		METHOD: POST
+		ELEMENTS: 
+			authenticity_token=be1888c8ce9cc296829f
+			message[text]=You are invited to http://wahya.biantara.com
+			message[recipient_screen_name]=TempeAZ247
+			return_to=
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-06 17:47:58] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: youtube
+USER: ywahya
+PASSWORD: p455word
+STEPS: 
+	initial_get :
+		URL: https://www.google.com/accounts/ServiceLogin?uilel=3&service=youtube&passive=true&continue=http%3A%2F%2Fwww.youtube.com%2Fsignup%3Fnomobiletemp%3D1%26hl%3Den_US%26next%3D%252F&hl=en_US&ltmpl=sso
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://www.google.com/accounts/ServiceLoginAuth?service=youtube
+		METHOD: POST
+		ELEMENTS: 
+			ltmpl=sso
+			continue=http://www.youtube.com/signin?action_handle_signin=true&nomobiletemp=1&hl=en_US&next=%2Findex
+			next=/
+			service=youtube
+			uilel=3
+			hl=en_US
+			GALX=
+			Email=ywahya
+			Passwd=p455word
+			PersistentCookie=yes
+			rmShown=1
+			signIn=Sign in
+			asts=
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-06 17:58:01] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: linkedin
+USER: gwahya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	initial_get :
+		URL: http://m.linkedin.com/session/new
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://m.linkedin.com/session
+		METHOD: POST
+		ELEMENTS: 
+			login=gwahya@gmail.com
+			authenticity_token=bKUh5msC0ppbKJBr+F7ZV7/PFhmpA+lVoya6lYeV58A=
+			password=p455word
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-06 17:59:18] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: linkedin
+USER: gwahya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	initial_get :
+		URL: http://m.linkedin.com/session/new
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://m.linkedin.com/session
+		METHOD: POST
+		ELEMENTS: 
+			login=gwahya@gmail.com
+			authenticity_token=R/mYRFBn9pkPju8xEg7zZSf/ttG2WptRaM+A85j/z5o=
+			password=p455word
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-06 18:02:31] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: hotmail
+USER: wahya.biantara@hotmail.com
+PASSWORD: p455word
+STEPS: 
+	initial_get :
+		URL: http://login.live.com/login.srf?id=2
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://login.live.com/ppsecure/post.srf?id=2&bk=1294336954
+		METHOD: POST
+		ELEMENTS: 
+			PPSX=Pa
+			PwdPad=
+			type=
+			PPFT=Cez2X32lC5SyQxP1Cuj7VQeFp1x7WVduiIA6uAXeqUTy9kPjEnHA0I6RT3BrGcuCW9ghU5ShnTsdzkLYgoB52h!QiJA9sNnM5ifr17Ewe75qv6S4kLy6!7PKtZjoxJIzQR!vqNQ7F2I4L8vFlv9QN2o9k6erp3Z!J0Qh*pVn5VkpWdYqaBPisIomV6YjTFHFK9i55to$
+			LoginOptions=3
+			login=wahya.biantara@hotmail.com
+			passwd=p455word
+		RESPONSE: OK
+	first_redirect :
+		URL: 
+		METHOD: GET
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-06 18:02:50] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: hotmail
+USER: wahya.biantara@hotmail.com
+PASSWORD: 123456
+STEPS: 
+	initial_get :
+		URL: http://login.live.com/login.srf?id=2
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://login.live.com/ppsecure/post.srf?id=2&bk=1294336973
+		METHOD: POST
+		ELEMENTS: 
+			PPSX=PassportR
+			PwdPad=
+			type=
+			PPFT=CbNNuDu0RGMc5B8cmM0xtEiTXrsdsqyYsL*FrA*qK7MoLodlLwokqZp8C9w25i7jYyaSlouFnrm8qdu3ii7siZ*I529s7XJ1Ti!dicJPJelTkRmxPpJj!wuYqjTizO0MBGrBQ3DPwo9dD1QS6wtSVQVAIdQtNTLciJcT3VC2gylXH9g4LDEHMzaKjXGx2untlQF34w7MRdwaKR1s8A$$
+			LoginOptions=3
+			login=wahya.biantara@hotmail.com
+			passwd=123456
+		RESPONSE: OK
+	first_redirect :
+		URL: 
+		METHOD: GET
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-07 11:26:39] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: plaxo
+USER: agus@lumonata.com
+PASSWORD: ajoesoii120883
+STEPS: 
+	initial_get :
+		URL: https://www.plaxo.com/signin
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://www.plaxo.com/signin
+		METHOD: POST
+		ELEMENTS: 
+			r=https://www.plaxo.com
+			t=
+			originalEmail=
+			signin=1
+			smi=0
+			signin_method=email
+			signin.email=agus@lumonata.com
+			signin.password=ajoesoii120883
+			signin.keeplive=1
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-07 11:29:33] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: plaxo
+USER: agus@lumonata.com
+PASSWORD: ajoesoii120883
+STEPS: 
+	initial_get :
+		URL: https://www.plaxo.com/signin
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://www.plaxo.com/signin
+		METHOD: POST
+		ELEMENTS: 
+			r=https://www.plaxo.com
+			t=
+			originalEmail=
+			signin=1
+			smi=0
+			signin_method=email
+			signin.email=agus@lumonata.com
+			signin.password=ajoesoii120883
+			signin.keeplive=1
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-07 11:29:57] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: plaxo
+USER: agus@lumonata.com
+PASSWORD: ajoesoii120883
+STEPS: 
+	initial_get :
+		URL: https://www.plaxo.com/signin
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://www.plaxo.com/signin
+		METHOD: POST
+		ELEMENTS: 
+			r=https://www.plaxo.com
+			t=
+			originalEmail=
+			signin=1
+			smi=0
+			signin_method=email
+			signin.email=agus@lumonata.com
+			signin.password=ajoesoii120883
+			signin.keeplive=1
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-07 11:51:35] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: facebook
+USER: gwahya@gmail.com
+PASSWORD: 020709
+STEPS: 
+	initial_get :
+		URL: http://apps.facebook.com/causes/
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://login.facebook.com/login.php?login_attempt=1
+		METHOD: POST
+		ELEMENTS: 
+			email=gwahya@gmail.com
+			pass=020709
+			next=http://apps.facebook.com/causes/home?_method=GET
+			return_session=0
+			req_perms=0
+			session_key_only=0
+			api_key=2318966938
+			version=1.0
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-07 11:53:16] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: facebook
+USER: gwahya@gmail.com
+PASSWORD: 020709
+STEPS: 
+	initial_get :
+		URL: http://apps.facebook.com/causes/
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://login.facebook.com/login.php?login_attempt=1
+		METHOD: POST
+		ELEMENTS: 
+			email=gwahya@gmail.com
+			pass=020709
+			next=http://apps.facebook.com/causes/home?_method=GET
+			return_session=0
+			req_perms=0
+			session_key_only=0
+			api_key=57b100f1e770bf6432dd88bc22e51afb
+			version=1.0
+		RESPONSE: OK
+	url_lite :
+		URL: http://lite.facebook.com/login/
+		METHOD: GET
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-07 11:54:53] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: facebook
+USER: gwahya@gmail.com
+PASSWORD: 020709
+STEPS: 
+	initial_get :
+		URL: http://apps.facebook.com/causes/
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://login.facebook.com/login.php?login_attempt=1
+		METHOD: POST
+		ELEMENTS: 
+			email=gwahya@gmail.com
+			pass=020709
+			next=http://apps.facebook.com/causes/home?_method=GET
+			return_session=0
+			req_perms=0
+			session_key_only=0
+			api_key=57b100f1e770bf6432dd88bc22e51afb
+			version=1.0
+		RESPONSE: OK
+	url_lite :
+		URL: http://lite.facebook.com/login/
+		METHOD: GET
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-07 11:56:19] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: facebook
+USER: gwahya@gmail.com
+PASSWORD: 020709
+STEPS: 
+	initial_get :
+		URL: http://apps.facebook.com/causes/
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://login.facebook.com/login.php?login_attempt=1
+		METHOD: POST
+		ELEMENTS: 
+			email=gwahya@gmail.com
+			pass=020709
+			next=http://apps.facebook.com/causes/home?_method=GET
+			return_session=0
+			req_perms=0
+			session_key_only=0
+			api_key=57b100f1e770bf6432dd88bc22e51afb
+			version=1.0
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-07 11:59:34] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: facebook
+USER: gwahya@gmail.com
+PASSWORD: 020709
+STEPS: 
+	initial_get :
+		URL: http://apps.facebook.com/causes/
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://login.facebook.com/login.php?login_attempt=1
+		METHOD: POST
+		ELEMENTS: 
+			email=gwahya@gmail.com
+			pass=020709
+			next=http://apps.facebook.com/causes/home?_method=GET
+			return_session=0
+			req_perms=0
+			session_key_only=0
+			api_key=2318966938
+			version=1.0
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-07 12:04:28] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: facebook
+USER: gwahya@gmail.com
+PASSWORD: 020709
+STEPS: 
+	initial_get :
+		URL: http://apps.facebook.com/causes/
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://login.facebook.com/login.php?login_attempt=1
+		METHOD: POST
+		ELEMENTS: 
+			email=gwahya@gmail.com
+			pass=020709
+			locale=en_US
+			persistent=1
+			charset_test=€,´,€,´,水,Д,Є
+			lsd=6vQ7k
+		RESPONSE: OK
+	url_friends :
+		URL: http://www.facebook.com/friends/?id=869170542&view=everyone
+		METHOD: GET
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-07 12:11:21] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: facebook
+USER: gwahya@gmail.com
+PASSWORD: 020709
+STEPS: 
+	initial_get :
+		URL: http://apps.facebook.com/causes/
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://login.facebook.com/login.php?login_attempt=1
+		METHOD: POST
+		ELEMENTS: 
+			email=gwahya@gmail.com
+			pass=020709
+			locale=en_US
+			persistent=1
+			charset_test=€,´,€,´,水,Д,Є
+			lsd=v0Ur8
+		RESPONSE: OK
+	url_friends :
+		URL: http://www.facebook.com/friends/?id=869170542&view=everyone
+		METHOD: GET
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-07 12:48:39] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: facebook
+USER: gwahya@gmail.com
+PASSWORD: 02070+
+STEPS: 
+	initial_get :
+		URL: http://apps.facebook.com/causes/
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://login.facebook.com/login.php?login_attempt=1
+		METHOD: POST
+		ELEMENTS: 
+			email=gwahya@gmail.com
+			pass=02070+
+			next=http://apps.facebook.com/causes/home?_method=GET
+			return_session=0
+			req_perms=0
+			session_key_only=0
+			api_key=2318966938
+			version=1.0
+		RESPONSE: OK
+	get_user_id :
+		URL: http://facebook.com/
+		METHOD: GET
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-07 13:07:42] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: facebook
+USER: gwahya@gmail.com
+PASSWORD: 02070+
+STEPS: 
+	initial_get :
+		URL: http://www.facebook.com/
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://login.facebook.com/login.php
+		METHOD: POST
+		ELEMENTS: 
+			email=gwahya@gmail.com
+			pass=02070+
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-07 13:07:55] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: facebook
+USER: gwahya@gmail.com
+PASSWORD: 02070+
+STEPS: 
+	initial_get :
+		URL: http://www.facebook.com/
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://login.facebook.com/login.php
+		METHOD: POST
+		ELEMENTS: 
+			email=gwahya@gmail.com
+			pass=02070+
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-07 13:08:15] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: facebook
+USER: gwahya@gmail.com
+PASSWORD: 020709
+STEPS: 
+	initial_get :
+		URL: http://www.facebook.com/
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://login.facebook.com/login.php
+		METHOD: POST
+		ELEMENTS: 
+			email=gwahya@gmail.com
+			pass=020709
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-07 13:28:19] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: facebook
+USER: gwahya@gmail.com
+PASSWORD: 020709
+STEPS: 
+	initial_get :
+		URL: http://apps.facebook.com/causes/
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://login.facebook.com/login.php?login_attempt=1
+		METHOD: POST
+		ELEMENTS: 
+			email=gwahya@gmail.com
+			pass=020709
+			next=http://apps.facebook.com/causes/home?_method=GET
+			return_session=0
+			req_perms=0
+			session_key_only=0
+			api_key=2318966938
+			version=1.0
+		RESPONSE: OK
+	get_user_id :
+		URL: http://facebook.com/
+		METHOD: GET
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-07 13:42:18] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: facebook
+USER: gwahya@gmail.com
+PASSWORD: 020709
+STEPS: 
+	initial_get :
+		URL: http://apps.facebook.com/causes/
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://login.facebook.com/login.php?login_attempt=1
+		METHOD: POST
+		ELEMENTS: 
+			email=gwahya@gmail.com
+			pass=020709
+			next=http://apps.facebook.com/causes/home?_method=GET
+			return_session=0
+			req_perms=0
+			session_key_only=0
+			api_key=2318966938
+			version=1.0
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-08 04:38:41] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwhya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwhya@gmail.com
+			Passwd=p455word
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-08 07:37:16] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwahya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwahya@gmail.com
+			Passwd=p455word
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: OK
+	contact_xml :
+		URL: http://www.google.com/m8/feeds/contacts/default/full?max-results=10000
+		METHOD: GET
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-08 07:37:32] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwahya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwahya@gmail.com
+			Passwd=p455word
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-09 00:17:51] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: yahoo
+USER: wahya_biantara@yahoo.com
+PASSWORD: sayang
+STEPS: 
+	initial_get :
+		URL: https://login.yahoo.com/config/mail?.intl=us&rl=1
+		METHOD: GET
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-10 18:02:00] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwahya@gmail.com
+PASSWORD: qwerty
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwahya@gmail.com
+			Passwd=qwerty
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-10 18:02:06] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwahya@gmail.com
+PASSWORD: qwerty
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwahya@gmail.com
+			Passwd=qwerty
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-11 18:54:37] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: yahoo
+USER: guspinix@yahoo.co.id
+PASSWORD: nurnai
+STEPS: 
+	initial_get :
+		URL: https://login.yahoo.com/config/mail?.intl=us&rl=1
+		METHOD: GET
+		RESPONSE: OK
+	login_post :
+		URL: https://login.yahoo.com/config/login?
+		METHOD: POST
+		ELEMENTS: 
+			.tries=1
+			.src=ym
+			.md5=
+			.hash=
+			.js=
+			.last=
+			promo=
+			.intl=us
+			.bypass=
+			.partner=
+			.u=8bioen56ioa7g
+			.v=0
+			.challenge=JnpiFCtVtK8jd8o1TywEVukMnMgJ
+			.yplus=
+			.emailCode=
+			pkg=
+			stepid=
+			.ev=
+			hasMsgr=0
+			.chkP=Y
+			.done=http://mail.yahoo.com
+			.pd=ym_ver=0&c=&ivt=&sg=
+			pad=5
+			aad=5
+			save=Sign+In
+			login=guspinix@yahoo.co.id
+			passwd=nurnai
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-15 11:47:59] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwahya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwahya@gmail.com
+			Passwd=p455word
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-01-19 02:23:29] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwahya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwahya@gmail.com
+			Passwd=p455word
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-03-12 05:30:04] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwahya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwahya@gmail.com
+			Passwd=p455word
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-03-18 08:29:42] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwahya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwahya@gmail.com
+			Passwd=p455word
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-03-18 10:13:10] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwahya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwahya@gmail.com
+			Passwd=p455word
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-03-18 10:13:20] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwahya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwahya@gmail.com
+			Passwd=p455word
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-03-18 10:15:27] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwahya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwahya@gmail.com
+			Passwd=p455word
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-03-18 10:15:37] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwahya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwahya@gmail.com
+			Passwd=p455word
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+
+[2011-03-18 10:15:49] Local Debugger
+----------DETAILS START----------
+TRANSPORT: curl
+SERVICE: gmail
+USER: gwahya@gmail.com
+PASSWORD: p455word
+STEPS: 
+	login_post :
+		URL: https://www.google.com/accounts/ClientLogin
+		METHOD: POST
+		ELEMENTS: 
+			accountType=HOSTED_OR_GOOGLE
+			Email=gwahya@gmail.com
+			Passwd=p455word
+			service=cp
+			source=OpenInviter-OpenInviter-1.9.4
+		RESPONSE: OK
+	contact_xml :
+		URL: http://www.google.com/m8/feeds/contacts/default/full?max-results=10000
+		METHOD: GET
+		RESPONSE: FAILED
+
+----------DETAILS END----------
+

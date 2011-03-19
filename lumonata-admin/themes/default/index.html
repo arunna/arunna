@@ -1,0 +1,61 @@
+<!-- BEGIN adminArea -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>{section_title} - {web_title}</title>
+{jquery}
+{header_elements}
+
+
+</head>
+
+<body>
+<div class="lumonata_head_wrap">
+	<div class="lumonata_header clearfix">
+		<ul>
+			<li></li>
+			<li>Hello <a href="{profile_link}">{displayname}</a>,</li>
+			<li><a href="{logout_link}">Logout</a></li>
+		</ul>
+	</div>
+</div>
+<div class="lumonata_content clearfix">
+	<!-- LEFT MENU -->
+	<div class="left_side">
+		<div class="profile_img clearfix">
+			<div style="width:95px;height: auto;float: left;text-align: right;">
+				<a href="{profile_updates}" style="font-weight: bold;">{displayname}</a><br />
+				<a href="{profile_link}" style="font-size: 10px;">Edit My Profile</a>
+			</div>
+			<div style="width:50px;height: 50px;float: left;">
+				<a href="{profile_updates}"><img src="{avatar}" alt="{displayname}" title="{displayname}" border="0" /></a>
+			</div>
+		</div>
+		<div class="preview_website clearfix">
+			<a href="{site_url}" target="_blank" >Preview Website</a>
+		</div>
+		<div class="lumonata_menu">
+			{navmenu}
+		</div>
+	</div>
+	<!-- ENDN OF LEFT MENU -->
+
+	<!-- APPLICATION AREA HERE -->
+		<div class="application_area clearfix">
+
+			{content_area}
+		</div>
+	<!-- END OF APPLICATION AREA HERE -->
+</div>
+<div class="footer">
+	Download: <a href="https://github.com/arunna/arunna" style="text-decoration: none;" >Github</a> | 
+	Feedback: <a href="mailto:request@arunna.com" style="text-decoration: none;">request@arunna.com </a> | 
+	Version: Alpha 
+</div>
+
+{admin_tail}
+
+</body>
+</html>
+<!-- END adminArea -->

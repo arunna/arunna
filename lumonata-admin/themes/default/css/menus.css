@@ -1,0 +1,156 @@
+.the_apps_set{
+	width:27% !important;
+	width:26%;
+	min-width:200px !important;
+	min-width:150px;
+	height:auto;
+	margin-left:0px;
+	border: 1px solid #bbbbbb;
+	float: left;
+}
+.the_apps_set ul{
+	padding:0;
+	margin:0;
+	border-top: 1px solid #bbbbbb;
+}
+.the_apps_set ul  li{
+	display: block;
+	list-style: none;
+}
+.the_apps_set h2,.the_menus_set h2{
+	padding:5px 0 0 5px;
+	margin:0;
+	background:url(../images/panel_bg.jpg) repeat-x;
+	height:28px;
+	border-bottom:1px solid #bbbbbb;
+	font-size:14px;
+}
+.the_menus_set{
+	width:70%;
+	min-width:400px !important;
+	min-width:600px;
+	height:auto;
+	border: 1px solid #bbbbbb;
+	float: left;
+	margin: 0 0 0 20px;
+	background: #fff;
+	
+}
+.the_menus_set ul{
+	padding:0;
+}
+.the_menus_set ul  li{
+	display: block;
+	
+	
+}
+.sets_apps_item{
+	width:97%;
+	height: 400px;
+	padding:5px;
+	overflow: auto;
+}
+
+.sets_apps_item .apps_item{
+	width:98%;
+	height: auto;
+	border:1px solid #bbb;
+	background: #fff;
+	margin:3px 0;
+	overflow: hidden;
+}
+.the_sets .apps_item{
+	width:300px;
+	height: auto;
+	border:1px solid #bbb;
+	background: #fff;
+	margin:3px 0;
+	cursor:move;
+}
+.the_sets  .apps_item .apps_item_text{
+	width:86%;
+	height:auto;
+	background: #ccc;
+	float:left;
+	padding: 8px 5px;
+}
+.sets_apps_item .apps_item .apps_item_text{
+	width:80%;
+	height:auto;
+	background: #ccc;
+	float:left;
+	padding: 8px 5px;
+}
+.sets_apps_item .apps_item .add{
+	width:8%;
+	height:20px;
+	float: left;
+	cursor: pointer;
+	border-right: 1px dashed #bbb;
+	padding: 5px 0;
+}
+.sets_apps_item .apps_item .view{
+	background:#fff url(../images/ico-arrow.png) center no-repeat;
+	width:6%;
+	height:30px;
+	float: left;
+	cursor: pointer;
+}
+.the_sets .apps_item .view{
+	background:#fff url(../images/ico-arrow.png) center no-repeat;
+	width:10%;
+	height:30px;
+	float: left;
+	cursor: pointer;
+}
+.apps_details_item{
+	width:94% !important;
+	width:93%;
+	min-width:200px !important;
+	min-width:150px;
+	height:auto;
+	background: #fff;
+	border: 1px dashed #bbb;
+	margin: 0;
+	padding: 5px;
+	
+}
+.menuset_details_item{
+	width:290px !important;
+	width:290px;
+	min-width:200px !important;
+	min-width:150px;
+	height:auto;
+	background: #fff;
+	border: 1px dashed #bbb;
+	margin: 0;
+	padding: 5px;
+	
+}
+.apps_details_item label{
+	
+	font-weight: bold;
+	
+}
+.setname{
+	background: #ccc;
+	width: 99%;
+	height: 30px;
+	padding: 10px 5px;
+}
+.the_sets{
+	background: #FFF;
+	height: auto;
+	clear:both;
+	padding: 5px;
+}
+
+.delete_tab:hover{
+	background: #ccc;
+	color:#fff;
+}
+#link_the_set{
+	width:100%;
+	height: 100px;
+	border-top: 1px solid #ccc;
+}

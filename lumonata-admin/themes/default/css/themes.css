@@ -1,0 +1,156 @@
+.theme_wrapper{
+	margin:10px;
+	border-top:1px solid #bbbbbb;
+	border-bottom:1px solid #bbbbbb;
+	width:98%;
+	height:auto;
+}
+.theme_preview{
+	width:350px;
+	height:350px;
+	border-right:1px solid #bbbbbb;
+	border-bottom:1px solid #bbbbbb;
+	margin:0px 0 0px 0;
+	padding:10px;
+	float:left;
+	overflow:hidden;
+}
+.current_theme_preview{
+	width:350px;
+	height:350px;
+	border-right:1px solid #bbbbbb;
+	border-bottom:1px solid #bbbbbb;
+	margin:0px 0 0px 0;
+	padding:10px;
+	float:left;
+	overflow:hidden;
+	background:#f0f0f0;
+}
+.theme_preview img,.current_theme_preview img{
+	border:1px solid #bbbbbb;
+}
+#background_preview{
+	width: 100%;
+	height: 300px;
+	border: 1px solid #ccc;
+}
+#header_preview{
+	width: 100%;
+	height: auto;
+	overflow: hidden;
+}
+#from_comp{
+	text-decoration: none;
+	font-weight: bold;
+}
+#existing_headers{
+	
+	
+}
+
+.header_thumb,.header_thumb_selected{
+	width:280px !important;
+	width:250px;
+	height:110px;
+	float:left;
+	margin:5px 5px;
+	overflow: hidden;
+	text-align: center;
+	text-align: left;
+}
+.header_thumb img{
+	border: 1px solid #ccc;
+	padding: 3px;
+	cursor: pointer;
+}
+.header_thumb_selected img{
+	border: 2px solid #ef451e;
+	padding: 3px;
+	cursor: pointer;
+}
+.the_upload_set{
+	width:31% !important;
+	width:32%;
+	min-width:200px !important;
+	min-width:150px;
+	height:auto;
+	margin-left:5px;
+	margin-bottom:5px;
+	border: 1px solid #bbbbbb;
+	float: left;
+}
+.the_header_set{
+	width:65% !important;
+	width:63%;
+	min-width:400px !important;
+	min-width:600px;
+	height:auto;
+	border: 1px solid #bbbbbb;
+	float: left;
+	margin: 0 0 0 20px;
+	background: #fff;
+	
+}
+.pages_name_items{
+	width: 96%;
+	height: 30px;
+	border: 1px solid #ccc;	
+	margin: 5px 0 0 0;
+	padding: 2px;
+}
+.page_name_label{
+	width: 90%;
+	float:left
+	
+}
+.page_name_check{
+	width: 8%;
+	float:left
+}
+#upload_area{
+	width:100%;
+	height:auto
+}
+#headers_area{
+	width:100%;
+	height:200px;
+	overflow:auto;
+}
+#headers_area .header_thumb,.header_thumb_selected{
+	width:280px;
+	height:100px;
+	margin:5px 5px;
+	overflow: hidden;
+	text-align: left;
+	
+	
+}
+.list_wrapper{
+	padding: 5px
+}
+.theme_title{
+	background:url(../images/panel_bg.jpg) repeat-x;
+	height:20px;
+	font-size: 12px;
+	font-weight: bold;
+	margin: 0 0 5px 0;
+	
+}
+.header_pos{
+	width:50%;
+	float:left;
+}
+.header_img{
+	width:20%;
+	float:left;
+}
+.header_act{
+	width:30%;
+	float:left;
+	
+}
+.header_row{
+	padding: 3px;
+	border: 1px solid #ccc;
+	margin: 5px 0;
+}

@@ -1,0 +1,45 @@
+<!-- BEGIN pageAddNew -->
+<h1>Add New Page</h1>
+<div class="tab_container">
+    <div class="single_content">
+	{alert}
+        <form method="post" action="#">
+	     {is_edit_all}
+	     {is_saved}
+            <div class="button_wrapper clearfix">
+                <div class="button_left">
+                    <ul class="button_navigation">
+                        {button}
+                    </ul>   
+                </div>
+           </div>
+	    <!-- BEGIN loopPage -->
+	    <div class="list_edit">
+		<fieldset>
+		    <p> Title</p>
+		    <p><input type="text" class="textbox" name="title[{i}]" value="{title}" /></p>
+		     {sef_scheme}
+		</fieldset>
+		<fieldset>
+		    {textarea}
+		</fieldset>
+		
+		<fieldset>
+		    {comments_settings}
+		    {share_to}
+		    {additional_data}
+		</fieldset>
+	    </div>
+	    <!-- END loopPage -->
+            <div class="button_wrapper clearfix">
+                <div class="button_left">
+                    <ul class="button_navigation">
+                       {button}
+                    </ul>   
+                </div>
+           </div>
+        </form>
+	
+    </div>
+</div>
+<!-- END pageAddNew -->

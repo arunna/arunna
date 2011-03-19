@@ -1,0 +1,82 @@
+.profile_img{
+	width:152px;
+	height:auto;
+	margin-bottom: 10px;
+}
+.profile_img img{
+	
+	margin: 0 0 0 5px;
+}
+.profile_img a{
+	color:#ef451e;
+	text-decoration: none;
+	
+}
+#profile_right{
+	width:250px !important;
+	width:250px;
+	min-width:200px !important;
+	min-width:150px;
+	height:auto;
+	margin-left:5px;
+	margin-bottom:10px;
+	float:left;
+}
+#profile_right h2,.work h2,.education h2{
+	font-weight: bold;
+	font-size: 12px;
+	background: #f0f0f0;
+	color:#333;
+	border-top: 1px solid #ccc;
+	padding:3px;
+}
+
+.work{
+	float:left;
+	width:45%;
+	height: auto;
+	padding: 10px 10px 10px 10px;
+}
+.education{
+	float:left;
+	width:45%;
+	height: auto;
+	padding: 10px 10px 10px 10px;
+	border-right: 1px solid #f0f0f0;
+}
+.eduwork_list{
+	margin:10px 0;
+}
+.the_school{
+	background: url("../images/school.png") left center no-repeat;
+	width:83%;
+	height: 50px;
+	padding-left:60px; 
+	margin:10px;
+	cursor: pointer;
+	
+}
+.the_work{
+	background: url("../images/office.png") left center no-repeat;
+	width:83%;
+	height: 50px;
+	padding-left:60px; 
+	margin:10px;
+	cursor: pointer;
+	
+}
+.the_school label,.the_work label{
+	font-size: 10px;
+	color:#ccc;
+}
+.the_school  .shool_name,.the_work  .comp_name{
+	float:left;
+	width:79%;
+	
+}
+.the_school  .action,.the_work  .action{
+	float:left;
+	width:21%;
+	text-align: right;
+	
+}

@@ -1,0 +1,69 @@
+<!-- BEGIN signupBlock -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+{style_sheet}
+{jquery}
+<title>{web_title} - Sign Up</title>
+</head>
+<body>
+<div class="signup_form">
+	<h2>Sign Up</h2>
+	{alert}
+	
+	
+	<form action="" method="post">
+		<table cellspacing="0" >
+			{inviter}
+			<tr>
+				<td>Username:</td>
+				<td><input type="text" name="username" class="inputtext" style="width:300px;" value="{username}" /></td>
+			</tr>
+			<tr>
+				<td>First Name:</td>
+				<td><input type="text" name="first_name" class="inputtext" style="width:300px;" value="{first_name}" /></td>
+			</tr>
+			<tr>
+				<td>Last Name:</td>
+				<td><input type="text" name="last_name" class="inputtext" style="width:300px;" value="{last_name}" /></td>
+			</tr>
+			<tr>
+				<td>Email Address:</td>
+				<td><input type="text" name="email" class="inputtext" style="width:300px;" value="{email}" /></td>
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td><input type="password" name="password" class="inputtext" style="width:300px;"  /></td>
+			</tr>
+			<tr>
+				<td>Reenter Password:</td>
+				<td><input type="password" name="repassword" class="inputtext" style="width:300px;" /></td>
+			</tr>
+			<tr>
+				<td>I am:</td>
+				<td>
+					{sex}
+				</td>
+			</tr>
+			<tr>
+				<td>My Birthday:</td>
+				<td>
+					{birthday}&nbsp;{birthmonth}&nbsp;{birthyear}
+					
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td> 
+				<input type="submit" name="signup" value="Sign Up" class="button_bold" />
+				 
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{tail}
+</body>
+</html>
+<!-- END signupBlock -->

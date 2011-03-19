@@ -1,0 +1,361 @@
+<!-- BEGIN usersAddNew -->
+<h1>{prc}</h1>
+<ul class="tabs">
+    {tabs}
+</ul>
+<div class="tab_container">
+    {alert}
+    <form method="post" action="">
+        <div class="button_wrapper clearfix">
+            <div class="button_left">
+                <ul class="button_navigation">
+                    <li>{save_user}</li>
+                    <li>{cancel}</li>
+                </ul>   
+            </div>
+        </div>
+        <fieldset>
+                <p><label>Username (required):</label></p>
+                 <input type="text" name="username" value="{user_name}" class="medium_textbox" id="username" />
+        </fieldset>
+        <fieldset>
+                <p><label>First name:</label></p>
+                 <input type="text" name="first_name" value="{first_name}" class="medium_textbox" />
+        </fieldset>
+        <fieldset>
+                <p><label>Last name:</label></p>
+                 <input type="text" name="last_name" value="{last_name}" class="medium_textbox" />
+        </fieldset>
+        <fieldset>
+                <p><label>Email (required):</label></p>
+                 <input type="text" name="email" value="{email}" class="medium_textbox" />
+        </fieldset>
+         <fieldset>
+                <p><label>Gender (required):</label> </p>
+                {sex}
+        </fieldset>
+        <fieldset>
+         <p><label>Birthday:</label> </p>
+         {birthday}&nbsp;{birthmonth}&nbsp;{birthyear}&nbsp;
+        </fieldset>
+        <fieldset>
+                <p><label>Website:</label></p>
+                 <input type="text" name="website" value="{website}" class="medium_textbox" /> ex: http://example.com
+        </fieldset>
+        <fieldset>
+                 <p><label>Password (required):</label> </p>
+                 <input type="password" name="password" value="" class="medium_textbox" id="password" />
+                 <p><label>Retype password (required)</label>: </p>
+                 <input type="password" name="re_password" value="" class="medium_textbox" />
+        </fieldset>
+        <fieldset>
+                {user_type}
+        </fieldset>
+        <fieldset>
+                {user_status}
+        </fieldset>
+        <fieldset>
+                <p><label>Send Details?</label></p>
+                 <input type="checkbox" name="send" {send_checked} /> Send all details to the new user via email.
+        </fieldset>
+        <div class="button_wrapper clearfix">
+            <div class="button_left">
+                <ul class="button_navigation">
+                    <li>{save_user}</li>
+                    <li>{cancel}</li>
+                </ul>   
+            </div>
+        </div>  
+    </form>
+</div>
+<!-- END usersAddNew -->
+
+<!-- BEGIN usersEdit -->
+<h1>{prc}</h1>
+<ul class="tabs">
+    {tabs}
+</ul>
+<div class="tab_container">
+    {alert}
+    <form method="post" action="">
+        {is_edit_all}
+        <div class="button_wrapper clearfix">
+            <div class="button_left">
+                <ul class="button_navigation">
+                    <li>{save_user}</li>
+                    <li>{cancel}</li>
+                </ul>   
+            </div>
+        </div>
+        <!-- BEGIN loopUser -->
+        <div class="list_edit">
+        <fieldset>
+           <h2>Personal Details</h2>
+           
+                <p><label>Username (required):</label></p>
+                 <input type="text" name="username[{i}]" value="{username}" class="medium_textbox"  readonly="readonly" id="username_{i}" /> Your username cannot be changed
+                 <input type="hidden" name="select[{i}]" value="{userid}" class="medium_textbox" readonly="readonly" />
+                <p><label>First name:</label></p>
+                 <input type="text" name="first_name[{i}]" value="{first_name}" class="medium_textbox" />
+           
+                <p><label>Last name:</label></p>
+                 <input type="text" name="last_name[{i}]" value="{last_name}" class="medium_textbox" />
+           
+                <p><label>Display name:</label></p>
+                {display_name}
+                
+                <p><label>Gender (required):</label> </p>
+                {sex}
+				
+				 <p><label>Birthday:</label> </p>
+                 {birthday}&nbsp;{birthmonth}&nbsp;{birthyear}&nbsp;
+                 
+                 <p><label>Short Bio:</label></p>
+                 <textarea name="bio[{i}]" class="textarea" style="width:70%;height:150px;" >{bio}</textarea>
+        </fieldset>
+        
+        <fieldset>
+            <h2>Contact Details</h2>
+           
+                <p><label>Email (required):</label></p>
+                 <input type="text" name="email[{i}]" value="{email}" class="medium_textbox" readonly="readonly" /> Your email cannot be changed
+            
+                <p><label>Website:</label></p>
+                 <input type="text" name="website[{i}]" value="{website}" class="medium_textbox" /> ex: http://example.com
+            
+        </fieldset>
+        <fieldset>
+            <h2>User Information</h2>
+            
+                 <p><label>Password (required):</label> <em>If you would like to change the password type a new one. Otherwise leave this blank.</em></p>
+                 <input type="password" name="password[{i}]" value="" class="medium_textbox" id="password_{i}" />
+                 <br />
+                 <p><label>Retype password (required)</label>: <em>Type your new password again.</em></p>
+                 <input type="password" name="re_password[{i}]" value="" class="medium_textbox" />
+                 
+            
+                {user_type}
+                
+                {user_status}
+           
+        </fieldset>
+        {send_option}
+        
+       
+        </div>
+        <!-- END loopUser -->
+        <div class="button_wrapper clearfix">
+            <div class="button_left">
+                <ul class="button_navigation">
+                    <li>{save_user}</li>
+                    <li>{cancel}</li>
+                </ul>   
+            </div>
+        </div>  
+    </form>
+</div>
+<!-- END usersEdit -->
+
+<!-- BEGIN profilePicture -->
+<h1>{prc}</h1>
+<ul class="tabs">
+    {tabs}
+</ul>
+<div class="tab_container">
+   <form action="" method="post" enctype="multipart/form-data" >
+        <div class="clearfix">
+            <div class="the_picture">
+                {the_avatar}
+            </div>
+            <div class="upload_profile_pic">
+                 {alert}
+                 <p>Select an image file on your computer (2MB max):</p>
+                <input type="file" name="theavatar" /><br />
+                {upload_button}
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- END profilePicture -->
+
+<!-- BEGIN educationWork -->
+<h1>{prc}</h1>
+<ul class="tabs">
+    {tabs}
+</ul>
+<div class="tab_container clearfix">
+	<div class="education"">
+   	   <h2>High School</h2>	
+	   <form action="" method="post" enctype="multipart/form-data" >
+		   <fieldset>
+        	<p><label><strong>High School:</strong></label></p>
+        	<input type="text" name="school_name" value="" class="medium_textbox" style="width:90%" />
+        
+        	<p><label><strong>Class Year:</strong></label>
+        	<select name="school_class_year">
+        		<option value="">Year:</option>
+        		{year}
+        	</select>
+        	</p>
+        	</fieldset>
+        	<fieldset>
+	       	<div style="text-align: right;">
+		        <input type="button" class="button_bold" value="Add/Edit School" id="add_school" />
+	        </div>
+	        </fieldset>
+	    </form>
+	    <div class="eduwork_list" id="school_list">
+	    	{school_list}
+	    </div>
+	    <h2>College/University</h2>	
+	   <form action="" method="post" enctype="multipart/form-data" >
+		  <fieldset>
+        	<p><label><strong>College/University:</strong></label></p>
+        	<input type="text" name="college" value="" class="medium_textbox" style="width:90%" />
+        	<p>
+        	<label><strong>Class Year:</strong></label>
+        	<select name="collage_class_year">
+        		<option value="">Year:</option>
+        		{year}
+        	</select>
+        	</p>
+      
+        	<p>
+	        	<label><strong>Concentrations:</strong></label>.
+	        	<input type="text" name="concentrations" value="" class="medium_textbox" style="width:90%" />
+        	</p>
+	      </fieldset>
+	      <fieldset>
+	       	<div style="text-align: right;">
+		        <input type="button" class="button_bold" value="Add/Edit School"  id="add_collage" />
+	        </div>
+	      </fieldset>
+	    </form>
+	     <div class="eduwork_list" id="collage_list">
+	    	{collage_list}	    	
+	    </div>
+   </div>
+   <div class="work"">
+   	   <h2>Work Experience</h2>	
+	   <form action="" method="post" enctype="multipart/form-data" >
+	         <fieldset>
+	         	<p><label><strong>Employer:</strong></label></p>
+	         	<input type="text" name="company_name" value="" class="medium_textbox" style="width:90%" />
+	         	<p><label><strong>Position:</strong></label></p>
+	         	<input type="text" name="position" value="" class="medium_textbox" style="width:90%" />
+	         	<p><label><strong>City / Town:</strong></label></p>
+	         	<input type="text" name="city" value="" class="medium_textbox" style="width:90%" />
+	         	<p><label><strong>Job Description:</strong></label></p>
+	         	<textarea name="jobdes" class="textarea" style="width:90%" ></textarea>
+	         	
+	         	<p>
+	         		<label><strong>Time Period:</strong></label><br />
+	         		<input type="checkbox" name="present" value="present" checked="checked">I am still working here<br />
+	         		<select name="from_month_period">
+	         			<option value="">Month:</option>
+	         			{month}
+	         		</select>
+	         		<select name="from_year_period">
+	         			<option value="">Year:</option>
+	         			{year}
+	         		</select>
+	         		to
+	         		
+	         		<select name="to_month_period" style="display:none;">
+	         			<option value="">Month:</option>
+	         			{month}
+	         		</select>
+	         		<select name="to_year_period" style="display:none;">
+	         			<option value="">Year:</option>
+	         			{year}
+	         		</select>
+	         		<span id="present_text">present</span>
+	         	</p>
+	         </fieldset>
+	         <fieldset>
+	        <div style="text-align: right;">
+	       	
+		        <input type="button" class="button_bold" value="Add/Edit Job" id="add_job" />
+	        	
+	        </div>
+	        </fieldset> 
+	    </form>
+	    <div class="eduwork_list" id="work_list">
+	    	{work_list}	    	
+	    </div>
+    </div>
+</div>
+<div id="response"></div>
+<script type="text/javascript">
+	$(function(){
+		$('#add_school').click(function(){
+				
+				$.post('../lumonata-functions/user.php',{
+					'eduwork'	  : 'school',
+					'school_name' : $('input[name=school_name]').val(),
+					'class_year'  : $('select[name=school_class_year]').val()
+				},function(theResponse){
+					$('input[name=school_name]').val('');
+					$('select[name=school_class_year]').val($('option:first', $('select[name=school_class_year]')).val());
+					$('#school_list').html(theResponse);	
+				});
+		});
+	
+		$('#add_collage').click(function(){
+			
+			$.post('../lumonata-functions/user.php',{
+				'eduwork'	  		: 'college',
+				'college' 			: $('input[name=college]').val(),
+				'class_year'  		: $('select[name=collage_class_year]').val(),
+				'concentrations'  	: $('input[name=concentrations]').val()
+			},function(theResponse){
+				$('input[name=college]').val('');
+				$('select[name=collage_class_year]').val($('option:first', $('select[name=collage_class_year]')).val());
+				$('input[name=concentrations]').val('');
+				$('#collage_list').html(theResponse);	
+			});
+		});
+		$('#add_job').click(function(){
+			//alert($('input[name=present]:checked').val())
+			$.post('../lumonata-functions/user.php',{
+				'eduwork'	  		: 'work',
+				'company_name'  	: $('input[name=company_name]').val(),
+				'position'  		: $('input[name=position]').val(),
+				'city'  			: $('input[name=city]').val(),
+				'jobdes'  			: $('textarea[name=jobdes]').val(),
+				'from_month_period' : $('select[name=from_month_period]').val(),
+				'from_year_period' 	: $('select[name=from_year_period]').val(),
+				'present'			: $('input[name=present]:checked').val(),
+				'to_month_period' 	: $('select[name=to_month_period]').val(),
+				'to_year_period' 	: $('select[name=to_year_period]').val(),
+				'class_year'  		: $('select[name=collage_class_year]').val(),
+				'concentrations'  	: $('input[name=concentrations]').val()
+			},function(theResponse){
+				$('input[name=company_name]').val('');
+				$('input[name=position]').val('');
+				$('input[name=city]').val('');
+				$('textarea[name=jobdes]').val('');
+				$('select[name=from_month_period]').val($('option:first', $('select[name=from_month_period]')).val());
+				$('select[name=from_year_period]').val($('option:first', $('select[name=from_year_period]')).val());
+				$('select[name=to_month_period]').val($('option:first', $('select[name=to_month_period]')).val());
+				$('select[name=to_year_period]').val($('option:first', $('select[name=to_year_period]')).val());
+				$('input[name=concentrations]').val('');
+				$('#work_list').html(theResponse);	
+			});
+		});
+
+		$('input[name=present]').click(function(){
+			if(this.checked==false){
+				$('select[name=to_month_period]').show();
+				$('select[name=to_year_period]').show();
+				$('#present_text').hide();
+			}else{
+				$('select[name=to_month_period]').hide();
+				$('select[name=to_year_period]').hide();
+				$('#present_text').show();
+			}
+		});
+	});
+</script>
+<!-- END educationWork -->

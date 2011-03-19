@@ -1,0 +1,23 @@
+body{
+	margin:0;
+	padding:5px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#333333;
+	font-size:14px;
+	font-weight:normal;
+}
+a{
+	color:#333333;
+}
+a:visited{
+	/*color:#333333;*/
+}
+img{
+	border:1px solid #e1e1e1;
+	padding:5px;
+	
+}
+.tinymce{
+	font-size:14px;
+	font-family:"Lucida Sans",Arial, Helvetica, sans-serif;
+}

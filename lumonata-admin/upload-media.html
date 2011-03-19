@@ -1,0 +1,218 @@
+<!-- BEGIN uploadMediaBlock -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Media Upload</title>
+    <link rel="stylesheet" href="{css}" type="text/css" media="screen" />
+    {header_elements}
+</head>
+<body style="background:#fbfafa;width:99%;">
+    <ul class="tabs">
+       {tabs}
+    </ul>
+    
+    <div class="tab_container">
+        <div id="general" class="tab_content_image">
+            {alert}
+            <fieldset>
+                
+                <h3>Choose file from your computer</h3>
+                <form action="{action}" method="post" enctype="multipart/form-data" name="upload" >
+                   <input type="file" name="media" /> &nbsp;{upload_button}&nbsp;{cancel_button}
+                </form>
+               
+            </fieldset>
+            
+            <fieldset id="upload_image_detail" style="display:none;" >
+               
+                    {attachment_details}
+                    {delete_box}
+                
+            </fieldset>
+        </div>
+    </div>
+    {bottom_elements}
+</body>
+</html>
+<!-- END uploadMediaBlock -->
+
+<!-- BEGIN imageMediaURLBlock -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Media Upload</title>
+    <link rel="stylesheet" href="{css}" type="text/css" media="screen" />
+    {header_elements}
+</head>
+<body style="background:#fbfafa;width:99%;">
+    
+    <ul class="tabs">
+       {tabs}
+    </ul>
+    
+    <div class="tab_container">
+        <div id="general" class="tab_content">
+            <fieldset>
+            
+            <form method="post" action="">
+                <table cellpadding="5">
+                    <tr>
+                        <td colspan="2"><h3>Add media files from URL</h3></td>
+                    </tr>
+                    <tr>
+                        <td width="20%" valign="top" align="left">Image URL:</td>
+                        <td width="80%" valign="top" align="left"><input type="text" class="textbox" name="url" /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" align="left">Title:</td>
+                        <td valign="top" align="left"><input type="text" class="textbox" name="title" /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" align="left">Alternate Text:</td>
+                        <td valign="top" align="left"><input type="text" class="textbox" name="alt_text" /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" align="left">Caption:</td>
+                        <td valign="top" align="left"><input type="text" class="textbox" name="caption" /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" align="left">Alignment:</td>
+                        <td valign="top" align="left">
+                            <ul id="alignment">
+                                <li id="alignment_none" ><input type="radio" name="alignment" value="none" checked="checked" />None</li>
+                                <li id="alignment_left"><input type="radio" name="alignment" value="left"   />Left</li>
+                                <li id="alignment_middle"> <input type="radio" name="alignment" value="center"  />Center</li>
+                                <li id="alignment_right"><input type="radio" name="alignment" value="right"  />Right</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" align="left">Link Image to:</td>
+                        <td valign="top" align="left">
+                            <input type="text" class="textbox" name="link_to" value="" id="link_to" /><br />
+                            <button type="button" value="" class="button" id="link_none">None</button>
+                            <button type="button" value="" class="button" id="my_link">Link to Image</button><br />
+                            <input type="hidden"  value="" id="link_to_file" />
+                            Enter a link URL or click above for presets.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="right">
+                            {insert_button}
+                            <input type="hidden" name="type" value="{type}" />
+                            <input type="hidden" name="textarea_id" value="{textarea_id}" />
+                        </td>
+                    </tr>
+                </table>    
+             </form>    
+           
+            </fieldset>
+        </div>
+    </div>
+     {bottom_elements}
+</body>
+</html>
+<!-- END imageMediaURLBlock -->
+
+<!-- BEGIN otherMediaURLBlock -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Media Upload</title>
+    <link rel="stylesheet" href="{css}" type="text/css" media="screen" />
+    {header_elements}
+</head>
+<body style="background:#fbfafa;width:99%;">
+    
+    <ul class="tabs">
+       {tabs}
+    </ul>
+    
+    <div class="tab_container">
+        <div id="general" class="tab_content">
+            <fieldset>
+            
+            <form method="post" action="">
+            <table cellpadding="5">
+                <tr>
+                    <td colspan="2"><h2>Add media files from URL</h2></td>
+                </tr>
+                <tr>
+                    <td width="20%" valign="top" align="left">{type_label} URL:</td>
+                    <td width="80%" valign="top" align="left"><input type="text" class="textbox" name="link_to" /></td>
+                </tr>
+                <tr>
+                    <td valign="top" align="left">Title:</td>
+                    <td valign="top" align="left"><input type="text" class="textbox" name="title" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right">
+                        {insert_button}
+                        <input type="hidden" name="type" value="{type}" />
+                        <input type="hidden" name="textarea_id" value="{textarea_id}" />
+                    </td>
+                    
+                </tr>
+            </table>
+            </form>
+           
+            </fieldset>
+        </div>
+    </div>
+     {bottom_elements}
+</body>
+</html>
+<!-- END otherMediaURLBlock -->
+<!-- BEGIN galleryMediaBlock -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Media Upload</title>
+    <link rel="stylesheet" href="{css}" type="text/css" media="screen" />
+    {header_elements}
+    <script type="text/javascript" language="javascript">
+    $(document).ready(function(){ 	
+	$(function() {
+		$("#media_gallery").sortable({ axis:'y', cursor: 'move', update: function() {
+                        var start_order=$("input[name=start_order]").val();
+			var order = $(this).sortable("serialize") + '&update_media_order=media&start='+start_order;
+                        var order_array=$(this).sortable("toArray");
+                        
+                        for(i=0;i<order_array.length;i++){
+                            var string=order_array[i];
+                            string=string.split("_");
+                            
+                            if(string!=""){
+                                $("#order_"+string[1]).val(start_order);
+                                start_order++;
+                            }
+                        }
+			$.post("upload-media.php", order);
+                        
+		}								  
+		});
+	});
+
+    });
+    </script>
+</head>
+<body style="background:#fbfafa;width:99%;">
+    <ul class="tabs">
+       {tabs}
+    </ul>
+   
+    <div class="tab_container">
+        <div id="general" class="tab_content">
+           <div  class="clearfix" style="padding:5px;height:100%;">
+                {attachment}
+            </div>
+        </div>
+    </div>
+    {bottom_elements}
+</body>
+</html>
+<!-- END galleryMediaBlock -->

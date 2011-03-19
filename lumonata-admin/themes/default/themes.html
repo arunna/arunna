@@ -1,0 +1,191 @@
+<!-- BEGIN frontthemesBlock -->
+<h1>Manage Themes</h1>
+<ul class="tabs">
+   {tab}
+</ul>
+<div class="tab_container">
+    <div  class="tab_content">
+	{alert}
+        
+        <div class="theme_wrapper clearfix">
+           {current_theme}
+           {themes_preview}
+        </div>
+    </div>
+</div>
+<!-- END frontthemesBlock -->
+
+<!-- BEGIN adminthemesBlock -->
+<h1>Manage Themes</h1>
+<ul class="tabs">
+   {tab}
+</ul>
+<div class="tab_container">
+    <div class="tab_content">
+	{alert}
+        <div class="theme_wrapper clearfix">
+             {current_theme}
+             {themes_preview}
+        </div>
+    </div>
+</div>
+<!-- END adminthemesBlock -->
+
+<!-- BEGIN changeBackgroundBlock -->
+<h1>Custome Website Background</h1>
+<ul class="tabs">
+   {tab}
+</ul>
+<div class="tab_container">
+    <div class="tab_content">
+		{alert}
+        <div class="theme_wrapper clearfix">
+        	<form action="" method="post" enctype="multipart/form-data">
+             <table border="0" cellpadding="2" cellspacing="5" width="100%">
+             	<tr>
+             		<td colspan="2"><h2>Preview</h2></td>
+             	</tr>
+             	<tr>
+             		<td colspan="2" align="right">{remove_img}</td>
+             	</tr>
+             	<tr>
+             		<td colspan="2"><div id="background_preview" {style}></div></td>
+             	</tr>
+             	<tr>
+             		<td width="100">Upload Image</td>
+             		<td>
+             			
+             			<input type="file" name="background_image" />&nbsp;<input type="submit" name="upload" value="Upload" class="button" />
+             			
+             		</td>
+             	</tr>
+             </table>
+             </form>
+             <form name="cutome_bg" action="" method="post" >
+             	 <table border="0" cellpadding="5" cellspacing="5" width="100%">
+             	 	<tr>
+             			<td colspan="2"><h2>Display Options</h2></td>
+             		</tr>
+             		{image_display_options}
+	             	<tr>
+	             		<td width="200">Custome Color</td>
+	             		<td>
+	             			#<input type="text" name="custome_color"  id="custome_color" class="small_textbox"  value="{custome_color}"  style="width:70px;" maxlength="6" />
+	             		</td>
+	             	</tr>
+	             	
+	             </table>
+	             {javas}
+	              <div class="button_wrapper clearfix">
+	                <div class="button_left">
+			             <ul class="button_navigation">
+			                  <li>{botton}</li>
+			             </ul>   
+			         </div>
+			      </div>
+		     </form>
+        </div>
+    </div>
+</div>
+<!-- END changeBackgroundBlock -->
+
+<!-- BEGIN headerBlock -->
+<h1>Custome Headers</h1>
+<ul class="tabs">
+   {tab}
+</ul>
+<div class="tab_container">
+    <div class="tab_content">
+		{alert}
+		<span id="aalert"></span>
+        <div class="clearfix" style="margin-top: 10px;">
+        	<div class="the_upload_set">
+	        	<div style="padding:2px 5px;">
+	        		<h2>Upload Header</h2>
+		        	<form action="" method="post" enctype="multipart/form-data">
+		             	<div class="clearfix">
+		             		<div style="border-bottom: 1px solid #ccc;" >
+			             		<label style="width:100px;float:left;">Position:</label> 
+			             		<select style="width:90%;" name="position">
+			              			<option value="home">Home Page ( Default )</option>
+			              			<option value="pages">Pages</option>
+			              			<option value="articles">Articles</option>
+			              			<option value="tags">Tags</option>
+			              			{apps_set}
+				               	</select>
+			               	</div>
+			               	<div style="width: 100% !important;width:98%;height:230px;overflow: auto;" id="app_items">
+			               		Choose your file and upload
+		               		</div>
+		               		<div style="text-align: right;border-top: 1px solid #ccc;margin:0px 0 15px 0;"><a href="javascript:;" rel="select_all">Select All</a></div>
+		               		<p><label style="width:100%;"><a href="javascript:;" id="from_comp">From Computer</a> | <a href="javascript:;" id="existing_headers">Existing Headers</a></label></p>
+		               		<script type="text/javascript">
+		               			$(function(){
+			               			
+			               			$('#existing_headers').click(function(){
+				               			$('#upload_area').slideUp();
+				               			$('#headers_area_wrapper').show();
+				               			
+				               			$('#existing_headers').css({ 'font-weight' : 'bold' });
+				               			$('#existing_headers').css({ 'text-decoration' : 'none' });
+
+				               			$('#from_comp').css({ 'font-weight' : 'normal' });
+				               			$('#from_comp').css({ 'text-decoration' : 'underline' });
+				               		});
+				               		
+			               			$('#from_comp').click(function(){
+				               			$('#headers_area_wrapper').slideUp();				               			
+				               			$('#upload_area').show();
+				               			
+				               			$('#from_comp').css({ 'font-weight' : 'bold' });
+				               			$('#from_comp').css({ 'text-decoration' : 'none' });
+				               			
+				               			$('#existing_headers').css({ 'font-weight' : 'normal' });
+				               			$('#existing_headers').css({ 'text-decoration' : 'underline' });
+				               			
+				               		});
+			               		});
+		               		</script>
+		               		<div style="width:100%;height:auto;">
+		               			<div id="upload_area" >
+			             			<input type="file" name="header" />
+			             			<input type="submit" name="upload" value="Upload" class="button" />
+			             			<br /> <span style="font-size: 10px;">Allowed file types: .jpg, .gif, .png and .swf</span>
+			             			
+			             		</div>
+			             		<div id="headers_area_wrapper" style="display: none;">
+				             		<div id="headers_area" >
+				             			{available_headers}
+				             			<br clear="left" />
+				             		</div>
+				             		<div style="text-align: left;margin: 10px 0 0 0;"><input type="submit" name="upload" value="Add" class="button" /></div>
+			             		</div>
+		             		</div>
+		             	</div>
+		            </form>
+	            </div>
+            </div>
+            <div class="the_header_set">
+	             <form name="cutome_bg" action="" method="post" >
+	             	 <div class="list_wrapper clearfix">	
+	             	  <h2>The Headers</h2>
+		              
+		              <div  class="header_pos theme_title">Position</div>
+		              <div  class="header_img theme_title">Image</div>
+		              <div  class="header_act theme_title">Action</div>
+		              <br clear="all" />
+		              {the_headers}
+		             </div>
+		              <div class="button_wrapper clearfix">
+		                <div class="button_left">
+				             <ul class="button_navigation">
+				                  <li>{botton}</li>
+				             </ul>   
+				         </div>
+				      </div>
+			     </form>
+		     </div>
+        </div>
+    </div>
+</div>
+<!-- END headerBlock -->

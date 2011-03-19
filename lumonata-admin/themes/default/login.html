@@ -1,0 +1,35 @@
+<!-- BEGIN mainBlock -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+{style_sheet}
+<title>{web_title} - Login</title>
+</head>
+<body>
+<form name="login_form" action="{login_action}" method="post">
+<div class="login_form">
+	<div class="alert_login">
+		{alert}
+	</div>
+	<div class="login_yellow">
+		<strong>Username</strong><br /><br />
+		<input type="text" name="username" class="login_text" value="{username}" />
+	</div>
+	<div class="login_yellow">
+		<strong>Password</strong><br /><br />
+		<input type="password" name="password" class="login_text" value="{password}" />
+	</div>
+	<div class="login_btn_wrp">
+		<input type="submit" name="login" value="Log In" class="login_btn" />
+		<input type="checkbox" name="remember_login" />Remember Me
+	</div>
+</div>
+<div class="lost_password">
+	<a href="?state=forget_password">Forgotten your password?</a>
+</div>
+</form>
+
+</body>
+</html>
+<!-- END mainBlock -->

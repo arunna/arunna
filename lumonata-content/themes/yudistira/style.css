@@ -1,0 +1,469 @@
+/* CSS Reset */
+@import "fonts/arial/stylesheet.css";
+@import "fonts/quicksand/stylesheet.css";
+@import "fonts/colaborate/stylesheet.css";
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+tr,th,td{
+	padding:5px;
+}
+body {
+	line-height: 1.5em;
+        background:#cccccc;
+        font-family:Colaborate-RegularRegular,ArialRegular,arial, sans-serif;
+        font-size:13px;
+        color:#333333;
+}
+p{
+	margin:1em 0;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.clearfix:after{
+	content:".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
+}
+
+/* Begin Layout */
+.body_wrapper{
+    margin:0 auto;
+    width:1000px;
+    height:auto;
+    background:#ffffff;
+}
+.head_title{
+    width:960px;
+    height:30px;
+    border-bottom:5px solid #ff0000;
+    padding:10px 20px;
+}
+.web_title{
+    float:left;
+    margin:0px 0 0 0;
+}
+h1{
+    font-family:Georgia, Palatino, Times New Roman, serif;
+    font-size:30px;
+    color:#ff6666;
+}
+h1 a{
+    color:#ff6666;
+    text-decoration:none;
+}
+.tagline{
+    float:right;
+    font-size:18px;
+    color:#ff6666;
+    margin:10px 0 0 0;
+}
+.head_image{
+    margin:0;
+    padding:0;
+    height:273px;
+}
+.top_bar{
+    height:25px;
+    background:#ff0000;
+    margin:0;
+    padding:10px 20px 5px 20px;
+}
+.the_body{
+    height:auto;
+    padding:10px 20px;
+}
+.the_content{
+    width:700px;
+    height:auto;
+    float:left;
+}
+.side_bar{
+    margin:0 0 0 25px;
+    width:235px;
+    height:auto;
+    float:left;
+}
+
+.the_footer{
+    height:60px;
+    padding:15px 20px 5px 20px;
+    border-top:5px solid #ff0000;
+    color:#ff6666;
+}
+.the_footer img{
+    margin:0;
+    padding:0;
+    float:left;
+    
+}
+.copy{
+    float:right;
+    font-style:italic;
+    margin:20px 0;
+}
+.button{
+	background:#fe5858;
+	padding:3px 5px;
+	color:#ffffff;
+	border:1px #ff0000 outset;
+	cursor:pointer;
+}
+textarea{
+	border:1px #ccc solid;
+}
+input {
+	border:1px #ccc solid;
+}
+a{
+	 color:#333333;
+	 text-decoration:underline;
+}
+/*Navigation*/
+.top_bar ul{
+    padding:0 0;
+    margin:0;
+}
+.top_bar ul li{
+    padding:0px 10px 0 0;
+    display:inline;
+}
+.top_bar ul li a{
+    color:#ffffff;
+    font-weight:bold;
+    text-decoration:none;
+    padding:10px 10px;
+}
+.top_bar ul li a:hover{
+    background:#ff6666;
+}
+.side_bar h2{
+    font-size:18px;
+    background:#ff6666;
+    color:#fff;
+    padding:10px;
+}
+.side_bar ul{
+    padding:0px;
+    margin:0px;
+}
+.side_bar ul li{
+    padding:10px;
+    background:#ffcccc;
+    margin-bottom:1px;
+}
+.side_bar ul li a{
+    display:block;
+    color:#333333;
+    font-size:14px;
+    text-decoration:none;
+}
+.side_bar ul li ul{
+    background:#ffffff;
+    margin:10px -10px -11px -10px;
+
+    padding:0;
+}
+.side_bar ul li ul li{
+    background:#ffffff;
+    padding:10px 20px;
+}
+.search_box{
+	margin:0 0px 5px 0;
+	
+}
+.input_text{
+	height:25px;
+}
+/*Content*/
+h2, h2 a{
+    font-size:24px;
+    color:#ff0000;
+    padding:5px 0;
+    text-decoration:none;
+    
+}
+.the_thumbs_item{
+	position:relative;
+	width: 150px;
+	height: 100px;
+	float: left;
+	margin: 10px;
+	border: 1px solid #ccc;
+	overflow: hidden;
+
+	
+}
+.the_thumbs_item img{
+		
+		
+		
+}
+.category_name{
+	margin: 10px 0 15px 0;
+}
+.brief_content{
+    border-bottom:1px solid #e7e7e7;
+    padding-bottom:15px;
+    margin-bottom:10px;
+}
+.article_label{
+    color:#817c7d;
+    margin:10px 0 0 0;
+    font-size:11px;
+}
+.article_label a{
+     color:#817c7d;
+    text-decoration:none;
+}
+.article_label a:hover{
+    text-decoration:underline;
+}
+a.commentview{
+    text-decoration:none;
+    font-size:12px;
+    color:#ff0000;
+}
+
+
+/*Comment*/
+.comment_box{
+    margin:5px 0 0 0;
+    padding:0;
+}
+.the_comment{
+    padding:5px 5px 5px 5px;
+    width:100%;
+    height:auto;
+    background:#ffd9d9;
+    margin:0px 0 1px 0;
+    
+}
+.commentator_name,.commentator_name a{
+    font-size:13px;
+    color:#333;
+    text-decoration:none;
+    font-weight:bold;
+    margin:5px 0 0 0;
+}
+.commentator_name a:hover{
+    text-decoration:underline;
+}
+.comment{
+    padding:0px 0px 0px 55px;
+    margin-top:-60px;
+}
+.the_avatar{
+    margin-left:0px;
+    width:50px;
+    height:50px;
+    overflow: hidden;
+}
+.comment_button{
+	text-align:right;
+}
+textarea.comment_area{
+	width:664px;
+	margin:10px 0 0 0;
+    font-family:inherit;
+    font-size: inherit;
+    color:inherit;
+    padding:3px;
+    line-height:inherit;
+}
+.comment_area_loged{
+    width:634px;
+	margin:10px 0 0 0;
+    font-family:inherit;
+    font-size: inherit;
+    color:inherit;
+    padding:3px;
+    line-height:inherit;
+}
+.comment_date{
+    font-size:11px;
+    color:#666;
+}
+.signup_text{
+	background-color:#FFCC66;
+	color:#333333;
+	padding:3px;
+	margin:0 0 3px 0;
+	font-weight:bold;
+}
+.inputtext{
+    height:25px;
+    font-family:inherit;
+    font-size: inherit;
+    color:inherit;
+    padding:3px;
+    line-height:inherit;
+}
+/* End Comments*/
+select{
+	height:30px;
+	font-family:inherit;
+    font-size: inherit;
+    color:inherit;
+    padding:5px 3px;
+    line-height:inherit;
+    border:1px #ccc solid;
+}
+.signup_ok{
+	width:100%;
+	height:auto;
+	padding:5px;
+	background-color:#f0f0f0;
+	color:#333333;
+	font-size:14px;
+	border:1px #ccc solid;
+}
+.alert_red_form{
+	width:58%;
+	height:auto;
+	padding:10px;
+	background-color:#FF6666;
+	color:#333333;
+	font-size:14px;
+	margin:20px 0 20px 0px;
+	
+	
+}
+/*Start Login*/
+.login_wrapper{
+	width:300px;
+	height: auto;
+	border: 1px solid #ccc;
+	padding: 5px;
+	margin:0 auto;
+}
+/*End Login*/
+
+/* Start Delete Confirmation Pop Up*/
+.alert_yellow{
+	width:95%;
+	height:auto;
+	padding:5px;
+	background-color:#FFCC66;
+	color:#333333;
+	font-size:14px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+}
+#delete_confirmation_wrapper{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 99;
+}
+
+
+.fade{
+	background:#000;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	filter:alpha(opacity=50);
+	opacity:.50;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /*--IE 8 Transparency--*/
+	left: 0;
+	top: 0;
+	z-index:99;
+
+}
+
+.popup_block {
+	padding: 0px 10px;
+	float: left;
+	width: 480px;
+	position: fixed;
+	top: 20%;
+	left: 50%;
+	margin: 0 0 0 -250px;
+	z-index: 100;
+	background: #fff;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border:1px solid #bbb;
+}
+.popup_block .popup {
+	float: left;
+	width: 100%;
+	background: #fff;
+	margin: 10px 0;
+	padding: 10px 0;
+}
+
+/*IE 6 Hack Script*/
+*html .fade {
+	/*height: 10000px;*/
+	position: absolute;
+	top:0;
+	left: 0;
+}
+
+*html .popup_block {
+	position: absolute;
+
+	top:expression(eval(document.compatMode &&
+	document.compatMode=='CSS1Compat') ?
+	documentElement.scrollTop
+	+((documentElement.clientHeight-this.clientHeight)/2)
+	: document.body.scrollTop
+	+((document.body.clientHeight-this.clientHeight)/2));
+
+	left:expression(eval(document.compatMode &&
+	document.compatMode=='CSS1Compat') ?
+	documentElement.scrollLeft
+	+ (document.body.clientWidth /2 )
+	: document.body.scrollLeft
+	+ (document.body.offsetWidth /2 ));
+}
+/*End Delete Confirmation Pop Up*/

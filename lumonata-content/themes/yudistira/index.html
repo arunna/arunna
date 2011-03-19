@@ -1,0 +1,53 @@
+<!-- BEGIN mainBlock -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>{meta_title}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    {meta_keywords}
+    {meta_description}
+    {meta_data}
+    {style_sheet}
+    {jquery}
+    {header}
+    
+</head>
+<body>
+   <div class="body_wrapper">
+        <div class="head_title">
+            <div class="web_title"><h1><a href="http://{site_url}">{web_title}</a></h1></div>
+            <div class="tagline">{tagline}</div>
+            <br clear="all" />
+        </div>
+        <div class="head_image">{custome_header}</div>
+        <div class="top_bar">
+            {top_menu}
+        </div>
+        <div class="the_body clearfix">
+            <div class="the_content">
+                {content_area}                
+            </div>
+            <div class="side_bar">
+                
+                <div class="search_box">
+                    <form method="post" action="">
+                        <input type="text" name="s" value="" style="height:22px;width:160px;" />
+                        <input type="submit" name="search" value="Search" class="button" />
+                    </form>
+                </div>
+                {right_menu}
+                <br />
+                <h2>Categories</h2>
+                {article_categories}
+            </div>
+            <br clear="left" />
+        </div>
+        <div class="the_footer">
+            <img src="{theme_img}/logo.png" alt="lumonata" title="lumonata" />
+            <div class="copy">Proudly powered by arunna</div>
+        </div>
+   </div>
+{tail}
+</body>
+</html>
+<!-- END mainBlock -->
