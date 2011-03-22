@@ -6,6 +6,9 @@
         
         function user_privileges(){
             /***********Privilege for Administrator***********/
+        	//Status
+            $this->add_privileges('administrator','status','preview');
+            
             //Dashboard
             $this->add_privileges('administrator','dashboard','preview');
             
@@ -78,6 +81,9 @@
            
             
             /***********Privilege for Editor***********/
+            //Status
+            $this->add_privileges('editor','status','preview');
+            
             //Dashboard
             $this->add_privileges('editor','dashboard','preview');
             
@@ -125,6 +131,9 @@
             $this->add_privileges('editor','friends','delete');
             
             /***********Privilege for Author***********/
+            //Status
+            $this->add_privileges('author','status','preview');
+            
             //Dashboard
             $this->add_privileges('author','dashboard','preview');
             
@@ -159,6 +168,9 @@
             $this->add_privileges('author','friends','delete');
             
             /***********Privilege for Contributor***********/
+            //Status
+            $this->add_privileges('contributor','status','preview');
+            
             //Dashboard
             $this->add_privileges('contributor','dashboard','preview');
             
@@ -193,6 +205,9 @@
             $this->add_privileges('contributor','friends','delete');
             
            /***********Privilege for Standard User***********/
+            //Status
+            $this->add_privileges('standard','status','preview');
+            
             //Profile
             $this->add_privileges('standard','my-profile','update');
             
