@@ -174,6 +174,13 @@ function set_home_meta_data(){
         		</div>";
 	return $return;
 }
+/*This is the first important step that you have to do.
+ * Who are allowed to access the application
+ * */
+add_privileges('administrator', 'metadata', 'insert');
+add_privileges('administrator', 'metadata', 'update');
+add_privileges('administrator', 'metadata', 'delete');
+
 /*
  * Add the meta data input interface into each proccess in administrator area.  
  * */

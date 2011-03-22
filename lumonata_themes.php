@@ -50,7 +50,70 @@
 	 * */
 	if($LUMONATA_ADMIN==false){
 		if(is_home()){
-			$thecontent=the_looping_articles();
+			//$thecontent=the_looping_articles();
+			$thecontent='<div class="the_content clearfix">
+                    		<div class="main_point">
+                    			<div class="privacy">
+                    				<h2>Privacy in Your Hand</h2>
+                    				You are entitled to control the information you have. You decide to share what you want, when you want and to whom you want.
+                    			</div>
+                    		</div>
+                    		<div class="main_point">
+                    			<div class="data_ownership">
+                    				<h2>Data Ownership</h2>
+                    				You are the owner of your content. Host all information such as photos, articles, web design, friend data and many more on your own server.
+                    			</div>
+                    		</div>
+                    		<div class="main_point">
+                    			<div class="future_proof">
+                    				<h2>Future Proof Technology</h2>
+                    				Supports the latest web technologies and is continually expanding its platform through collaboration with developer communities worldwide.
+                    			</div>
+                    		</div>
+                    		<div class="main_point">
+                    			<div class="social_market">
+                    				<h2>Social Marketplace</h2>
+                    				Start building commerce environment in your social network. Turn community into buyers and sellers. Most of buying decisions are made by friends and family recommendation.
+                    			</div>
+                    		</div>
+                    		<div class="main_point">
+                    			<div class="engaging">
+                    				<h2>Engaging</h2>
+                    				Create environment where customer ask, get answers and exchange thoughts. Engage your community on their passion and interest then drive demand for your products and services. 
+                    			</div>
+                    		</div>
+                    		<div class="main_point">
+                    			<div class="cms">
+                    				<h2>Content Management System</h2>
+                    				A platform that is not defined by limitations, provides tool to build extensible plug-in, making a powerful web CMS with many possibilities.
+                    			 </div>
+                    		</div>
+                    		<br clear=\"both\" />
+                    	</div>
+                    	<div class="submit_form">
+                    		<form action="http://'.site_url().'/invite/" method="post">
+                    			<input type="text" name="email" value="Enter your email address here..." class="email_submit" />
+                    			<input type="submit" value="Get an Invitation" class="button_invite" />
+                    		</form>
+                    	</div>
+                    	<script type="text/javascript">
+                    		$(function(){
+                    			
+                        		$("input[name=email]").click(function(){
+                        			var email=$("input[name=email]").val();
+                        			if(email=="Enter your email address here...")
+                        			$("input[name=email]").val("");
+                        			
+								});
+								$("input[name=email]").blur(function(){
+									var email=$("input[name=email]").val();
+                        			if(email==""){
+                        				$("input[name=email]").val("Enter your email address here...");	
+									}
+								});
+							});
+                    	</script>
+                    	';
 		}elseif(is_details()){
 			$thecontent=article_detail();
 		}elseif(is_category()){
@@ -109,8 +172,11 @@
 			do_logout();
 		}else{
 			if(isset($_GET['sub'])){
+				if(is_grant_app($_GET['sub']))
 				$thecontent=run_actions($_GET['sub']);
+				
 			}elseif(isset($_GET['state'])){
+				if(is_grant_app($_GET['state']))
 				$thecontent=run_actions($_GET['state']);
 			}
 			if(!empty($thecontent))

@@ -170,16 +170,18 @@
 			
 					
 			foreach($menu_set as $key=>$val){
-				if(is_preview()){
-					$theme=$_GET['theme'];
-					$menu.="<li><a href=\"?state=applications&sub=$key&preview=true&theme=$theme\">$val</a></li>";
-				}else{
-					if($key=='installed'){
-						if(allow_action('applications','install'))
-							$menu.="<li><a href=\"?state=applications&sub=$key\">$val</a></li>";
+				if(is_grant_app($key)){
+					if(is_preview()){
+						$theme=$_GET['theme'];
+						$menu.="<li><a href=\"?state=applications&sub=$key&preview=true&theme=$theme\">$val</a></li>";
 					}else{
-						if(is_grant_app('applications'))
-							$menu.="<li><a href=\"?state=applications&sub=$key\">$val</a></li>";
+						if($key=='installed'){
+							if(allow_action('applications','install'))
+								$menu.="<li><a href=\"?state=applications&sub=$key\">$val</a></li>";
+						}else{
+							if(is_grant_app('applications'))
+								$menu.="<li><a href=\"?state=applications&sub=$key\">$val</a></li>";
+						}
 					}
 				}
 			}
