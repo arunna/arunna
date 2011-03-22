@@ -28,7 +28,7 @@
 <li>Open <em>lumonata_config.php</em> file and change your database name user and password</li>
 </ul>
 
-<h3>ADMINISTRATOR ACCESS</h3>
+<h3>Administrator Access</h3>
 <ul>
 <li>When you finish configure your database, now you can access Arunna on your active web server (http://localhost/arunna) </li>
 <li>To access the administrator area, please visit http://localhost/arunna/lumonata-admin/</li>
