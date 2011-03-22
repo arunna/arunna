@@ -787,7 +787,8 @@
 	    }
 	    $menuset=get_meta_data('menu_set','menus');
 	    $menuset=json_decode($menuset,TRUE);
-	    
+	    if(!is_array($menuset))
+	    return;
 	    foreach($menuset as $key=>$val){
 	    	if(strtolower($val)==strtolower($var['menuset'])){
 	    		$menuset_key=$key;
