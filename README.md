@@ -39,7 +39,7 @@
 <p>More discussion and support about Arunna please visit and post it to <a href="http://groups.google.com/group/arunna/">Arunna milist at Google Group</a></p>
 
 <h2>LICENSE</h2>
-<p>ThinkUp's source code is licensed under the <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License</a></p>
+<p>Arunna's source code is licensed under the <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License</a></p>
 
 <h2>EXTERNAL LIBRARIES</h2>
 <ul>
