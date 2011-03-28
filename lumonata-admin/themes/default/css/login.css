@@ -60,7 +60,10 @@
 	margin:50px auto 0 auto;
 	border:1px solid #ccc;
 	width:450px;
-	background:#ffffff url(../images/logo-login.jpg) no-repeat right top;
+	background-color:#ffffff;
+	background-image: url(../images/logo-med.png);
+	background-repeat: no-repeat; 
+	background-position: 280px 40px;
 	padding:77px 10px 25px 20px;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;

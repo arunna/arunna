@@ -60,7 +60,15 @@
                                        				<td>".$value."</td>
                                       		  	</tr>";
             		                  }
-            		              }else break;
+            		              }elseif($count==-1){ //for unlimited invitation
+        	                          	  $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value,'',$enc_ulid);
+        	                          	  $sent++;
+            		                      $no=$key+1;
+                        		          $html.="<tr>
+                                       				<td>".$no.".</td>
+                                       				<td>".$value."</td>
+                                      		  	</tr>";
+        	                      }else break;
         		            }
         		        }
     		        }
@@ -1513,35 +1521,39 @@
 		        
 		        $count=$invite_limit;	
 		        	        
-    		        foreach ($the_email as $key=>$value){
-    		            $value=str_replace("<br>", "", trim($value));
-    		            $value=str_replace("<br />", "", trim($value));
-    		            if(!empty($value)){
-        		            if(isEmailAddress(trim($value))){
-        		                  if(isset($_POST['sent_email'])){
-        		                      if(!in_array(trim($value), $_POST['sent_email'])){
-        		                          if($count>0){
-        		                              $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value);
-        		                              if($send_invite)
-        		                              $count--;
-        		                          }else break;
-        		                      }
-        		                  }else{
-        		                      if($count>0){
-            		                      $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value);
-            		                      if($send_invite)
-        		                          $count--;
-        		                      }else break;
-        		                  }
-        		                  
-            		              $sent_to[]=trim($value);
-            		              $sent++;
-        		               }
-        		        }
-    		        }
+    	        foreach ($the_email as $key=>$value){
+    	            $value=str_replace("<br>", "", trim($value));
+    	            $value=str_replace("<br />", "", trim($value));
+    	            if(!empty($value)){
+        	            if(isEmailAddress(trim($value))){
+        	                  if(isset($_POST['sent_email'])){
+        	                      if(!in_array(trim($value), $_POST['sent_email'])){
+        	                          if($count>0){
+        	                              $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value);
+        	                              if($send_invite)
+        	                              $count--;
+        	                          }elseif($count==-1){ //for unlimited invitation
+        	                          	  $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value);	
+        	                          }else break;
+        	                      }
+        	                  }else{
+        	                      if($count>0){
+            	                      $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value);
+            	                      if($send_invite)
+        	                          $count--;
+        	                      }elseif($count==-1){ //for unlimited invitation
+        	                          	  $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value);	
+        	                      }else break;
+        	                  }
+        	                  
+            	              $sent_to[]=trim($value);
+            	              $sent++;
+        	               }
+        	        }
+    	        }
 		        
 		        if($invite_limit!=-1){
-    			    $invite_limit=$invite_limit-count($sent_to);
+    			    $invite_limit=$invite_limit - count($sent_to);
     			    edit_additional_field($_COOKIE['user_id'], "invite_limit", $invite_limit, "user");
 		        }
 		        
