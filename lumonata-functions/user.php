@@ -79,31 +79,97 @@
 		    }
 		}
 	}   
-	
+	/**
+	 * To check if the URI requested is call login form.
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @return boolean 
+	 */
 	function is_login_form(){
 		if(empty($_GET['state']) || $_GET['state']=='login')return true;
 		else return false;
 	}
+	/**
+	 * To check if the URI requested is call registration form.
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @return boolean 
+	 */
 	function is_register_form(){
 		if(isset($_GET['state']) && $_GET['state']=='register')return true;
 		else return false;
 	}
+	
+	/**
+	 * To check if the URI requested is call thanks form after registration.
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @return boolean 
+	 */
+	
 	function is_thanks_page(){
 		if(isset($_GET['state']) && $_GET['state']=='thanks')return true;
 		else return false;
 	}
+	
+	/**
+	 * To check if the URI requested is call email verification form.
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @return boolean 
+	 */
+	
 	function is_verify_account(){
 		if(isset($_GET['state']) && $_GET['state']=='verify' && isset($_GET['token']))return true;
 		else return false;
 	}
+	/**
+	 * To check if the URI requested is call forget password form.
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @return boolean 
+	 */
 	function is_forget_password(){
 		if(!empty($_GET['state']) && $_GET['state']=='forget_password') return true;
 		else return false;
 	}
+	/**
+	 * To check if the URI contain redirection.
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @return boolean 
+	 */
 	function is_redirect(){
 		if(!empty($_GET['redirect']))return true;
 		else return false;
 	}
+	/**
+	 * To check if the user already logi or not.
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @return boolean 
+	 */
 	function is_user_logged(){
 		if(isset($_COOKIE['user_id']) && isset($_COOKIE['password']) && isset($_COOKIE['thecookie'])){
 			if(md5($_COOKIE['password'].$_COOKIE['user_id'])==$_COOKIE['thecookie'])
@@ -114,12 +180,28 @@
 			return false;
 		}
 	}
-	
+	/**
+	 * Login POST action and validate the input.
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @return boolean 
+	 */
 	function post_login(){
 		if(count($_POST)>0)
 		return validate_login();
 	}
-	
+	/**
+	 * Validate the login input.
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @return boolean 
+	 */
 	function validate_login(){
 		
 		if(empty($_POST['username']) || empty($_POST['password'])){
@@ -159,6 +241,15 @@
 			}
 		}
 	}
+	/**
+	 * Logout action to destroy the cookie
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @return boolean 
+	 */
 	function do_logout(){
 		
 		setcookie('username', "", time()-3600,'/');
@@ -170,6 +261,17 @@
 		
 		header("location:".get_state_url('login'));
 	}
+	/**
+	 * To check the if the user exist or not.
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @param string $username username
+	 * 
+	 * @return boolean 
+	 */
 	function is_exist_user($username){
 		global $db;
 		$sql=$db->prepare_query("SELECT * FROM lumonata_users WHERE lusername=%s",$username);
@@ -177,6 +279,17 @@
 		if($db->num_rows($result)>0) return true;
 		else return false;
 	}
+	/**
+	 * To check if the email address is exist or not.
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @param string $email email address
+	 * 
+	 * @return boolean 
+	 */
 	function is_exist_email($email){
 		global $db;
 		$sql=$db->prepare_query("SELECT * FROM lumonata_users WHERE lemail=%s",$email);
@@ -184,12 +297,35 @@
 		if($db->num_rows($result)>0) return true;
 		else return false;
 	}
+	
+	/**
+	 * To count lumonata_user table on database.
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * 
+	 * 
+	 * @return Integer number of users 
+	 */
 	function is_num_users(){
 		global $db;
 		$sql=$db->prepare_query("SELECT * FROM lumonata_users");
 		$result=$db->do_query($sql);
 		return $db->num_rows($result);
 	}
+	/**
+	 * To check if the password that sent from the POST variable are match with the mention user name
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * 
+	 * 
+	 * @return boolean 
+	 */
 	function is_match_password(){
 		global $db;
 		$sql=$db->prepare_query("SELECT * FROM lumonata_users WHERE lusername=%s AND lpassword=%s AND lstatus=1",$_POST['username'],md5($_POST['password']));
@@ -197,6 +333,18 @@
 		if($db->num_rows($result)>0) return true;
 		else return false;
 	}
+	/**
+	 * Login Form Design
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * 
+	 * 
+	 * @return string login form html
+	 *  
+	 */
 	function get_login_form(){
 		//set template
 		set_template(TEMPLATE_PATH."/login.html");
@@ -220,25 +368,68 @@
 		parse_template('mainBlock','mBlock');
 		print_template(); 
 	}
-	
+	/**
+	 * The Sign Up URL
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * 
+	 * 
+	 * @return string Sign up URL 
+	 */
 	function signup_url(){
 		if(is_permalink())
 			return "http://".site_url()."/register/";
 		else 
 			return "http://".site_url()."/?page_name=register";
 	}
+	/**
+	 * The Sign In URL
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * 
+	 * 
+	 * @return string Sign In URL 
+	 */
 	function signin_url(){
 		if(is_permalink())
 			return "http://".site_url()."/login/";
 		else 
 			return "http://".site_url()."/?page_name=login";
 	}
+	/**
+	 * URL of user profile when login
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * 
+	 * 
+	 * @return string User  
+	 */
 	function user_url($id){
 		//if(is_permalink())
 		//	return "http://".site_url()."/user/".$username."/";
 		//else 
 			return "http://".site_url()."/lumonata-admin/?state=my-profile&amp;id=".$id;
 	}
+	/**
+	 * Call the Login Form Design
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * 
+	 * 
+	 * @return string Login HTML Design   
+	 */
 	function sign_in_form(){
 		
 		set_template(TEMPLATE_PATH."/login.html","sign_in_form");
@@ -257,6 +448,17 @@
 		return return_template("sign_in_form");
 	}
 	
+	/**
+	 * Call the sign up form. This function is also checking if the user sign up are invited by other user
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * 
+	 * 
+	 * @return string Sign Up HTML Design  
+	 */
 	function signup_user(){
 		$alert="";
 		$tokenmail="";
@@ -414,6 +616,17 @@
 		
 		
 	}
+	/**
+	 * Password reseter form. In this function the sending process also executed here 
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * 
+	 * 
+	 * @return string Resend HTML Design  
+	 */
 	function resendPassword(){
 		if(!isset($_GET['uep']))
 		header("location:".get_admin_url()."/?state=login"); 
@@ -456,6 +669,17 @@
         print_template('resend');
 		
 	}
+	/**
+	 * Function to verify email activation process  
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * 
+	 * 
+	 * @return string The activation process status and the login form when active  
+	 */
 	function verify_account(){
         global $db;
 		set_template(TEMPLATE_PATH."/verifyAccount.html","verify");
@@ -529,17 +753,50 @@
 		parse_template('verifyPage','vrfBlock');
 		print_template('verify');
 	}
+	/**
+	 * Function to handle forgot password action 
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * 
+	 * 
+	 * @return string Action status  
+	 */
 	function post_forget_password(){
 		if(count($_POST)>0)
 			return validate_forget_password();
 		else
 			return "<div class=\"alert_yellow\">Please enter your username or e-mail address. You will receive a new password via e-mail.</div>";
 	}
+	/**
+	 * Function to check the email input, when request a new password
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * 
+	 * 
+	 * @return string Action status  
+	 */
 	function validate_forget_password(){
 		if(empty($_POST['user_email'])){
 			return "<div class=\"alert_yellow\">Please enter your username or e-mail address. You will receive a new password via e-mail.</div>";
 		}
 	}
+	/**
+	 * Call Forget Password HTML Design 
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * 
+	 * 
+	 * @return string HTML Design  
+	 */
 	function get_forget_password_form(){
 		//set template
 		set_template(TEMPLATE_PATH."/forget_password.html");
@@ -557,6 +814,17 @@
 		parse_template('mainBlock','mBlock');
 		print_template(); 
 	}
+	/**
+	 * Is used in admin area, to get the list of registered user. Navigation button are configured here. 
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * 
+	 * 
+	 * @return string list of registered user in HTML  
+	 */
 	function get_users_list($tabs=''){
 		global $db;
 		$list='';
@@ -637,6 +905,17 @@
 		return $list;
 	}
 	
+	/**
+	 * Is used in admin area, to get the detail list of registered user.  
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * 
+	 * 
+	 * @return string list of registered user in HTML  
+	 */
 	function users_list($result){
 		global $db;
 		$i=0;$list='';
@@ -673,9 +952,40 @@
 		}
 		return $list;
 	}
+	
+	/**
+	 * Will return the user type in array   
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * 
+	 * 
+	 * @return array type of user  
+	 */
 	function user_type(){
 		return $user_type=array("standard"=>"Standard","contributor"=>"Contributor","author"=>"Author","editor"=>"Editor","administrator"=>"Administrator");
 	}
+	
+	/**
+	 * Save user to database   
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @param string $username unique username
+	 * @param string $password unique password
+	 * @param string $email email address
+	 * @param integer $sex 1=Male, 2=Female
+	 * @param string $user_type Default user type are: standard, contributor, author, editor, administrator
+	 * @param string $birthday The date format is Y-m-d H:i:s
+	 * @param string $status the user status(0=pendding activation,1=active, 2=blocked)
+	 * 
+	 * @return boolean True if the insert process is success  
+	 */
+	
 	function save_user($username,$password,$email,$sex,$user_type,$birthday,$status=0){
 		global $db;
 		$regdate=date("Y-m-d H:i:s");
@@ -687,6 +997,19 @@
 		return $db->do_query($sql);
 		
 	}
+	
+	/**
+	 * Automatically add new user as administrator firend   
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @param integer $friend_id The id of the new user 
+	 * 
+	 * 
+	 * @return boolean True if the insert process is success  
+	 */
 	function add_friend_to_admin($friend_id){
 	    global $db;
         $administrator=fetch_user_per_type('administrator');
@@ -699,6 +1022,26 @@
 		}
 		return $return;
 	}
+	
+	
+	/**
+	 * Used to edit user database   
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @param integer $id edited user ID
+	 * @param string $display_name User display name
+	 * @param string $password New password if any change
+	 * @param string $email New email address if applicable
+	 * @param integer $sex 1=Male, 2=Female
+	 * @param string $user_type Default user type are: standard, contributor, author, editor, administrator
+	 * @param string $birthday The date format is Y-m-d H:i:s
+	 * @param string $status the user status(0=pendding activation,1=active, 2=blocked)
+	 * 
+	 * @return boolean True if the insert process is success  
+	 */
 	function edit_user($id,$display_name,$password,$email,$sex,$user_type,$birthday,$status=0){
 		global $db;
 		if(empty($password))
@@ -742,6 +1085,19 @@
 			return $db->do_query($sql);
 		
 	}
+	
+	/**
+	 * Delete user from database   
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @param integer $id deleted user ID
+	 * 
+	 * 
+	 * @return boolean True if the insert process is success  
+	 */
 	function delete_user($id){
 		global $db;
 		if($id!=1){
@@ -756,6 +1112,23 @@
 			}
 		}
 	}
+	
+	/**
+	 * Validate the user input   
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @param string $username unique username
+	 * @param string $password unique password
+	 * @param string $re_password must have same value with password
+	 * @param string $email Email address
+	 * @param integer $sex 1=Male, 2=Female
+	 * @param string $website User website address
+	 * 
+	 * @return string when data are good return OK, if not return the alert text  
+	 */
 	function is_valid_user_input($username,$password,$re_password,$email,$sex,$website){
 		
 		if(empty($username)){
@@ -804,6 +1177,18 @@
 		}
 		return "OK";
 	}
+	
+	/**
+	 * Each user can edit his/her user profile when they login. This function will be called when they want to edit the profile.
+	 * All process are happen here.    
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 *  
+	 * @return string The HTML design of edit profile  
+	 */
 	function edit_profile(){
 		$tabs=array('my-updates'=>'My Updates','my-profile'=>'My Profile','profile-picture'=>'Profile Picture','eduwork'=>'Education & Work');
 		$alert='';
@@ -962,6 +1347,19 @@
 		
 		return return_template('users');
 	}
+	
+	/**
+	 * This function is used to view the user profile. If you click your friend profile, then this function will be called
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *  
+	 * @return string The profile HTML design   
+	 */
 	function user_profile($user_id){
 		$user=fetch_user($user_id);
 		$website=get_additional_field($user_id,'website','user');
@@ -1083,7 +1481,19 @@
 		}
 		return $html;
 	}
-		
+
+	/**
+	 * This function is used to show the user feeds update. 
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *  
+	 * @return string Selected user Feeds   
+	 */
    	function user_updates(){
    		if(!is_user_logged())
    		return;
@@ -1143,7 +1553,7 @@
 			$the_tabs=set_tabs($tabs,$selected_tab);
 			
 		}else{ 
-			//$tabs=array('my-updates'=>$user['ldisplay_name'].' Updates','my-profile'=>'Profile');
+			
 			if(isset($_GET['tab']) && $_GET['tab']=='profile'){
 				$content_left=user_profile($_GET['id']);
 				$the_tabs="<li><a href=\"".get_state_url('my-profile')."&id=".$id."\">".$user['ldisplay_name']." Updates</a></li>";
@@ -1211,6 +1621,18 @@
 		return $content;
    } 	
    
+   /**
+	 * Edit the user picture profile 
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *  
+	 * @return string The picture profile HTML Design    
+	 */
    function edit_profile_picture(){
          global $db;
          $thealert="";
@@ -1299,6 +1721,19 @@
 
 		return return_template('users');
     }
+    
+    /**
+	 * Get the User Education and Work Information 
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *  
+	 * @return string The Education and Work HTML Design    
+	 */
     function get_eduwork($eduwork,$user_id){
     	
     	$edw=get_additional_field($user_id, $eduwork, 'user');
@@ -1414,6 +1849,19 @@
     	}
     	return $html;
     }
+    
+    /**
+	 * Manage user education and work 
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *  
+	 * @return string The Education and Work HTML Design    
+	 */
     function profile_eduwork(){
        global $db;
        $thealert="";
@@ -1479,6 +1927,19 @@
 
 		return return_template('users');
     }
+    
+     /**
+	 * Grab user data by the user type  
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *  
+	 * @return array user data by user type    
+	 */
     function fetch_user_per_type($user_type){
     	global $db;
 		
@@ -1491,6 +1952,19 @@
 			return $user;
 		}
     }
+    
+    /**
+	 * Grab user data by the user ID or User name
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *  
+	 * @return array user data by ID or Username    
+	 */
 	function fetch_user($id){
 		global $db;		
 		
@@ -1505,6 +1979,18 @@
 		}
 	}
 	
+	/**
+	 * Create the option display name from First and Last Name
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *  
+	 * @return array Display name options    
+	 */
 	function opt_display_name($id){
 		$d=fetch_user($id);
 		$display_name[$d['lusername']]=$d['lusername'];
@@ -1524,6 +2010,19 @@
 		
 		return $display_name;
 	}
+	/**
+	 * Check if the given user_id is a standard user or no 
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $user_id User ID
+	 *  
+	 * @return boolean     
+	 */
 	function is_standard_user($user_id=0){
 		if(empty($user_id)){
 			if($_COOKIE['user_type']=='standard') return true;
@@ -1534,6 +2033,19 @@
 			else return false;
 		}
 	}
+	/**
+	 * Check if the given user_id is a contributor or no 
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $user_id User ID
+	 *  
+	 * @return boolean     
+	 */
 	function is_contributor($user_id=0){
 		if(empty($user_id)){
 			if($_COOKIE['user_type']=='contributor') return true;
@@ -1544,6 +2056,19 @@
 			else return false;
 		}
 	}
+	/**
+	 * Check if the given user_id is an author or no 
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $user_id User ID
+	 *  
+	 * @return boolean     
+	 */
 	function is_author($user_id=0){
 		if(empty($user_id)){
 			if($_COOKIE['user_type']=='author') return true;
@@ -1554,6 +2079,19 @@
 			else return false;
 		}
 	}
+	/**
+	 * Check if the given user_id is an editor or no 
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $user_id User ID
+	 *  
+	 * @return boolean     
+	 */
 	function is_editor($user_id=0){
 		if(empty($user_id)){
 			if($_COOKIE['user_type']=='editor') return true;
@@ -1564,6 +2102,19 @@
 			else return false;
 		}
 	}
+	/**
+	 * Check if the given user_id is an administrator or no 
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $user_id User ID
+	 *  
+	 * @return boolean     
+	 */
 	function is_administrator($user_id=0){
 		if(empty($user_id)){
 			if($_COOKIE['user_type']=='administrator') return true;
@@ -1574,6 +2125,21 @@
 			else return false;
 		}
 	}
+	
+	/**
+	 * Get the user avatar image 
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $user_id User ID
+	 * @param integer $image_size 1=Large,2=Medium,3=Small 
+	 *  
+	 * @return boolean     
+	 */
     function get_avatar($user_id,$image_size=1){
             $d=fetch_user($user_id);
             if(empty($d['lavatar'])){
@@ -1604,6 +2170,21 @@
                  }
             }
     }
+    
+    /**
+	 * Get the display name of user 
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $id User ID
+	 *  
+	 *  
+	 * @return boolean     
+	 */
     function get_display_name($id){
     	$data=fetch_user($id);
     	return $data['ldisplay_name'];
