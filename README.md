@@ -3,7 +3,7 @@
 <a href="http://arunna.com">http://arunna.com</a></p>
 
 <p><strong><em>WARNING: Arunna is in early alpha. There may be bugs and security risks involved in running it on your web server. PROCEED AT YOUR OWN RISK!</em></strong></p>
-<p><strong>Thanks to <a href="http://wordpress.org">Wordpress</a> that inspired us while we drink a cup of coffee to start this idea.</strong></p>
+<p><strong>Thanks to <a href="http://wordpress.org">Wordpress</a> that inspired us while we drink a cup of coffee infront of our desk to start this idea.</strong></p>
 
 
 <h2>SYSTEM REQUIREMENTS</h2>
