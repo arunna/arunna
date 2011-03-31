@@ -175,9 +175,6 @@
                 foreach($_POST['id'] as $key=>$val){
                         delete_article($val,'pages');
                 }
-                
-                if(is_num_articles()==0)
-                header("location:".get_state_url("page")."&prc=add_new");
         }
         
         //Display Users Lists
@@ -495,13 +492,9 @@
                 
                 return $warning;
             }elseif(is_confirm_delete()){
-            	
                 foreach($_POST['id'] as $key=>$val){
                         delete_article($val,$type);
                 }
-				
-                if(is_num_articles("type=articles")==0)
-                header("location:".get_state_url("articles"));
             }
             
             //Display Users Lists
@@ -1308,6 +1301,8 @@
         global $thepost;
         $index=0;
         $button="";
+        $sef_scheme="";
+        
         set_page_template();
         
         if(!is_contributor())
@@ -1521,6 +1516,8 @@
     
     function edit_article($post_id=0,$type,$title){
         global $thepost;
+        $sef_scheme="";
+        
         $index=0;
         $button="";
         set_article_template();
@@ -1712,6 +1709,7 @@
                 add_variable('most_used_tags',get_most_used_tags($type,$index));
                 add_variable('add_new_tag',add_new_tag($post_id,$index));
                 
+                
                 //Get The Permalink
                 if(is_permalink()){
                     if(isset($_POST['sef_box'][$index]))
@@ -1776,8 +1774,6 @@
 	                    							$('#the_sef_content_".$_POST['index']."').html(new_sef.substr(0,50)+more);
 	             								}
                  							});
-                 							
-                 							
                         				});
                                   </script>"; 
                         $sef_scheme.="</div>";
@@ -2097,8 +2093,7 @@
         }elseif(!empty($var_name['sef'])){
             $sql=$db->prepare_query("SELECT * FROM lumonata_articles WHERE $w larticle_type=%s AND lsef=%s",$var_name['type'],$var_name['sef']);
         }else{
-            $sql=$db->prepare_query("SELECT * from lumonata_articles WHERE $w larticle_type=%s",$var_name['type']);
-                
+            $sql=$db->prepare_query("SELECT * from lumonata_articles WHERE $w larticle_type=%s",$var_name['type']);    
         }
        
         $r=$db->do_query($sql);
