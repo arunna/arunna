@@ -54,6 +54,18 @@
 		    
 		}
 	}
+	
+	/**
+	 * This function called when you click the themes menu to manage all of your themes configurations 
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *   
+	 * @return string the HTML Design     
+	 */
 	function get_themes(){
 		$tabs=array('front'=>'Website Themes','admin'=>'Admin Themes','header'=>'Header','background'=>'Background');
 		$view_themes='';
@@ -518,6 +530,18 @@
 		}
 		return return_template('themes');
 	}
+	
+	/**
+	 * This function called when you click the themes menu to manage all of your themes configurations 
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *   
+	 * @return string the HTML Design     
+	 */
 	function get_listed_headers(){
 		global $db;
 		$list='';
@@ -612,6 +636,20 @@
 		$list.="<div class=\"paging_right\">". paging($url,$num_rows,$page,$viewed,10)."</div>";
 		return $list;
 	}
+	
+	/**
+	 * Used to get available header images from choosen template   
+	 *   
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $id App ID
+	 * @param string $location Image location
+	 *   
+	 * @return string contain the available images     
+	 */
 	function get_header_images($id,$location){
 		$headers="";
 		if(!is_dir(TEMPLATE_PATH.'images/headers'));
@@ -693,6 +731,18 @@
 		return $headers;
 	}
 	
+	/**
+	 * This function is called at get_themes() to hook an action that add the javascript at tail of the theme   
+	 *   
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *   
+	 * @return string javascript string that arrange which section will be added for the header      
+	 */
+	
 	function themes_javascript(){
 		return "<script type=\"text/javascript\">
              		$(document).ready(function(){
@@ -728,6 +778,18 @@
 	             	});
 		        </script>";
 	}
+	
+	/**
+	 * Will return the HTML design of the publihed page name   
+	 *   
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *   
+	 * @return string HTML design of the publihed page name      
+	 */
 	function published_pages_themes(){
 		global $db;
 		$html="";
@@ -745,6 +807,18 @@
 		}
 		return $html;
 	}
+	
+	/**
+	 * Will return the HTML design of the publihed application category   
+	 *   
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *   
+	 * @return string HTML design of the publihed application category      
+	 */
 	function published_apps_themes($app_name){
 		global $db;
 		$html="";
@@ -766,6 +840,18 @@
 		}
 		return $html;
 	}
+	
+	/**
+	 * This function is used in front themes when you have a themes that using custome image    
+	 *   
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *   
+	 * @return string image HTML <img>      
+	 */
 	function the_header(){
 		if(is_home()){
 			$value=get_additional_field(0, 'headers', 'home');
@@ -792,6 +878,18 @@
 			return filter_header_file($value['location']);
 		}
 	}
+	
+	/**
+	 * Filter the image type, is it image or flash    
+	 *   
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *   
+	 * @return string image HTML <img>      
+	 */
 	function filter_header_file($location){
 		if(empty($location))
 			return "<img src=\"http://".FRONT_TEMPLATE_URL.'/'.get_meta_data('front_theme','themes').'/images/headers/default.jpg'."\" />";
