@@ -141,6 +141,18 @@
         //}
          
     }
+    /**
+	 * Set the rules tamplate in administrator    
+	 *   
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * 
+	 * @return void
+	 *      
+	 */
     function set_rule_template(){
         //set template
         set_template(TEMPLATE_PATH."/rules.html",'rules');
@@ -148,10 +160,37 @@
         add_block('loopRule','lRule','rules');
         add_block('ruleAddNew','rAddNew','rules');
     }
+     /**
+	 * Return the rules tamplate in administrator    
+	 *   
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * @param boolean $loop If template block is looping then set it true
+	 * 
+	 * @return string return rules template
+	 *      
+	 */
     function return_rule_template($loop=false){
         parse_template('ruleAddNew','rAddNew',$loop);
         return return_template('rules');
     }
+    
+    /**
+	 * Call this function when you want to add new rules (Category or Tags)    
+	 *   
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * @param string $rule The rule name. By default it cloud be "categories" or "tags" 
+	 * @param string $group The application name. 
+	 * @param string $title The rule title that will be shown in admin area 
+	 * 
+	 * @return string HTML design when you add new category or tags
+	 *      
+	 */
     function add_new_rule($rule,$group,$title){
         //$args=array($index=0,$post_id);
         set_rule_template();
@@ -193,6 +232,21 @@
         
     }
     
+    /**
+	 * Call this function when you want to edit the rules (Category or Tags)    
+	 *   
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * @param string $rule The rule name. By default it cloud be "categories" or "tags" 
+	 * @param string $group The application name. 
+	 * @param string $title The rule title that will be shown in admin area 
+	 * @param integer $rule_id The edited rule ID, by default the value is 0
+	 * 
+	 * @return string HTML design when you edit category or tags
+	 *      
+	 */
     function edit_rule($rule,$group,$title,$rule_id=0){
         $index=0;
         $button="";
@@ -315,6 +369,22 @@
         add_variable('button',$button);
         return return_rule_template();
     }
+    
+     /**
+	 * Get the rule lists (Categories or Tags)    
+	 *   
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * @param string $rule The rule name. By default it cloud be "categories" or "tags" 
+	 * @param string $type The application name. 
+	 * @param string $title The rule title that will be shown in admin area 
+	 * @param string $tabs Each rule has a different tabs. This variable should contain the list
+	 * 
+	 * @return string HTML design when you open category or tags complate with the button navigation
+	 *      
+	 */
     function get_rule_list($rule,$type,$title,$tabs){
         global $db;
         $list='';
@@ -445,6 +515,22 @@
         add_actions('section_title',$title);
         return $list;
     }
+    
+     /**
+	 * This is function is called in get_rule_list() and search list. This function only return the list without the navigation menu    
+	 *   
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * @param object $result Is the result of mysql query 
+	 * @param string $type The application name. 
+	 * @param string $rule The rule name. By default it cloud be "categories" or "tags" 
+	 * @param integer $i Index
+	 * 
+	 * @return string HTML design list when you open category or tags complate without the button navigation
+	 *      
+	 */
     function rule_list($result,$type,$rule,$i=1){
         global $db;
         $list='';
@@ -489,6 +575,22 @@
         }
         return $list;
     }
+    
+    /**
+	 * Get all categories rules    
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $index Index  
+	 * @param string $rule_name The rule name. By default it cloud be "categories" or "tags"
+	 * @param string $group The application name. 
+	 * @param array $rule_id Selected rule if any. Leave it blank if there are no selected categories
+	 * 
+	 * @return string All categories with <span>
+	 *      
+	 */
     function all_categories($index,$rule_name,$group,$rule_id=array()){
         $xcode=json_encode($rule_id);
         
@@ -496,6 +598,22 @@
         $return.="<span id=\"selected_category_".$index."\">$xcode</span>";
         return $return;
     }
+    
+     /**
+	 * To show the structure of each rule if they has Child.    
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $start_id Is used to identify the root ID. This ID is not change in the recursive and must be the same ID with $rule_id for the first call  
+	 * @param integer $rule_id The ID of the rule that you want get the structure
+	 * @param integer $level The recursive level. 
+	 * 
+	 * 
+	 * @return string Example output: Root >> Category1 >> Category2
+	 *      
+	 */
     function get_rule_structure($start_id,$rule_id,$level=0){
         global $db;
         $sql=$db->prepare_query("SELECT *
@@ -529,6 +647,29 @@
         
         return $items;
     }
+    
+    /**
+	 * Get all rule from Root to the last child using this recursive function. 
+	 * This function is also detected if there any rules are selected.
+	 * You also can choose the order type by Descending or Ascending.    
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $index Index
+	 * @param integer $rule_name The Rule Name. By default it could be categories or tags  
+	 * @param integer $group The application name
+	 * @param string $type Output type: select, checkbox, li alse only with link 
+	 * @param array $rule_id Selected rule_id if any
+	 * @param string $order Ordering type: ASC, DESC
+	 * @param integer $parent The rule parent ID
+	 * @param integer $level recursive level
+	 * @param boolean $related_to_article FALSE=all category will shown, TRUE= Only Category that has correlation with article will shown
+	 * 
+	 * @return string Example output: Root >> Category1 >> Category2
+	 *      
+	 */
     function recursive_taxonomy($index,$rule_name,$group,$type='select',$rule_id=array(),$order='ASC',$parent=0,$level=0,$related_to_article=false){
         global $db;
         if(!$related_to_article)
@@ -665,6 +806,22 @@
         return $items;
     }
     
+    /**
+	 * Get the 15 most used categories.  
+	 * 
+	 *     
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $group The application name
+	 * @param integer $index Index 
+	 * @param array $rule_id Selected rule_id if any
+	 * 
+	 * @return string 15 most used categories
+	 *      
+	 */
     function get_most_used_categories($group,$index=0,$rule_id=array()){
         global $db;
         
@@ -701,6 +858,24 @@
         return $return;
     
     }
+    
+    /**
+	 * This function will display add new category box on add new article  
+	 * 
+	 *     
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * 
+	 * @param integer $index Index 
+	 * @param array $rule_name Name of the rule (By default categories or tags).
+	 * @param integer $group The application name
+	 * 
+	 * @return string add new category box
+	 *      
+	 */
     function article_new_category($index,$rule_name,$group){
         
         $return="<div class=\"add_new_cattags\">
@@ -720,7 +895,23 @@
         return $return;
     }
     
-    
+     /**
+	 * Get the tag that been used for an article and show it in add new or edit article  
+	 * 
+	 *     
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * 
+	 * @param integer $post_id article ID 
+	 * @param integer $index Index
+	 * @param integer $group The application name
+	 * 
+	 * @return string tags in each post
+	 *      
+	 */
     function get_post_tags($post_id,$index,$group){
         global $db;
        
@@ -749,6 +940,22 @@
         $return.="</div>";
         return $return;
     }
+    
+    /**
+	 * 15 tags that used mostly  
+	 * 
+	 *     
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $group The application name
+	 * @param integer $index Index
+	 * 
+	 * @return string 15 tags that used mostly  
+	 *      
+	 */
     function get_most_used_tags($group,$index=0){
         global $db;
         $sql=$db->prepare_query("SELECT a.lname, a.lrule_id
@@ -805,6 +1012,21 @@
         return $return;
     }
     
+    /**
+	 * Add new tag box when edit or add new article  
+	 * 
+	 *     
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $post_id article ID
+	 * @param integer $index Index
+	 * 
+	 * @return string Add new tag box when edit or add new article  
+	 *      
+	 */
     function add_new_tag($post_id,$index){
         $return="<div class=\"add_new_cattags\">
 		    <input type=\"text\" class=\"category_textbox\" name=\"new_tag[$index]\" value=\"New tags\" />
@@ -816,6 +1038,27 @@
                 
         return $return;
     }
+    
+     /**
+	 * Insert new rule into lumonata_rules table  
+	 * 
+	 *     
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $parent parent ID of the new rule, if the new rule are child. If the new rule are Root then the $parent ID must be 0
+	 * @param string $name Rule name
+	 * @param string $description Rule description
+	 * @param string $rule The rule name. "categories" and "tags" are the rule name by default
+	 * @param string $group Application name
+	 * @param boolean $insert_default If the variable set TRUE means that you insert the default rule. The rule ID, will automatically set to 1
+	 * 
+	 * @return integer If the rule are 'tags' and then tags name are exist in database then the function will return the exist tag ID.
+	 *                 But if it is other that 'tags' it will return the new inserted ID  
+	 *      
+	 */
     function insert_rules($parent,$name,$description,$rule,$group,$insert_default=false){
         global $db;
         $parent=rem_slashes($parent);
@@ -842,7 +1085,8 @@
             }
         }
         if($insert_default){
-            $sql=$db->prepare_query("INSERT INTO lumonata_rules(lrule_id,lparent,
+            $sql=$db->prepare_query("INSERT INTO lumonata_rules(lrule_id,
+            												lparent,
                                                             lname,
                                                             lsef,
                                                             ldescription,
@@ -874,6 +1118,27 @@
                 return mysql_insert_id();
 
     }
+    
+    /**
+	 * Edit the rules  
+	 * 
+	 *     
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $rule_id The rule ID that will be edited
+	 * @param string $parent The parent ID of edited rule
+	 * @param string $description Rule description
+	 * @param string $rule The rule name. "categories" and "tags" are the rule name by default
+	 * @param string $group Application name
+	 * 
+	 * 
+	 * @return If the rule are 'tags' and then tags name are exist in database then the function will return the exist tag ID.
+	 *         But if it is other that 'tags' it will return TRUE if the edit process success and false if fail  
+	 *      
+	 */
     function update_rules($rule_id,$parent,$name,$description,$rule,$group){
         global $db;
         $parent=rem_slashes($parent);
@@ -919,6 +1184,22 @@
                 
 
     }
+    
+    /**
+	 * Update or set the new number of  rule being used by articles or other applications  
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $rule_id The rule ID that will be edited
+	 * @param integer $rule_count The number of used
+	 
+	 * 
+	 * 
+	 * @return boolean  
+	 *      
+	 */
     function update_rule_count($rule_id,$rule_count){
         global $db;
         $sql=$db->prepare_query("UPDATE lumonata_rules
@@ -926,6 +1207,20 @@
                                 WHERE lrule_id=%d",$rule_count,$rule_id);
         return $db->do_query($sql);
     }
+    
+     /**
+	 * Delete the spesific rule by ID  
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $id The rule ID that will be deleted
+	 * 
+	 * 
+	 * @return boolean  
+	 *      
+	 */
     function delete_rule($id){
         global $db;
         $d=count_rules("rule_id=".$id,false);
@@ -970,6 +1265,22 @@
         
         return false;
     }
+    
+     /**
+	 * Update rule relationship between article  
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $rule_id The rule ID that will be edited
+	 * @param integer $app_id application ID (article ID)
+	 * @param integer $new_rule_id New rule ID that replace the existing ID
+	 * 
+	 * 
+	 * @return boolean  
+	 *      
+	 */
     function update_rules_relationship($rule_id,$app_id,$new_rule_id){
         global $db;
         $sql=$db->prepare_query("UPDATE lumonata_rule_relationship SET lrule_id=%d
@@ -980,6 +1291,21 @@
             return update_rule_count($rule_id,$rule_count);
         }
     }
+    
+    /**
+	 * Insert rule relationship between article and category or tag  
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $app_id application ID (article ID)
+	 * @param integer $rule_id The rule ID that will be edited
+	 * 
+	 * 
+	 * @return boolean  
+	 *      
+	 */
     function insert_rules_relationship($app_id,$rule_id){
         global $db;
       
@@ -992,6 +1318,25 @@
             }
         }
     }
+    
+    /**
+	 * Count how many articles or applications are using the rule, There are two $args that you can use: app_id and rule_id
+	 * 
+	 * @example count_rules_relationship();
+	 * @example count_rules_relationship("app_id=1"); //use this if you only want to count it per application ID
+	 * @example count_rules_relationship("app_id=1&rule_id=3"); //use this if you only want to count it per application ID and rule ID
+	 *    
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param string $args Argument that can be specify by you. 
+	 *  
+	 * 
+	 * @return boolean  
+	 *      
+	 */
     function count_rules_relationship($args=''){
          global $db;
         $var_name['app_id']='';
@@ -1021,15 +1366,34 @@
        
         return $db->num_rows($db->do_query($sql));
     }
+    
+    /**
+	 * Delete the rule relationship, there are two $args that you can use: app_id and rule_id
+	 * 
+	 * 
+	 * @example delete_rules_relationship("app_id=1"); //use this if you only want to delete the relationship per application ID
+	 * @example delete_rules_relationship("app_id=1&rule_id=3"); //use this if you only want to delete the relationship per application ID and rule ID
+	 * @example delete_rules_relationship("app_id=1","categories"); //use this if you only want to delete the relationship by the rule name
+	 *    
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param string $args Argument that can be specify by you. 
+	 * @param string $rule Rule name
+	 *  
+	 * 
+	 * @return boolean  
+	 *      
+	 */
     function delete_rules_relationship($args='',$rule=''){
         global $db;
         $var_name['app_id']='';
         $var_name['rule_id']='';
         $where="";
         
-        /*if(empty($rule))
-            return;
-        */
+        
         if(!empty($args)){
             $args=explode('&',$args);
             
@@ -1059,6 +1423,24 @@
         }
         
     }
+    /**
+	 * To fetch the rule relationship and there are two $args that you can use: app_id and rule_id
+	 *   
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param string $args Argument that can be specify by you. 
+	 * @param string $return_value Specify the return value that your want to get, by default the return value is 'lrule_id'
+	 * 
+	 * @example delete_rules_relationship("app_id=1"); //use this if you only want to fetch the relationship per application ID
+	 * @example delete_rules_relationship("app_id=1&rule_id=3"); //use this if you only want to fetch the relationship per application ID and rule ID
+	 * @example delete_rules_relationship("app_id=1&rule_id=3","lrule_id"); //use this if you only want to fetch the relationship per application ID and rule ID and return the lrule_id as the result 
+	 * 
+	 * @return $return_value  
+	 *      
+	 */
     function fetch_rule_relationship($args='',$return_value='lrule_id'){
         global $db;
         $return=array();
@@ -1093,6 +1475,22 @@
             return $return;
         }
     }
+    /**
+	 * To fetch the rule and there are three $args that you can use: sef, rule_id and group
+	 * Default value for 'group' args are 'articles'  
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param string $args Argument that can be specify by you. 
+	 * 
+	 * @example delete_rules_relationship("sef=category-1"); //use this if you only want to fetch the rule by the given sef
+	 * @example delete_rules_relationship("sef=category-1&group=articles"); //use this if you only want to fetch the rule by the given sef in given application name ($group) 
+	 * 
+	 * @return array Fetch result  
+	 *      
+	 */
     function fetch_rule($args=''){
     	global $db;
     	$var_name['sef']='';
@@ -1127,6 +1525,22 @@
         }
     	
     }
+    
+    /**
+	 * To count the specifiy rule conditions
+	 * There are fice $args that you can use: parent,name,rule,group,sef,rule_id
+	 *   
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param string $args Argument that can be specify by you. 
+	 * @param boolean $count is this variable set to false, the function will return the fetching results 
+	 * 
+	 * @return the number of count if $count=TRUE and fetch array if $count=FALSE 
+	 *      
+	 */
     function count_rules($args='',$count=true){
         global $db;
         $var_name['parent']='';
@@ -1172,6 +1586,22 @@
             return $db->fetch_array($r);
         }
     }
+    /**
+	 * This function to the query to select the selected rule in mention article. 
+	 * 
+	 *   
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param integer $post_id Article ID 
+	 * @param string $rule The rule name (categories or tags)
+	 * @param string $group The application name 
+	 * 
+	 * @return array Return a set of Rule ID as per query specify 
+	 *      
+	 */
     function find_selected_rules($post_id,$rule,$group){
         global $db;
         $result=array();
@@ -1186,6 +1616,23 @@
         
         return $result;
     }
+    
+    /**
+	 * Update rule order ID of   
+	 * 
+	 *   
+	 * 
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param array $order Set of exisitng data that contain order_id and rule_id. The array data are array(order_id=>rule_id) 
+	 * @param integer $start Number where to start to update the order ID
+	 * @param string $app_name The application name 
+	 * 
+	 * @return boolean 
+	 *      
+	 */
     function update_taxonomy_order($order,$start,$app_name){
         global $db;
         foreach($order as $key=>$val){
