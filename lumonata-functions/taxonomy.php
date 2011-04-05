@@ -1,4 +1,20 @@
 <?php
+	/**
+	 * This function is called when you click the categories or tags tab on articles application     
+	 *   
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 * @param string $rule Rule name: categories or tags
+	 * @param string $group The application name, by default is articles
+	 * @param string $thetitle The Title that will shown on the admin area
+	 * @param string $tabs The list tab
+	 * 
+	 * @return string
+	 *      
+	 */
     function get_admin_rule($rule,$group,$thetitle,$tabs){
         
         //Publish or Save Draft Actions
