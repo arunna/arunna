@@ -9,20 +9,29 @@
 
 	//Check if the user is not login yet
 	if(!is_user_logged()){
-		if(is_login_form())
+		if(is_login_form()){
 			/*Return Login Form*/ 
+			if (!empty($_SERVER["HTTPS"]))
+				$http='https://';
+			else 
+				$http='http://';
+				
+			if($http.site_url().'/lumonata-admin/'!=cur_pageURL())
+			header('location:'.$http.site_url().'/lumonata-admin/');
+			
 			get_login_form();
-		elseif(is_register_form())
+		}elseif(is_register_form()){
 			signup_user();
-		elseif(is_thanks_page())
+		}elseif(is_thanks_page()){
 			resendPassword();
-		elseif(is_verify_account())
+		}elseif(is_verify_account()){
 			verify_account();
-		elseif(is_forget_password()) 
+		}elseif(is_forget_password()){ 
 			/*Return Forget Password Form*/
 			get_forget_password_form();
-		else
+		}else{
 			header("location:".get_admin_url()."/?state=login&redirect=".urlencode(cur_pageURL()));
+		}
 	}else{
 		
 		/*redirect to home dashboard*/
