@@ -33,7 +33,9 @@
 		
 		$home_path = parse_url($site_url);
 		$home_path = $home_path['path'];
-		$url = str_replace($home_path, '', $url);
+		if(!empty($home_path['path']))
+			$url = str_replace($home_path, '', $url);
+		
 	}
 	// Trim leading and lagging slashes
 	 $url = trim($url, '/');

@@ -380,10 +380,7 @@
 	 * @return string Sign up URL 
 	 */
 	function signup_url(){
-		if(is_permalink())
-			return "http://".site_url()."/register/";
-		else 
-			return "http://".site_url()."/?page_name=register";
+		return "http://".site_url()."/lumonata-admin/?state=register";
 	}
 	/**
 	 * The Sign In URL
@@ -396,11 +393,8 @@
 	 * 
 	 * @return string Sign In URL 
 	 */
-	function signin_url(){
-		if(is_permalink())
-			return "http://".site_url()."/login/";
-		else 
-			return "http://".site_url()."/?page_name=login";
+	function signin_url(){		
+		return "http://".site_url()."/lumonata-admin/?state=login&redirect=".cur_pageURL();
 	}
 	/**
 	 * URL of user profile when login
