@@ -636,7 +636,7 @@
 					}
 					$return.="<br clear=\"left\" />";
 					if($data['larticle_type']=="status")
-					$return.="<p>".nl2br($data['larticle_title'])."</p>";
+					$return.="<p>".activate_URLs(nl2br($data['larticle_title']))."</p>";
 					
 					$return.="<div class=\"the_post\">";
 					if($data['larticle_type']!="status"){
