@@ -778,6 +778,37 @@
 	function validate_forget_password(){
 		if(empty($_POST['user_email'])){
 			return "<div class=\"alert_yellow\">Please enter your username or e-mail address. You will receive a new password via e-mail.</div>";
+		}else{
+			if(is_exist_email($_POST['user_email'])){
+				
+				$new_password=random_string();
+				
+				$user_id=fetch_user_ID_by_email($_POST['user_email']);
+				$user=fetch_user($user_id);
+				
+				if(reset_user_password($user_id,$new_password))
+					$return =reset_password_email($_POST['user_email'],$user['lusername'],$user['ldisplay_name'], $new_password);
+				else return false;
+					
+			}elseif(is_exist_user($_POST['user_email'])){
+				
+				$new_password=random_string();
+				
+				$user_id=fetch_user_ID_by_username($_POST['user_email']);
+				
+				$user=fetch_user($user_id);
+				
+				if(reset_user_password($user_id,$new_password)){
+					$return=reset_password_email($user['lemail'],$user['lusername'],$user['ldisplay_name'], $new_password);
+				}else return false;
+					
+			}else{
+				return "<div class=\"alert_yellow\">Please enter your valid username or e-mail address.</div>";	
+			}
+			
+			if($return)
+				return "<div class=\"alert_yellow\">Your password has been reseted. Please check your email.</div>";
+			
 		}
 	}
 	/**
@@ -1016,8 +1047,32 @@
 		}
 		return $return;
 	}
-	
-	
+	/**
+	 * Update user password to DB   
+	 *
+	 * @author Wahya Biantara
+	 *
+	 * @since alpha
+	 * 
+	 * @param integer $user_id User ID 
+	 * @param password $new_password New Password
+	 * 
+	 * @return boolean True if the reset process is success  
+	 */
+	function reset_user_password($user_id,$new_password){
+		global $db;
+		if(empty($user_id) || empty($new_password))
+		return;
+		
+		$sql=$db->prepare_query("
+					UPDATE lumonata_users
+					SET 
+						lpassword=%s
+					WHERE 
+						luser_id=%d",md5($new_password),$user_id);
+		
+		return $db->do_query($sql);
+	}
 	/**
 	 * Used to edit user database   
 	 *
@@ -1961,6 +2016,55 @@
 				$user[]=$data['luser_id'];
 			}
 			return $user;
+		}
+    }
+    
+    /**
+	 * Grab user ID data by Email  
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *  
+	 * @return User ID   
+	 */
+    function fetch_user_ID_by_email($email){
+    	global $db;
+		
+		if(!empty($email)){
+			$sql=$db->prepare_query("select * from lumonata_users where lemail=%s",$email);
+			$r=$db->do_query($sql);
+			$data=$db->fetch_array($r);
+			return $data['luser_id'];
+			
+		}
+    }
+    
+    /**
+	 * Grab user ID data by username  
+	 *  
+	 *     
+	 *
+	 * @author Wahya Biantara
+	 * 
+	 * @since alpha
+	 * 
+	 *  
+	 * @return User ID 
+	 */
+    function fetch_user_ID_by_username($username){
+    	global $db;
+		
+		if(!empty($username)){
+			
+			$sql=$db->prepare_query("select * from lumonata_users where lusername=%s",$username);
+			$r=$db->do_query($sql);
+			$data=$db->fetch_array($r);
+			return $data['luser_id'];
+			
 		}
     }
     

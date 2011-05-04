@@ -295,6 +295,27 @@
 		return sendmail($subject, $message, get_email(), web_name(), $invited['lemail']);
 	}
 	
-	
+	function reset_password_email($email,$username,$name, $new_password){
+		if(!defined('SITE_URL'))
+			define('SITE_URL',get_meta_data('site_url'));
+		
+		
+		$subject="Reset Password: Your new password on ".trim(web_name());
+		$message="Hi ".$name.",\n\n";
+		$message.="As requested, we have reset your password on ".trim(web_name()).". Here are the new details:\n\n";
+		
+		$message.="Username:".$username."\n";
+		$message.="Password:".$new_password."\n\n";
+		
+		$message.="Click the link bellow to login:\n";
+		$message.=get_admin_url()."\n\n";
+		
+		$message.="Please remember that both your login and password are case sensitive and if you still can't log in, please check your browser, firewall settings, and don't forget to enable cookies.\n\n";
+		
+		$message.="Thanks\n";
+		$message.=trim(web_name())." Team";
+		
+		return sendmail($subject, $message, get_email(), web_name(), $email);
+	}
 	
 ?>

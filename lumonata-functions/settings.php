@@ -2374,4 +2374,13 @@
 	function get_javascript_inc($url){
 	    return "<script type=\"text/javascript\" src=\"".get_includes_url($url)."\" ></script>";
 	}
+	
+	function random_string($num=7){
+		$str = "";
+	    for ($i = 0; $i <= $num; $i++) {
+	        //this numbers refer to numbers of the ascii table (small-caps)
+	        $str .= chr(rand(97, 122));
+		}
+		return $str;
+	}
 ?>
