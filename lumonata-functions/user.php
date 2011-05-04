@@ -1743,9 +1743,16 @@
     			$to_period=explode(" ", $val['to_period']);
     			
     			$html.="<div class=\"the_work clearfix\" id='the_work_".$i."'>
-				    		<div class=\"comp_name\">
-					    		<strong>".$key." - ".$val['position']." (".$val['city'].")</strong><br />
-					    		<label>".$val['from_period']." to ".$val['to_period']."</label><br />
+				    		<div class=\"comp_name\">";
+				$html.="<strong>".$key;
+				
+				if(!empty($val['position']))
+				$html.=" - ".$val['position'];
+				
+				if(!empty($val['city']))
+				$html.=" (".$val['city'].") </strong>";
+				
+				$html.="<br /><label>".$val['from_period']." to ".$val['to_period']."</label><br />
 					    		<span style='font-size:10px;'>".$val['jobdes']."</span>
 				    		</div>";
     				if($user_id==$_COOKIE['user_id'] && isset($_COOKIE['user_id']))
@@ -1794,8 +1801,18 @@
     			$html.="<div class=\"the_school clearfix\" id=\"college_".$i."\">
 				    		<div class=\"shool_name\" >
 					    		<strong>".$key."</strong><br />
-					    		<label>".$val['concentrations']." - ".$val['class_year']."</label>
-				    		</div>";
+					    		<label>";
+    							if(!empty($val['concentrations']))
+    							$html.=$val['concentrations'];
+    							
+    							if(!empty($val['concentrations']) && !empty($val['class_year']))
+    							$html.=" - ";
+    							
+    							if(!empty($val['class_year']))
+					    		$html.=$val['class_year'];
+					    		
+				    		$html.="</label></div>";
+					    		
     				if($user_id==$_COOKIE['user_id'] && isset($_COOKIE['user_id']))
 				    $html.="<div class=\"action\"><a href=\"javascript:;\">Edit</a> | <a href=\"javascript:;\" rel=\"delete_college_".$i."\">Delete</a></div>";
 				 $html.="</div>";
