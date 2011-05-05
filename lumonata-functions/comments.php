@@ -265,7 +265,6 @@
             }else{
                 $commentator_url="<div class=\"commentator_name\"><a href=\"".$data['lcomentator_url']."\" rel=\"nofollow\">".$display_name."</a></div>";
                 $commentator_url_img= "<a href=\"".$data['lcomentator_url']."\" rel=\"nofollow\"><img src=\"".get_avatar($data['luser_id'],$avatar_thmb)."\" alt=\"".$data['lcomentator_name']."\" title=\"".$data['lcomentator_name']."\" border=\"0\"  /></a>";
-                
             }
             
 
@@ -492,7 +491,10 @@
                     <div class=\"the_avatar\"><img src=\"".get_avatar($_COOKIE['user_id'],$avatar_thmb)."\"  /></div>
                         <div class=\"comment\">
                             <textarea class=\"comment_area_loged expand50-1000\" name=\"comment\"  id=\"commentarea_".$post_id."\"></textarea>
-                            <div class=\"comment_button\"><input type=\"button\" id=\"send_comment_".$post_id."\" value=\"Comment\" name=\"comment_button\" class=\"button\" /></div>
+                            <div class=\"comment_button\">
+                            	<img src=\"".get_admin_url()."/includes/media/loader.gif\" id=\"comment_loading\" style=\"display:none;\" />
+                            	<input type=\"button\" id=\"send_comment_".$post_id."\" value=\"Comment\" name=\"comment_button\" class=\"button\" />
+                            </div>
                         </div>
                     </div>
                    
@@ -504,23 +506,23 @@
                             var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
   							thecomment_show=thecomment.replace(exp,'<a href=\"$1\">$1</a>');
 							
-                            
+                            $('#comment_loading').show();
                             $('#send_comment_".$post_id."').attr('disabled',true);
                             $('#commentarea_".$post_id."').attr('disabled',true);	
-                                $.post('http://".site_url()."/lumonata_comments.php','comment_type=comment&comment='+thecomment+'&article_id=".$post_id."&parent_id=0',function(data){
-                                    var count_child=$('.comment_wrapper_".$post_id."').size();
-                                if(count_child==0){
-                                    $(\".comment_box_".$post_id."\").html('');
-                                    $(\".comment_box_".$post_id."\").append(data);
-                                }else{
-                                    $(\".comment_wrapper_".$post_id.":last\").after(data);
-                                }
-                                    
-                                });
-                                $('#send_comment_".$post_id."').attr('disabled',false);
-                            $('#commentarea_".$post_id."').attr('disabled',false);
-								
-                                                     
+                            
+                            $.post('http://".site_url()."/lumonata_comments.php','comment_type=comment&comment='+thecomment+'&article_id=".$post_id."&parent_id=0',function(data){
+                            	var count_child=$('.comment_wrapper_".$post_id."').size();
+                            	if(count_child==0){
+                            		$(\".comment_box_".$post_id."\").html('');
+                                	$(\".comment_box_".$post_id."\").append(data);
+                            	}else{
+                                	$(\".comment_wrapper_".$post_id.":last\").after(data);
+                            	}
+                            	
+                            	$('#comment_loading').hide();
+                            	$('#send_comment_".$post_id."').attr('disabled',false);
+                                $('#commentarea_".$post_id."').attr('disabled',false);
+                            });
                            
                         });
                    

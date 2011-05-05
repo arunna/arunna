@@ -50,8 +50,9 @@
 			}
 		}
 		if(!empty($_POST['postit'])){
+			
 			if(isset($_POST['share_to']))
-				$saveit=save_article($_POST['status'], '', 'publish', 'status', 'allowed',$_POST['share_to']);
+				$saveit=save_article($_POST['status'], '', 'publish', 'status', 'allowed','',$_POST['share_to']);
 			else
 				$saveit=save_article($_POST['status'], '', 'publish', 'status', 'allowed');
 				
@@ -139,6 +140,7 @@
 		
 		$fl_tab=get_friend_list($_COOKIE['user_id']);
 		
+		$share_to_id= kses(base64_decode($_GET['tab']),array());
 		
 		$return="<ul class=\"tabs\">";
 			if(!isset($_GET['tab'])){
@@ -154,16 +156,18 @@
 				$max=count($fl_tab['friends_list_id']);
 				
 				for($tb=0;$tb<$max;$tb++){
-					if(isset($_GET['tab']) && $fl_tab['friends_list_id'][$tb]==base64_decode($_GET['tab']))
+					
+					if(isset($_GET['tab']) && $fl_tab['friends_list_id'][$tb]==$share_to_id){
 						$return.="<li class=\"active\"><a href=\"".get_tab_url(base64_encode($fl_tab['friends_list_id'][$tb]))."\">".$fl_tab['list_name'][$tb]."</a></li>";
-					else 
+					}else{ 
 						$return.="<li><a href=\"".get_tab_url(base64_encode($fl_tab['friends_list_id'][$tb]))."\">".$fl_tab['list_name'][$tb]."</a></li>";
+					}
 				}
 			}
 			if(isset($_GET['mta'])){
 				$mta=base64_decode($_GET['mta']);
 				$mta=json_decode($mta,true);
-				$return.="<li class=\"active\"><a href=\"".get_tab_url(base64_encode($_GET['tab']))."\">".$mta[base64_decode($_GET['tab'])]."</a></li>";
+				$return.="<li class=\"active\"><a href=\"".get_tab_url(base64_encode($share_to_id))."&mta=".kses($_GET['mta'],array())."\">".$mta[base64_decode($_GET['tab'])]."</a></li>";
 			}
 			$return.="<li><a href=\"".get_state_url('friends')."&tab=manage-friend-list\"><img src=\"http://".TEMPLATE_URL."/images/friend_list.png\" border=\"0\" style=\"margin-top:0px;padding-bottom:0px;\" /></a></li>";
 			
@@ -195,7 +199,10 @@
 			$return.="<input type=\"text\" value=\"Share your thought\" id=\"share_thought\" class=\"postbox\" style=\"color:#bbb;\" />";
 			$return.="<div id=\"postbox\" style=\"display:none;\">";
 				$return.="<textarea type=\"text\" name=\"postbox\" id=\"postarea\" class=\"expand50-1000\"  /></textarea>";
-				$return.="<div style=\"text-align:right;width:100%;padding:0;margin:10px 0 0 0;\"><input id=\"postit\" type=\"button\" value=\"Share\" name=\"postit\" class=\"btn_post\"></div>";
+				$return.="<div style=\"text-align:right;width:100%;padding:0;margin:10px 0 0 0;\">
+								<img src=\"".get_theme_img()."/loader.gif\" id=\"post_loading\" style=\"display:none;\" />
+								<input id=\"postit\" type=\"button\" value=\"Share\" name=\"postit\" class=\"btn_post\">
+						  </div>";
 			$return.="</div>";
 			$return.="</div>";
 			$return.="<script type=\"text/javascript\">
@@ -221,22 +228,32 @@
 								}
 							});
 							$('#postit').click(function(){
-								
-								$('#postit').attr('disabled',true);
-								$('#postarea').attr('disabled',true);";
-								if($feeds_type=='post_per_list')
-								$return.="$.post('dashboard.php','postit=status&share_to=".base64_decode($_GET['tab'])."&status='+$('#postarea').val(),function(data){";
-								else 
-								$return.="$.post('dashboard.php','postit=status&status='+$('#postarea').val(),function(data){";
-	                            $return.="$('#postbox').hide();
-	        							$('#share_thought').show();
-	        							$('#postarea').val('');
-	        							$('#refresh_update').prepend(data);
-	        							
-	                             });
-	                             $('#noupdates_alert').remove();
-								 $('#postit').attr('disabled',false);
-	                             $('#postarea').attr('disabled',false);
+							   if($.trim($('#postarea').val())!=''){
+									$('#post_loading').show();
+									$('#postit').attr('disabled',true);
+									$('#postarea').attr('disabled',true);";
+									if($feeds_type=='post_per_list'){
+										$return.="$.post('dashboard.php','postit=status&share_to=".$share_to_id."&status='+$('#postarea').val(),function(data){";
+									}else{ 
+										$return.="$.post('dashboard.php','postit=status&status='+$('#postarea').val(),function(data){";
+									}
+		                            	$return.="
+		                            	    $('#postit').attr('disabled',false);
+		                             		$('#postarea').attr('disabled',false);
+		                             		$('#post_loading').hide();
+		                             		$('#noupdates_alert').remove();
+		                            		$('#postbox').hide();
+		        							$('#share_thought').show();
+		        							$('#postarea').val('');
+		        							$('#refresh_update').prepend(data);
+		        							
+		                             });
+		                             
+		                             
+		                        }else{
+		                        	$('#postarea').val('');
+		                        	$('#postarea').focus();
+								}
 							});
 					 </script>";
 		}
