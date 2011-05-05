@@ -1410,6 +1410,8 @@
 	 * @return string The profile HTML design   
 	 */
 	function user_profile($user_id){
+	    
+	    //$user_id=kses($user_id, array());
 		$user=fetch_user($user_id);
 		$website=get_additional_field($user_id,'website','user');
 		$first_name=get_additional_field($user_id,'first_name','user');
@@ -1547,9 +1549,10 @@
    		if(!is_user_logged())
    		return;
    		global $db;
+   		
    		if(!empty($_GET['id'])){
    			$id=$_GET['id'];
-   			
+   			$id=kses($id, array());
 	   		if(is_my_friend($_COOKIE['user_id'], $_GET['id']) || is_my_friend($_COOKIE['user_id'], $_GET['id'],'unfollow')){
 				$query=$db->prepare_query("SELECT * FROM lumonata_articles 
 										 WHERE larticle_status='publish' AND
@@ -1602,9 +1605,9 @@
 			$the_tabs=set_tabs($tabs,$selected_tab);
 			
 		}else{ 
-			
+			$id=kses($_GET['id'], array());
 			if(isset($_GET['tab']) && $_GET['tab']=='profile'){
-				$content_left=user_profile($_GET['id']);
+				$content_left=user_profile($id);
 				$the_tabs="<li><a href=\"".get_state_url('my-profile')."&id=".$id."\">".$user['ldisplay_name']." Updates</a></li>";
 				$the_tabs.="<li class=\"active\"><a href=\"".get_state_url('my-profile')."&tab=profile&id=".$id."\">Profile</a></li>";
 			}else{
@@ -1613,13 +1616,13 @@
 			}
 			
 			if(!is_my_friend($_COOKIE['user_id'], $id,'connected')){
-				$add_friend_button=add_friend_button($_GET['id'],0);
+				$add_friend_button=add_friend_button($id,0);
 			}
 			
 			if(is_my_friend($_COOKIE['user_id'], $id,'connected')){
-				if(!is_administrator($_GET['id'])){
-					$friendship=search_friendship($_COOKIE['user_id'],$_GET['id']);
-					$add_friend_button=add_friend_button($_GET['id'],$friendship['friendship_id'][0],'unfollow');
+				if(!is_administrator($id)){
+					$friendship=search_friendship($_COOKIE['user_id'],$id);
+					$add_friend_button=add_friend_button($id,$friendship['friendship_id'][0],'unfollow');
 				}
 			}
 			
@@ -1627,12 +1630,12 @@
 			$add_friend_button="<div style='color:#cacaca;margin-bottom:10px;'>Friend request pending.</div>";
 			
 			if(is_my_friend($_COOKIE['user_id'], $id,'onrequest')){
-				$friendship=search_friendship($_COOKIE['user_id'],$_GET['id']);
-				$add_friend_button=add_friend_button($_GET['id'],$friendship['friendship_id'][0],'confirm');
+				$friendship=search_friendship($_COOKIE['user_id'],$id);
+				$add_friend_button=add_friend_button($id,$friendship['friendship_id'][0],'confirm');
 			}
 			if(is_my_friend($_COOKIE['user_id'], $id,'unfollow')){
-				$friendship=search_friendship($_COOKIE['user_id'],$_GET['id']);
-				$add_friend_button=add_friend_button($_GET['id'],$friendship['friendship_id'][0],'follow');
+				$friendship=search_friendship($_COOKIE['user_id'],$id);
+				$add_friend_button=add_friend_button($id,$friendship['friendship_id'][0],'follow');
 			}
 		}
 		
