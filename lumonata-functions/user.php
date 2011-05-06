@@ -689,6 +689,7 @@
         $sql=$db->prepare_query("SELECT * FROM lumonata_users
                                  WHERE lactivation_key=%s AND lstatus=0",$themail[0]);
         $r=$db->do_query($sql);
+        $invited_user=$db->fetch_array($r);
         if($db->num_rows($r)>0){
         	$query=$db->prepare_query("UPDATE lumonata_users
         								SET lstatus=1
@@ -723,10 +724,16 @@
 							</table>
 						</form>";
         		
+        		//add new user to administrator
+        		//add_friend_to_admin($new_user['luser_id']);
+        		
         		//if invite from friend
         		if(isset($_GET['iid']) && !empty($_GET['iid'])){
-        		    $invited_user=$db->fetch_array($r);
+        		    
+        		   
         		    $invitr_user=fetch_user($_GET['iid']);
+        		    
+        		    add_friend_to_admin($invited_user['luser_id'],$_GET['iid']);
         		    
         		    //update friendship status
         		    $edit_f=edit_friendship($_GET['iid'], $invited_user['luser_id'],'connected',true);
@@ -734,6 +741,8 @@
         		    //send email
         		    if($edit_f)
                     request_approved_mail($invitr_user['lemail'],$invitr_user['ldisplay_name'],$invited_user['luser_id'],$invited_user['lsex']);
+        		}else{
+        		     add_friend_to_admin($invited_user['luser_id']);
         		}
         		
         	}
@@ -1035,15 +1044,16 @@
 	 * 
 	 * @return boolean True if the insert process is success  
 	 */
-	function add_friend_to_admin($friend_id){
+	function add_friend_to_admin($friend_id, $inviter=NULL){
 	    global $db;
         $administrator=fetch_user_per_type('administrator');
 		//$friend_id=mysql_insert_id();
 		foreach ($administrator as $key=>$value){
-			$return=add_friendship($value, $friend_id,'connected');
-			
-			if($return)
-			$return=add_friendship($friend_id, $value,'connected');
+		    if(!is_null($inviter) && $inviter!=$value){
+			    $return=add_friendship($value, $friend_id,'connected');
+			    if($return)
+			    $return=add_friendship($friend_id, $value,'connected');
+		    }
 		}
 		return $return;
 	}
