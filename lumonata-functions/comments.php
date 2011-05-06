@@ -492,7 +492,7 @@
                         <div class=\"comment\">
                             <textarea class=\"comment_area_loged expand50-1000\" name=\"comment\"  id=\"commentarea_".$post_id."\"></textarea>
                             <div class=\"comment_button\">
-                            	<img src=\"".get_admin_url()."/includes/media/loader.gif\" id=\"comment_loading\" style=\"display:none;\" />
+                            	<img src=\"".get_admin_url()."/includes/media/loader.gif\" class=\"comment_loading\" style=\"display:none;\" />
                             	<input type=\"button\" id=\"send_comment_".$post_id."\" value=\"Comment\" name=\"comment_button\" class=\"button\" />
                             </div>
                         </div>
@@ -506,7 +506,7 @@
                             var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
   							thecomment_show=thecomment.replace(exp,'<a href=\"$1\">$1</a>');
 							
-                            $('#comment_loading').show();
+                            $('.comment_loading').show();
                             $('#send_comment_".$post_id."').attr('disabled',true);
                             $('#commentarea_".$post_id."').attr('disabled',true);	
                             
@@ -519,7 +519,7 @@
                                 	$(\".comment_wrapper_".$post_id.":last\").after(data);
                             	}
                             	
-                            	$('#comment_loading').hide();
+                            	$('.comment_loading').hide();
                             	$('#send_comment_".$post_id."').attr('disabled',false);
                                 $('#commentarea_".$post_id."').attr('disabled',false);
                             });
