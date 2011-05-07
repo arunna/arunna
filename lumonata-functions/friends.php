@@ -378,12 +378,99 @@
 	    	}
 		}
 	}else{
-		add_actions('friends','friendship');
+		if(isset($_GET['coleked_id'])){
+			
+			require_once('../lumonata_config.php');
+			require_once 'user.php';
+			if(is_user_logged()){
+				
+				require_once('../lumonata_settings.php');
+	    		require_once('settings.php');
+	    		if(!defined('SITE_URL'))
+				define('SITE_URL',get_meta_data('site_url'));
+				echo colek_box($_GET['coleked_id']);
+			}
+		}elseif(isset($_POST['coleked_id'])){
+			require_once('../lumonata_config.php');
+			require_once 'user.php';
+			if(is_user_logged()){
+				require_once('../lumonata_settings.php');
+	    		require_once('settings.php');
+	    		require_once('mail.php');
+	    		if(!defined('SITE_URL'))
+				define('SITE_URL',get_meta_data('site_url'));
+				
+				if(colek_mail($_POST['coleked_id'],$_POST['person_who_colek_id'])){
+					echo "OK";
+				}else{
+					echo "<div>Something went wrong. Please try again later</div>";
+				}
+			}
+		}else{
+			add_actions('friends','friendship');
+		}
 		
 	}
 	
 	
-	
+	function colek_box($coleked_id){
+		
+		$user=fetch_user($coleked_id);
+		
+		
+		switch ($user['lsex']){
+			case 2:
+				$heshe="she";
+				$hisher="her";
+				break;
+				
+			case 1:
+				$heshe="he";
+				$hisher="his";
+				break;
+				
+		}
+		return "<div id=\"colek_form\">
+    					<div style=\"margin: 5px 0;\"><h3>Colek ".$user['ldisplay_name']."?</h3></div>
+    					<div class=\"clearfix\">
+    						<div style=\"float:left;width:50px;hight:50px;\">
+    							<img src=\"".get_avatar($coleked_id,2)."\" />
+    						</div>
+    						<div style=\"float:left;width:250px;hight:100px;margin-left:2px;background:#ccc;color:#333;padding:10px;\" >
+    							Colek ".$user['ldisplay_name']." and ".$heshe." will notified through ".$hisher." email to see your profile
+    						</div>
+    					</div>
+    					
+    					<div style=\"text-align: right;margin: 5px 0;\">
+    						<img src=\"".get_admin_url()."/includes/media/loader.gif\" class=\"loading_colek\" style=\"display:none;\"  />
+        	  				<input type=\"button\" name=\"colek\" value=\"Colek\" class=\"button\" />
+        	  			</div>
+    			</div>
+    			
+    			<script type=\"text/javascript\">
+					$(function(){
+						$('input[name=colek]').click(function(){
+							$('.loading_colek').show();
+							$.post('../lumonata-functions/friends.php',
+									{ 
+										'coleked_id' 		    : '".$user['luser_id']."',
+									   	'person_who_colek_id'	: '".$_COOKIE['user_id']."',
+									   	'send_colek'			: true
+									},
+									function(theResponse){
+										if(theResponse=='OK'){
+											$('.loading_colek').hide();
+											$('#colek').colorbox.close();
+										}else{
+											$('#colek_form').html(theResponse);
+										}
+									}
+							);
+						});
+					});
+				</script>
+    			";
+	}
 	function invitation_box(){
 	    
 	    $invite_credit=get_additional_field($_COOKIE['user_id'], "invite_limit", "user");
@@ -1273,6 +1360,17 @@
 		return return_template('friends'); 	
 		
 	}
+	function colek_button($coleked_id){
+		return "<a class=\"button_add_friend_user\" id=\"colek\" href=\"../lumonata-functions/friends.php?colek=true&coleked_id=".$coleked_id."\" >
+					Colek
+				</a>
+				<script type=\"text/javascript\">
+		   			$('#colek').click(function(){
+		   				$('#colek').colorbox();
+					});
+		   		</script>
+				";
+	}
 	function add_friend_button($friend_id,$friendship_id,$type='add',$text=''){
 		if(empty($text)){
 			if($type=='add')
@@ -1286,59 +1384,62 @@
 			}
 		}
 		if($type=='follow' || $type=='unfollow'){
-			if($type=='follow')
-			$return="<div style='margin:0px 0 10px 0;' >
-						<a class=\"button_add_friend_user\" id=\"follow_unfollow\" >
-							$text
-						</a>
-						<span id='load_follow' style='display:none;margin-left:5px;' >
-							<img src='http://".TEMPLATE_URL."/images/loading.gif' />
-						</span>
-			   		</div>";
-			else 
-			$return="<div style='margin:0px 0 10px 0;'  >
-						<a class=\"button_add_friend_user\" id=\"follow_unfollow\" >
-							$text
-						</a>
-						<span id='load_follow' style='display:none;margin-left:5px;' >
-							<img src='http://".TEMPLATE_URL."/images/loading.gif' />
-						</span>
-			   		</div>";
-											
-			 $return.="<script type=\"text/javascript\">
-			   			$(function(){
-				   			$('#follow_unfollow').click(function(){
-				   				label=jQuery.trim($('#follow_unfollow').html());
-				   				$('#load_follow').show();
-				   				if(label=='Follow'){
-					   				$.post('../lumonata-functions/friends.php',{ 'follow' : 'follow', 'id' : '".$friend_id."' },
-					   				function(theResponse){
-					   					if(theResponse=='OK'){
-					   						$('#follow_unfollow').html('Unfollow');
-										}
-									});
-								}else if(label=='Unfollow'){
-									$.post('../lumonata-functions/friends.php',{ 'unfollow' : 'unfollow', 'id' : '".$friend_id."' },
-					   				function(theResponse){
-					   					if(theResponse=='OK'){
-					   						$('#follow_unfollow').html('Follow');
-										}
-									});
-								}
-								$('#load_follow').hide();
-							});
-							
+			if($type=='follow'){
+				$return="<div style='margin:0px 0 10px 0;' >
+							<a class=\"button_add_friend_user\" id=\"follow_unfollow\" >
+								$text
+							</a>";
+				$return.=colek_button($friend_id);			
+				$return.="<span id='load_follow' style='display:none;margin-left:5px;' >
+								<img src='http://".TEMPLATE_URL."/images/loading.gif' />
+							</span>
+				   		</div>";
+			}else{ 
+				$return="<div style='margin:0px 0 10px 0;'  >
+							<a class=\"button_add_friend_user\" id=\"follow_unfollow\" >
+								$text
+							</a>";
+				$return.=colek_button($friend_id);
+				$return.="<span id='load_follow' style='display:none;margin-left:5px;' >
+								<img src='http://".TEMPLATE_URL."/images/loading.gif' />
+							</span>
+				   		</div>";
+			}								
+		 	$return.="<script type=\"text/javascript\">
+		   			$(function(){
+			   			$('#follow_unfollow').click(function(){
+			   				label=jQuery.trim($('#follow_unfollow').html());
+			   				$('#load_follow').show();
+			   				if(label=='Follow'){
+				   				$.post('../lumonata-functions/friends.php',{ 'follow' : 'follow', 'id' : '".$friend_id."' },
+				   				function(theResponse){
+				   					if(theResponse=='OK'){
+				   						$('#follow_unfollow').html('Unfollow');
+									}
+								});
+							}else if(label=='Unfollow'){
+								$.post('../lumonata-functions/friends.php',{ 'unfollow' : 'unfollow', 'id' : '".$friend_id."' },
+				   				function(theResponse){
+				   					if(theResponse=='OK'){
+				   						$('#follow_unfollow').html('Follow');
+									}
+								});
+							}
+							$('#load_follow').hide();
 						});
-			   		</script>
-			   		";
+						
+					});
+		   		</script>
+		   		";
 			return $return;
+			
 		}else{	
-			return "<div style='margin:0px 0 10px 0;' >
+			$return="<div style='margin:0px 0 10px 0;' >
 						<a class=\"button_add_friend_user\" href=\"../lumonata-functions/friends.php?add_friend=true&type=".$type."&friendship_id=".$friendship_id."&friend_id=".$friend_id."&redirect=".urlencode(cur_pageURL())."&key=#add_friend\" id=\"add_friend\" >
 							$text
-						</a>
-						
-			   		</div>
+						</a>";
+			$return.=colek_button($friend_id);			
+			$return.="</div>
 			   		<script type=\"text/javascript\">
 			   			$('#add_friend').click(function(){
 			   				$('#add_friend').colorbox();

@@ -317,5 +317,20 @@
 		
 		return sendmail($subject, $message, get_email(), web_name(), $email);
 	}
+	function colek_mail($coleked_id, $person_who_colek_id){
+		$coleked_user=fetch_user($coleked_id);
+		$person_who_colek=fetch_user($person_who_colek_id);
+		
+		$subject=$person_who_colek['ldisplay_name']." colek you on ".trim(web_name());
+		$message="Hi ".$coleked_user['ldisplay_name'].",\n\n";
+		$message.=$person_who_colek['ldisplay_name']." is Colek you on ".trim(web_name())."\n\n";
+		$message.="To view ".$person_who_colek['ldisplay_name']." profile click the link bellow:\n";
+		$message.=get_admin_url()."/?state=my-profile&tab=profile&id=".$person_who_colek_id." \n\n";
+		
+		$message.="Thanks\n";
+		$message.=trim(web_name())." Team";
+		
+		return sendmail($subject, $message, get_email(), web_name(), $coleked_user['lemail']);
+	}
 	
 ?>
