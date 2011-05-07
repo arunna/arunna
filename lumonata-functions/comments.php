@@ -143,7 +143,10 @@
         		$loader="";
         }else{
         	$link="javascript:;";
-        	$loader="&nbsp;&nbsp;<span id=\"loading_comments_".$post_id."\" style=\"display:none;\"><img src=\"".get_theme_img()."/loader.gif\" /></span>";
+        	$loader="&nbsp;&nbsp;
+        			<span id=\"loading_comments_".$post_id."\" style=\"display:none;\">
+        				<img src=\"".get_theme_img()."/loader.gif\" />
+        			</span>";
         	$comment.="<script type=\"text/javascript\">
         					$(function(){
 	        					$('#view_all_comments_".$post_id."').click(function(){
@@ -151,10 +154,9 @@
 	        						
 	        						$.post('http://".site_url()."/lumonata_comments.php','view_all=all&post_id=".$post_id."&avatar_thmb=".$avatar_thmb."&limit=".$nn."&nn=".$nn."&start_row=0',function(data){
                                    	 	$('#comments_list_area_".$post_id."').html(data);
-                                   	 	
+                                   	 	$('#loading_comments_".$post_id."').hide();
                                     });
                                     
-	        						$('#loading_comments_".$post_id."').hide();
 	        					});
         					});
         				</script>";
@@ -173,7 +175,7 @@
 	                    </div>";
         }
 
-      
+      //  $comment.="<img src=\"".get_admin_url()."/includes/media/loader.gif\" class=\"comment_loading\" style=\"display:none;\" />";
         
         $comment.="<div id=\"comments_list_area_".$post_id."\">".fetch_comments_list($limit,$nn,$start_row,$avatar_thmb,$post_id)."</div>";
         
