@@ -406,6 +406,21 @@
 					echo "<div>Something went wrong. Please try again later</div>";
 				}
 			}
+		}elseif(isset($_POST['search'])){
+			require_once('../lumonata_config.php');
+			require_once 'user.php';
+			if(is_user_logged()){
+				require_once('../lumonata_settings.php');
+	    		require_once('settings.php');
+	    		if(!defined('SITE_URL'))
+				define('SITE_URL',get_meta_data('site_url'));
+				$friend_result=friend_search($_POST['s']);
+				if(count($friend_result)>0)
+					echo friends_list_array($friend_result);
+				else 
+					echo "<div class=\"alert_yellow_form\">No result found for <em>".$_POST['s']."</em>.</div>";
+				
+			}
 		}else{
 			add_actions('friends','friendship');
 		}
@@ -975,6 +990,7 @@
 	function friendship(){
 		if(!is_user_logged())
 		header("location:".get_admin_url()."?redirect=".cur_pageURL());
+		
 		$count_friends_req=0;
 		$friend_req=myfriend_requests($_COOKIE['user_id']);
 		if(isset($friend_req['id']))
@@ -995,6 +1011,7 @@
 		}elseif($_GET['tab']=='manage-friend-list'){
 			return manage_user_list($tabs);
 		}
+		
 	}
 	function manage_user_list($tabs){
 		global $db;$followjs='';
@@ -1167,6 +1184,41 @@
 		}
 		return $friends;
 	}
+	function friend_search($sterms=''){
+		global $db;
+		$friends=array();
+		$viewed=list_viewed();
+		
+		if(!empty($sterms))
+			$query=$db->prepare_query("SELECT a.lfriendship_id,a.lfriend_id,a.lstatus
+										FROM lumonata_friendship a, lumonata_users b
+										WHERE a.luser_id=%d 
+										AND (a.lstatus='connected' OR a.lstatus='unfollow') 
+										AND a.lfriend_id=b.luser_id 
+										AND b.ldisplay_name like %s
+										ORDER BY b.ldlu DESC",$_COOKIE['user_id'],"%".$sterms."%");
+		else 
+			$query=$db->prepare_query("SELECT a.lfriendship_id,a.lfriend_id,a.lstatus
+										FROM lumonata_friendship a, lumonata_users b
+										WHERE a.luser_id=%d AND (a.lstatus='connected' OR a.lstatus='unfollow') AND a.lfriend_id=b.luser_id
+										ORDER BY b.ldlu DESC 
+										LIMIT %d,%d",$_COOKIE['user_id'],0,$viewed);
+			
+		$result=$db->do_query($query);
+		while($friend=$db->fetch_array($result)){
+			$user=fetch_user($friend['lfriend_id']);
+			$friends['fid'][]=$friend['lfriendship_id'];
+			$friends['username'][]=$user['lusername'];
+			$friends['name'][]=$user['ldisplay_name'];
+			$friends['id'][]=$user['luser_id'];
+			$friends['avatar'][]=get_avatar($user['luser_id'], 2);
+			$friends['email'][]=$user['lemail'];
+			$friends['status'][]=$friend['lstatus'];
+			$friends['friend_id'][]=$friend['lfriend_id'];
+			
+		}
+		return $friends;
+	}
 	function is_my_friend($user_id,$friend_id,$status='connected'){
 		global $db;
 		$query=$db->prepare_query("SELECT * FROM lumonata_friendship
@@ -1278,7 +1330,34 @@
 			$html="<div class=\"alert_yellow_form\">".$err."</div>";
 		}else{	
 			
-			foreach ($friends['id'] as $key=>$value){
+			$html.=friends_list_array($friends);
+			$html.="<div class=\"paging_right\">". paging($url,$num_rows,$page,$viewed,10)."</div>";
+			$friendlist=get_friend_list($_COOKIE['user_id']);
+		
+			$fl_html="";
+			if(count($friendlist)>0)
+				foreach ($friendlist['friends_list_id'] as $key=>$val){
+					$fl_html.="<div class=\"friend_list\"><a href=\"".get_tab_url('friends')."&friend_list=".$friendlist['friends_list_id'][$key]."\">".$friendlist['list_name'][$key]."</a></div>";	
+				}
+				$fl_html.="<div class=\"friend_list\"><a href=\"".get_tab_url('friends')."\">All Friends</a></div>";
+			
+			add_variable('friend_list',$fl_html);
+		}
+			
+		
+		add_variable('myfriends_list',$html);
+		add_variable('friends_search',search_box('../lumonata-functions/friends.php','friendship','search=true&','left','alert_green_form','Search Friends'));
+		parse_template('friendshipBlock','fBlock');
+		return return_template('friends'); 	
+		
+	}
+	
+	function friends_list_array($friends=array()){
+		$html='';
+		if(count($friends)<1)
+		return;
+		
+		foreach($friends['id'] as $key=>$value){
 				$flist=the_fs_list($friends['fid'][$key]);
 				$follow_label='';
 				
@@ -1347,28 +1426,11 @@
 			}
 			
 			
-			$html.="<div class=\"paging_right\">". paging($url,$num_rows,$page,$viewed,10)."</div>";
 			
 			
-			$friendlist=get_friend_list($_COOKIE['user_id']);
-		
-			$fl_html="";
-			if(count($friendlist)>0)
-				foreach ($friendlist['friends_list_id'] as $key=>$val){
-					$fl_html.="<div class=\"friend_list\"><a href=\"".get_tab_url('friends')."&friend_list=".$friendlist['friends_list_id'][$key]."\">".$friendlist['list_name'][$key]."</a></div>";	
-				}
-				$fl_html.="<div class=\"friend_list\"><a href=\"".get_tab_url('friends')."\">All Friends</a></div>";
-			
-			add_variable('friend_list',$fl_html);
-		}
-			
-		
-		add_variable('myfriends_list',$html);
-		add_variable('friends_search',search_box('','friendship','','left','alert_green_form','Search Friends'));
-		parse_template('friendshipBlock','fBlock');
-		return return_template('friends'); 	
-		
+			return $html;
 	}
+	
 	function colek_button($coleked_id){
 		return "<a class=\"button_add_friend_user\" id=\"colek\" href=\"../lumonata-functions/friends.php?colek=true&coleked_id=".$coleked_id."\" >
 					Colek
