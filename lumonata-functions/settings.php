@@ -1691,13 +1691,17 @@
 	 */
 	function search_box($keyup_action='',$results_id='',$param='',$pos='left',$class='alert_green',$text='Search'){
 		$searchbox="<div class=\"search_box clearfix\" style=\"float:$pos;\">
-				<div class=\"textwrap\">
-				    <input type=\"text\" name=\"s\" class=\"searchtext\" value=\"".$text."\" />
-				</div>
-				<div class=\"buttonwrap\">
-				    <input type=\"image\" src=\"". get_theme_img() ."/ico-search.png\" name=\"search\" class=\"searchbutton\" value=\"yes\" />
-				</div>
-                            </div>";
+						<div class=\"textwrap\">
+						    <input type=\"text\" name=\"s\" class=\"searchtext\" value=\"".$text."\" />
+						</div>
+						<div class=\"buttonwrap\">
+						    <input type=\"image\" src=\"". get_theme_img() ."/ico-search.png\" name=\"search\" class=\"searchbutton\" value=\"yes\" />
+						</div>
+            	 	</div>
+            	 	<div style=\"float:$pos;margin:10px;display:none;\" id=\"search_loader\">
+            	 		<img src=\"". get_theme_img() ."/loader.gif\"  />
+            	 	</div>
+            	 	";
 			    
 		if(!empty($keyup_action)){
 			$searchbox.="<script type=\"text/javascript\">
@@ -1705,14 +1709,14 @@
 					
 					$('.searchtext').keyup(function(){
 						
-						$('#response').html('<div class=".$class.">Searching...</div>');
+						$('#$results_id').html('<div class=".$class.">Searching...</div>');
 						var s = $('input[name=s]').val();
 						var parameter='".$param."s='+s;
 						
+						$('#search_loader').show();
 						$.post('".$keyup_action."',parameter,function(data){
 							 $('#".$results_id."').html(data);
-							 //$('#response').delay(100);
-							 //$('#response').slideUp();
+							 $('#search_loader').hide();
 						});
 						$('#response').html('');
 						
@@ -1727,8 +1731,9 @@
 					});
 				});
 				$(function(){
+					var search_text='".$text."';
 					$('.searchtext').blur(function(){
-						$('.searchtext').val($(this).val()==''?'Search':$(this).val());
+						$('.searchtext').val($(this).val()==''?search_text:$(this).val());
 					});
 				});
 				</script>";
