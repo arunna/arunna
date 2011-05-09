@@ -762,9 +762,10 @@
    		$myfriends=myfriends($user_id, 0, 12);
 		$friends_html='';
 		tooltips('friends');
+		$friend_cnt=count_all_friend($user_id);
 		if(count($myfriends)>0){
 			$friends_html.="<div style='border-bottom:1px solid #ccc;margin-bottom:10px;' class='clearfix'>";
-			$friends_html.="<h2>Friends</h2>";
+			$friends_html.="<h2>Friends (".$friend_cnt.")</h2>";
 			
 				foreach ($myfriends['id'] as $key=>$val){
 					$friends_html.="<div style='width:32px:height:32px;overflow:hidden;margin:5px 5px;float:left'>
@@ -1121,6 +1122,14 @@
 					});	
 				</script>";
 	}
+	function count_all_friend($user_id){
+		global $db;
+		$query=$db->prepare_query("SELECT *
+										FROM lumonata_friendship a
+										WHERE a.luser_id=%d AND (a.lstatus='connected' OR a.lstatus='unfollow') 
+										",$user_id);
+		return $num=$db->num_rows($db->do_query($query));
+	}
 	function myfriends($user_id,$limit,$viewed,$bylist=0){
 		global $db;
 		$friends=array();
@@ -1383,6 +1392,7 @@
 				$text="Unfollow";
 			}
 		}
+		
 		if($type=='follow' || $type=='unfollow'){
 			if($type=='follow'){
 				$return="<div style='margin:0px 0 10px 0;' >
@@ -1434,6 +1444,7 @@
 			return $return;
 			
 		}else{	
+			
 			$return="<div style='margin:0px 0 10px 0;' >
 						<a class=\"button_add_friend_user\" href=\"../lumonata-functions/friends.php?add_friend=true&type=".$type."&friendship_id=".$friendship_id."&friend_id=".$friend_id."&redirect=".urlencode(cur_pageURL())."&key=#add_friend\" id=\"add_friend\" >
 							$text
@@ -1446,6 +1457,7 @@
 						});
 			   		</script>
 			   		";
+			return $return;
 		}
 	}
 	function friend_requests($tabs){

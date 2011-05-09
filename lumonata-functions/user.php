@@ -1637,7 +1637,11 @@
 			}
 			
 			if(is_my_friend($_COOKIE['user_id'], $id,'pending'))
-			$add_friend_button="<div style='color:#cacaca;margin-bottom:10px;'>Friend request pending.</div>";
+			$add_friend_button="
+			<div style='margin-bottom:10px;'>
+				".colek_button($id) ."&nbsp;
+				<span style='color:#cacaca;'>Friend request pending.</span>
+			</div>";
 			
 			if(is_my_friend($_COOKIE['user_id'], $id,'onrequest')){
 				$friendship=search_friendship($_COOKIE['user_id'],$id);
