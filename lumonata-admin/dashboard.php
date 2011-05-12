@@ -140,7 +140,7 @@
 		
 		$fl_tab=get_friend_list($_COOKIE['user_id']);
 		
-		$share_to_id= kses(base64_decode($_GET['tab']),array());
+		$share_to_id= (isset($_GET['tab']))?kses(base64_decode($_GET['tab']),array()):0;
 		
 		$return="<ul class=\"tabs\">";
 			if(!isset($_GET['tab'])){
@@ -228,14 +228,15 @@
 								}
 							});
 							$('#postit').click(function(){
+							  
 							   if($.trim($('#postarea').val())!=''){
 									$('#post_loading').show();
 									$('#postit').attr('disabled',true);
 									$('#postarea').attr('disabled',true);";
 									if($feeds_type=='post_per_list'){
-										$return.="$.post('dashboard.php','postit=status&share_to=".$share_to_id."&status='+$('#postarea').val(),function(data){";
+										$return.="$.post('postit=status&share_to=".$share_to_id."&status='+encodeURIComponent($('#postarea').val()),function(data){";
 									}else{ 
-										$return.="$.post('dashboard.php','postit=status&status='+$('#postarea').val(),function(data){";
+										$return.="$.post('dashboard.php','postit=status&status='+encodeURIComponent($('#postarea').val()),function(data){";
 									}
 		                            	$return.="
 		                            	    $('#postit').attr('disabled',false);
