@@ -2018,10 +2018,16 @@
 	 * @return string Return the new Search Engine Friendly name without special characters.
 	 */
 	function generateSefUrl($phrase){
+		
 		$result = str_normalize($phrase);
 		$result = strtolower($result);
 		$result = preg_replace("/[^a-z0-9\s-]/", "", $result);
 		$result = trim(preg_replace("/[\s-]+/", " ", $result));
+		
+		
+		
+		
+		
 		//$result = trim(substr($result, 0, $maxLength));
 		$result = preg_replace("/\s/", "-", $result);
 		return $result;
@@ -2036,14 +2042,14 @@
 	 */
 	function str_normalize ($string) {
 		$table = array(
-		    '�'=>'S', '�'=>'s', '?'=>'Dj', '?'=>'dj', '�'=>'Z', '�'=>'z', '?'=>'C', '?'=>'c', '?'=>'C', '?'=>'c',
+		    '�'=>'S', '�'=>'s', '�'=>'Z', '�'=>'z','&amp;'=>'',
 		    '�'=>'A', '�'=>'A', '�'=>'A', '�'=>'A', '�'=>'A', '�'=>'A', '�'=>'A', '�'=>'C', '�'=>'E', '�'=>'E',
 		    '�'=>'E', '�'=>'E', '�'=>'I', '�'=>'I', '�'=>'I', '�'=>'I', '�'=>'N', '�'=>'O', '�'=>'O', '�'=>'O',
 		    '�'=>'O', '�'=>'O', '�'=>'O', '�'=>'U', '�'=>'U', '�'=>'U', '�'=>'U', '�'=>'Y', '�'=>'B', '�'=>'Ss',
 		    '�'=>'a', '�'=>'a', '�'=>'a', '�'=>'a', '�'=>'a', '�'=>'a', '�'=>'a', '�'=>'c', '�'=>'e', '�'=>'e',
 		    '�'=>'e', '�'=>'e', '�'=>'i', '�'=>'i', '�'=>'i', '�'=>'i', '�'=>'o', '�'=>'n', '�'=>'o', '�'=>'o',
 		    '�'=>'o', '�'=>'o', '�'=>'o', '�'=>'o', '�'=>'u', '�'=>'u', '�'=>'u', '�'=>'y', '�'=>'y', '�'=>'b',
-		    '�'=>'y', '?'=>'R', '?'=>'r',
+		    '�'=>'y'
 		);
 	       
 		return strtr($string, $table);

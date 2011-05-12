@@ -65,7 +65,7 @@
         	
         }
         
-        $comment="<p class=\"article_label\" style=\"text-align:right;\">";
+        $comment="<br clear='all' /><div style=\"text-align:right;width:97%;\">";
         if($comment_allowed=='allowed'){
         	if(!$close_comment){
 	            $comment.="<a href=\"javascript:;\" class=\"commentview \" id=\"insertcomment_".$post_id."\">Comment</a> - ";
@@ -127,7 +127,7 @@
         }
         
               
-        $comment.="</p>";
+        $comment.="</div>";
         $comment.="<div class=\"comment_box comment_box_".$post_id."\" id=\"comment_box_".$post_id."\">";
         
     	if($dc['lcount_like']>0){
@@ -425,7 +425,7 @@
                             }
                             
                             if(thecomment!=''){
-                                $.post('http://".site_url()."/lumonata_comments.php','comment_type=comment&name='+thename+'&email='+theemail+'&website='+thewebsite+'&comment='+thecomment+'&article_id=".$post_id."&parent_id=0',function(data){
+                                $.post('http://".site_url()."/lumonata_comments.php','comment_type=comment&name='+thename+'&email='+encodeURIComponent(theemail)+'&website='+encodeURIComponent(thewebsite)+'&comment='+encodeURIComponent(thecomment)+'&article_id=".$post_id."&parent_id=0',function(data){
                                     $('#alert_".$post_id."').html(data);
                                 });
 
@@ -512,7 +512,7 @@
                             $('#send_comment_".$post_id."').attr('disabled',true);
                             $('#commentarea_".$post_id."').attr('disabled',true);	
                             
-                            $.post('http://".site_url()."/lumonata_comments.php','comment_type=comment&comment='+thecomment+'&article_id=".$post_id."&parent_id=0',function(data){
+                            $.post('http://".site_url()."/lumonata_comments.php','comment_type=comment&comment='+encodeURIComponent(thecomment)+'&article_id=".$post_id."&parent_id=0',function(data){
                             	var count_child=$('.comment_wrapper_".$post_id."').size();
                             	if(count_child==0){
                             		$(\".comment_box_".$post_id."\").html('');

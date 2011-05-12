@@ -1301,8 +1301,6 @@
         global $thepost;
         $index=0;
         $button="";
-        $sef_scheme="";
-        
         set_page_template();
         
         if(!is_contributor())
@@ -1516,8 +1514,6 @@
     
     function edit_article($post_id=0,$type,$title){
         global $thepost;
-        $sef_scheme="";
-        
         $index=0;
         $button="";
         set_article_template();
@@ -1709,7 +1705,6 @@
                 add_variable('most_used_tags',get_most_used_tags($type,$index));
                 add_variable('add_new_tag',add_new_tag($post_id,$index));
                 
-                
                 //Get The Permalink
                 if(is_permalink()){
                     if(isset($_POST['sef_box'][$index]))
@@ -1774,6 +1769,8 @@
 	                    							$('#the_sef_content_".$_POST['index']."').html(new_sef.substr(0,50)+more);
 	             								}
                  							});
+                 							
+                 							
                         				});
                                   </script>"; 
                         $sef_scheme.="</div>";
@@ -2066,14 +2063,16 @@
         $var_name['id']='';
         $var_name['sef']='';
         $var_name['type']='pages';
-        
+
+        $args=str_replace('&amp;','U+0026', $args);
+       
         if(!empty($args)){
             $args=explode('&',$args);
             foreach($args as $val){
                 list($variable,$value)=explode('=',$val);
                 if($variable=='title' || $variable=='id' || $variable=='type' || $variable=='sef')
                 $var_name[$variable]=$value;
-                
+                $var_name[$variable]=str_replace('U+0026','&amp;', $var_name[$variable]);
             }
         }
         
