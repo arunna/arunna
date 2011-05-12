@@ -36,7 +36,7 @@
 	background-color:#84ff90;
 	color:#333333;
 	font-size:14px;
-	margin:20px 0 20px 20px;
+	margin:20px auto 20px auto;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
 	
@@ -48,7 +48,7 @@
 	background-color:#FF6666;
 	color:#333333;
 	font-size:14px;
-	margin:20px 0 20px 20px;
+	margin:20px auto 20px auto;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
 	
@@ -60,7 +60,7 @@
 	background-color:#FFCC66;
 	color:#333333;
 	font-size:14px;
-	margin:20px 0 20px 20px;
+	margin:20px auto 20px auto;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
 	

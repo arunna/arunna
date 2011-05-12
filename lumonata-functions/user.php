@@ -469,7 +469,8 @@
 		$tokenmail=$_GET['token'];
 								
 		if(isset($_POST['signup'])){
-			$validation_user=is_valid_user_input($_POST['username'], $_POST['password'], $_POST['repassword'], $_POST['email'], $_POST['sex'],"");
+			$validation_user=is_valid_user_input($_POST['username'],$_POST['first_name'],$_POST['last_name'], $_POST['password'], $_POST['repassword'], $_POST['email'], $_POST['sex'],"");
+			
 			if($validation_user=="OK"){
 			    			    
 				if(!empty($_POST['birthday']) && !empty($_POST['birthmonth']) && !empty($_POST['birthyear'])){
@@ -477,18 +478,21 @@
 					$thebirthday=date("Y-m-d",strtotime($thebirthday));
 				}else{
 					$thebirthday="0000-00-00";
-				}	
-				if(save_user($_POST['username'],$_POST['password'],$_POST['email'],$_POST['sex'],"standard",$thebirthday)){
+				}
+
+				
+				$display_name=$_POST['first_name']." ".$_POST['last_name'];
+				
+				if(save_user($_POST['username'],$_POST['password'],$_POST['email'],$_POST['sex'],"standard",$thebirthday,0,$display_name)){
                         $user_id=mysql_insert_id(); // must be at first line here
                         
                         //add additional field for invitation limit
 				        $invite_limit=get_meta_data("invitation_limit");
 				        add_additional_field($user_id, "invite_limit", $invite_limit, "user");
 				        
-                        if(!empty($_POST['first_name']))
+                        //if(!empty($_POST['first_name']))
                         add_additional_field($user_id,'first_name',$_POST['first_name'],'user');
-
-                        if(!empty($_POST['last_name']))
+                        //if(!empty($_POST['last_name']))
                         add_additional_field($user_id,'last_name',$_POST['last_name'],'user');
                         
                         $inviter_id=0;
@@ -1020,13 +1024,17 @@
 	 * @return boolean True if the insert process is success  
 	 */
 	
-	function save_user($username,$password,$email,$sex,$user_type,$birthday,$status=0){
+	function save_user($username,$password,$email,$sex,$user_type,$birthday,$status=0,$display_name=''){
 		global $db;
 		$regdate=date("Y-m-d H:i:s");
 		$activation_key=md5($username.$email.$password);
+		
+		if(empty($display_name))
+		$display_name=$username;
+		
 		$sql=$db->prepare_query("INSERT INTO
 					lumonata_users(lusername,ldisplay_name,lpassword,lemail,lsex,lregistration_date,luser_type,lactivation_key,lbirthday,lstatus,ldlu)
-					VALUES (%s,%s,%s,%s,%d,%s,%s,%s,%s,%d,%s)",$username,$username,md5($password),$email,$sex,$regdate,$user_type,$activation_key,$birthday,$status,$regdate);
+					VALUES (%s,%s,%s,%s,%d,%s,%s,%s,%s,%d,%s)",$username,$display_name,md5($password),$email,$sex,$regdate,$user_type,$activation_key,$birthday,$status,$regdate);
 		
 		return $db->do_query($sql);
 		
@@ -1188,48 +1196,54 @@
 	 * 
 	 * @return string when data are good return OK, if not return the alert text  
 	 */
-	function is_valid_user_input($username,$password,$re_password,$email,$sex,$website){
+	function is_valid_user_input($username,$first_name,$last_name,$password,$re_password,$email,$sex,$website){
 		
 		if(empty($username)){
-			return "<div class=\"alert_red\">Please specifiy your username</div>";
+			return "<div class=\"alert_red_form\">Please specifiy your username</div>";
 		}
 		if(strlen($username) < 5){
-			return "<div class=\"alert_red\">Username <em>$username</em> should be at least five characters long</div>";
+			return "<div class=\"alert_red_form\">Username <em>$username</em> should be at least five characters long</div>";
 		}
 		if(is_exist_user($username) && (is_add_new()|| is_register_form())){
-			return "<div class=\"alert_red\">Username <em>$username</em> is not available, please try another username</div>";
+			return "<div class=\"alert_red_form\">Username <em>$username</em> is not available, please try another username</div>";
+		}
+		if(empty($first_name)){
+			return "<div class=\"alert_red_form\">Please specifiy your first name</div>";
+		}
+		if(empty($last_name)){
+			return "<div class=\"alert_red_form\">Please specifiy your last name</div>";
 		}
 		if(empty($email)){
-			return "<div class=\"alert_red\">Please specifiy your email</div>";
+			return "<div class=\"alert_red_form\">Please specifiy your email</div>";
 		}
 		if(is_exist_email($email) && (is_add_new()|| is_register_form()))
-			return "<div class=\"alert_red\">This email is already taken. Please choose another email</div>";
+			return "<div class=\"alert_red_form\">This email is already taken. Please choose another email</div>";
 			
 		if(empty($sex)){
-			return "<div class=\"alert_red\">Please select your gender</div>";
+			return "<div class=\"alert_red_form\">Please select your gender</div>";
 		}
 		if(!isEmailAddress($email)){
-			return "<div class=\"alert_red\">Invalid email format(<em>$email</em>) </div>";
+			return "<div class=\"alert_red_form\">Invalid email format(<em>$email</em>) </div>";
 		}
 		
 		if(!empty($website) && $website!="http://"){
 			if(!is_website_address($website))
-				return "<div class=\"alert_red\">Invalid website format (<em>$website</em>)</div>";
+				return "<div class=\"alert_red_form\">Invalid website format (<em>$website</em>)</div>";
 		}
-		if(is_add_new() || is_category("appname=register")){
+		if(is_add_new() || is_category("appname=register") || $_GET['state']=='register'){
 			if(empty($password) || strlen($password)<7){
-				return "<div class=\"alert_red\">The password should be at least seven characters long</div>";
+				return "<div class=\"alert_red_form\">The password should be at least seven characters long</div>";
 			}
 			
 			if($password!=$re_password){
-				return "<div class=\"alert_red\">Password do not match</div>";
+				return "<div class=\"alert_red_form\">Password do not match</div>";
 			}
 		}elseif(is_edit() || is_edit_all()){
 			if(!empty($password)){
 				if(strlen($password)<7)
-					return "<div class=\"alert_red\">$username's password should be at least seven characters long</div>";
+					return "<div class=\"alert_red_form\">$username's password should be at least seven characters long</div>";
 				elseif($password!=$re_password){
-					return "<div class=\"alert_red\">$username's password do not match</div>";
+					return "<div class=\"alert_red_form\">$username's password do not match</div>";
 				}
 			}
 			
@@ -1278,7 +1292,7 @@
 		//add_actions('header_elements','get_javascript','password');
 		if(is_save_changes()){
 			
-			$validation_rs=is_valid_user_input($_POST['username'][0],$_POST['password'][0],$_POST['re_password'][0],$_POST['email'][0],$_POST['sex'][0],$_POST['website'][0]);
+			$validation_rs=is_valid_user_input($_POST['username'][0],$_POST['first_name'][0],$_POST['last_name'][0],$_POST['password'][0],$_POST['re_password'][0],$_POST['email'][0],$_POST['sex'][0],$_POST['website'][0]);
 			if($validation_rs=="OK"){
 				
 				$thebirthday="000-00-00";	

@@ -525,7 +525,7 @@
 			$thebirthday="0000-00-00";
 			
 			if(is_add_new()){
-				$validation_rs=is_valid_user_input($_POST['username'],$_POST['password'],$_POST['re_password'],$_POST['email'],$_POST['sex'],$_POST['website']);
+				$validation_rs=is_valid_user_input($_POST['username'],$_POST['first_name'],$_POST['last_name'],$_POST['password'],$_POST['re_password'],$_POST['email'],$_POST['sex'],$_POST['website']);
 				if($validation_rs=="OK"){
 					
 					if(!empty($_POST['birthday']) && !empty($_POST['birthmonth']) && !empty($_POST['birthyear'])){
@@ -533,7 +533,10 @@
 						$thebirthday=date("Y-m-d",strtotime($thebirthday));
 					}	
 					
-					if(save_user($_POST['username'],$_POST['password'],$_POST['email'],$_POST['sex'],$_POST['user_type'],$thebirthday,$_POST['status'])){
+					
+					$display_name=$_POST['first_name']." ".$_POST['last_name'];
+										
+					if(save_user($_POST['username'],$_POST['password'],$_POST['email'],$_POST['sex'],$_POST['user_type'],$thebirthday,$_POST['status'],$display_name)){
 						$user_id=mysql_insert_id();
 						add_friend_to_admin($user_id);
 						
@@ -546,10 +549,10 @@
 						if(!empty($_POST['first_name']))
 						add_additional_field($user_id,'first_name',$_POST['first_name'],'user');
 						
-						if(!empty($_POST['last_name']))
+						//if(!empty($_POST['last_name']))
 						add_additional_field($user_id,'last_name',$_POST['last_name'],'user');
 						
-						if(!empty($_POST['website']))
+						//if(!empty($_POST['website']))
 						add_additional_field($user_id,'website',$_POST['website'],'user');
 						
 						//send message is checked
