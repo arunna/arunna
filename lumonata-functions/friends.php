@@ -414,9 +414,17 @@
 	    		require_once('settings.php');
 	    		if(!defined('SITE_URL'))
 				define('SITE_URL',get_meta_data('site_url'));
-				$friend_result=friend_search($_POST['s']);
+				
+				if(isset($_POST['fid'])){
+					$friend_result=friend_search($_POST['s'],$_POST['fid']);
+					$friend_of_friend=true;
+				}else{
+					$friend_result=friend_search($_POST['s'],$_COOKIE['user_id']);
+					$friend_of_friend=false;
+				}
+				
 				if(count($friend_result)>0)
-					echo friends_list_array($friend_result);
+					echo friends_list_array($friend_result,$friend_of_friend);
 				else 
 					echo "<div class=\"alert_yellow_form\">No result found for <em>".$_POST['s']."</em>.</div>";
 				
@@ -779,7 +787,7 @@
 		tooltips('friends');
 		$friend_cnt=count_all_friend($user_id);
 		if(count($myfriends)>0){
-			$friends_html.="<div style='border-bottom:1px solid #ccc;margin-bottom:10px;' class='clearfix'>";
+			$friends_html.="<div  class='clearfix'>";
 			$friends_html.="<h2>Friends (".$friend_cnt.")</h2>";
 			
 				foreach ($myfriends['id'] as $key=>$val){
@@ -792,6 +800,15 @@
 				
 			
 			$friends_html.="</div>";
+			
+			if(!is_dashboard()){
+				$prolink=get_state_url('friends')."&tab=".$_GET['id'];
+			}else{
+				$prolink=get_state_url('friends');
+			}
+			$friends_html.="<div style=\"background:#f0f0f0;border-bottom:1px solid #ccc;margin-bottom:10px;padding:3px;text-align:right;\">
+								<a href=\"".$prolink."\">View All</a>
+							</div>";
 		}
 		return $friends_html;
    }
@@ -1010,6 +1027,8 @@
 			return invite_friends($tabs);
 		}elseif($_GET['tab']=='manage-friend-list'){
 			return manage_user_list($tabs);
+		}elseif(isset($_GET['tab']) && is_numeric($_GET['tab'])){
+			return friend_of_friend($_GET['tab']);
 		}
 		
 	}
@@ -1184,7 +1203,7 @@
 		}
 		return $friends;
 	}
-	function friend_search($sterms=''){
+	function friend_search($sterms='',$user_id){
 		global $db;
 		$friends=array();
 		$viewed=list_viewed();
@@ -1196,13 +1215,13 @@
 										AND (a.lstatus='connected' OR a.lstatus='unfollow') 
 										AND a.lfriend_id=b.luser_id 
 										AND b.ldisplay_name like %s
-										ORDER BY b.ldlu DESC",$_COOKIE['user_id'],"%".$sterms."%");
+										ORDER BY b.ldlu DESC",$user_id,"%".$sterms."%");
 		else 
 			$query=$db->prepare_query("SELECT a.lfriendship_id,a.lfriend_id,a.lstatus
 										FROM lumonata_friendship a, lumonata_users b
 										WHERE a.luser_id=%d AND (a.lstatus='connected' OR a.lstatus='unfollow') AND a.lfriend_id=b.luser_id
 										ORDER BY b.ldlu DESC 
-										LIMIT %d,%d",$_COOKIE['user_id'],0,$viewed);
+										LIMIT %d,%d",$user_id,0,$viewed);
 			
 		$result=$db->do_query($query);
 		while($friend=$db->fetch_array($result)){
@@ -1351,14 +1370,84 @@
 		return return_template('friends'); 	
 		
 	}
-	
-	function friends_list_array($friends=array()){
+	function friend_of_friend($fid){
+		global $db;$followjs='';
+		//set template
+		set_template(TEMPLATE_PATH."/friends.html",'friends');
+		
+		//set block
+		add_block('friendshipBlock','fBlock','friends');
+		add_block('inviteFriendsBlock','ifBlock','friends');
+		add_block('friendsRequestBlock','frBlock','friends');
+		add_block('manageFriendListBlock','mflBlock','friends');
+		
+		//Add variable
+		//configure the tabs
+		$friend=fetch_user($fid);
+		
+		$tabs=array($fid =>"Friends");
+		
+		$tabb='';
+		if(empty($fid))
+			$the_tab='friends';
+		else
+			$the_tab=$fid;
+		
+
+		add_actions('section_title',$friend['ldisplay_name']."'s Friends");	
+		add_variable('title',$friend['ldisplay_name']."'s Friends");
+		add_variable('tabs',set_tabs($tabs,$the_tab));
+		
+		$html='<span id="response"></span>';
+		
+		$viewed=list_viewed();
+        if(isset($_GET['page'])){
+            $page= $_GET['page'];
+        }else{
+            $page=1;
+        }
+        
+        $limit=($page-1)*$viewed;
+		
+		
+		$err="You don't have any friend yet.";
+		$friends=myfriends($fid,$limit,$viewed);
+		
+		$the_query=$db->prepare_query("SELECT * FROM lumonata_friendship
+									   WHERE luser_id=%d AND lstatus='connected'",$fid);
+		
+		$num_rows=$db->num_rows($db->do_query($the_query));
+		$url=cur_pageURL()."&page=";
+			
+		
+		
+		if(count($friends)==0){
+			$html="<div class=\"alert_yellow_form\">".$err."</div>";
+		}else{	
+			
+			$html.=friends_list_array($friends,true);
+			$html.="<div class=\"paging_right\">". paging($url,$num_rows,$page,$viewed,10)."</div>";
+
+			$fl_html="<div>".dashboard_invite_friends()."</div>";
+			
+			add_variable('friend_list',$fl_html);
+		}
+			
+		
+		add_variable('myfriends_list',$html);
+		add_variable('friends_search',search_box('../lumonata-functions/friends.php','friendship','search=true&fid='.$fid.'&','left','alert_green_form','Search Friends'));
+		parse_template('friendshipBlock','fBlock');
+		return return_template('friends'); 
+	}
+	function friends_list_array($friends=array(),$friend_of_friend=false){
 		$html='';
+		$followjs='';
 		if(count($friends)<1)
 		return;
 		
 		foreach($friends['id'] as $key=>$value){
 				$flist=the_fs_list($friends['fid'][$key]);
+				
 				$follow_label='';
 				
 				if(!(is_administrator($friends['id'][$key]))){
@@ -1389,38 +1478,76 @@
 								});";
 				}
 				
-				$html.='<div class="friends_item clearfix" id="friends_item_'.$key.'">
-					    	<div class="friends_avatar">
-					    		<a href="'.get_state_url('my-profile').'&id='.$friends['id'][$key].'">
-					    			<img src="'.$friends['avatar'][$key].'" title="'.$friends['name'][$key].'" alt="'.$friends['name'][$key].'" />
-					    		</a>
-					    	</div>
-					    	<div class="friends_name"><p><a href="'.get_state_url('my-profile').'&id='.$friends['id'][$key].'">'.$friends['name'][$key].'</a> '.$flist.'</p></div>
-					    	<div class="edit_friends_list"><p style="display: none;" id="edit_list_'.$key.'"><a href="../lumonata-functions/friends.php?editlist=true&id='.$friends['fid'][$key].'&friend_id='.$friends['id'][$key].'&redirect='.urlencode(cur_pageURL()).'&key=#colorbox_'.$key.'" id="colorbox_'.$key.'" >Edit Lists</a></p></div>
-					    	<div class="follow_unfollow">'.$follow_label.'</div>';
-							
-							if(!(is_administrator($friends['id'][$key]) || is_administrator())){			
-						    	$html.='<div class="delete_friends_list"><p><a href="javascript:;" rel="delete_'.$friends['id'][$key].'">&nbsp;</a></p></div>';
-						    	$delete_msg="Are you sure want to delete ".$friends['name'][$key]." from your friend list?";
-						    	add_actions('admin_tail','delete_confirmation_box',$friends['id'][$key],$delete_msg,'../lumonata-functions/friends.php','friends_item_'.$key,'friend_id='.$friends['id'][$key].'&user_id='.$_COOKIE['user_id']);
-							}
-							
-				$html.='</div>';
-				$html.="<script type=\"text/javascript\">";
-				$html.="$(function(){";
-					$html.=$followjs;			
-					$html.="$('#friends_item_".$key."').mouseover(function(){
-				        		$('#edit_list_".$key."').show();
-				        	});
-				        	
-				    		$('#friends_item_".$key."').mouseout(function(){
-				        		$('#edit_list_".$key."').hide();
-				        	});
-				        	
-				        	$('#colorbox_".$key."').colorbox();
-						});
-			    		
-			    	</script>";
+				if($friend_of_friend==false){
+					$html.='<div class="friends_item clearfix" id="friends_item_'.$key.'">
+						    	<div class="friends_avatar">
+						    		<a href="'.get_state_url('my-profile').'&id='.$friends['id'][$key].'">
+						    			<img src="'.$friends['avatar'][$key].'" title="'.$friends['name'][$key].'" alt="'.$friends['name'][$key].'" />
+						    		</a>
+						    	</div>
+						    	<div class="friends_name"><p><a href="'.get_state_url('my-profile').'&id='.$friends['id'][$key].'">'.$friends['name'][$key].'</a> '.$flist.'</p></div>
+						    	<div class="edit_friends_list"><p style="display: none;" id="edit_list_'.$key.'"><a href="../lumonata-functions/friends.php?editlist=true&id='.$friends['fid'][$key].'&friend_id='.$friends['id'][$key].'&redirect='.urlencode(cur_pageURL()).'&key=#colorbox_'.$key.'" id="colorbox_'.$key.'" >Edit Lists</a></p></div>
+						    	<div class="follow_unfollow">'.$follow_label.'</div>';
+								
+								if(!(is_administrator($friends['id'][$key]) || is_administrator())){			
+							    	$html.='<div class="delete_friends_list"><p><a href="javascript:;" rel="delete_'.$friends['id'][$key].'">&nbsp;</a></p></div>';
+							    	$delete_msg="Are you sure want to delete ".$friends['name'][$key]." from your friend list?";
+							    	add_actions('admin_tail','delete_confirmation_box',$friends['id'][$key],$delete_msg,'../lumonata-functions/friends.php','friends_item_'.$key,'friend_id='.$friends['id'][$key].'&user_id='.$_COOKIE['user_id']);
+								}
+								
+					$html.='</div>';
+					
+					$html.="<script type=\"text/javascript\">";
+					$html.="$(function(){";
+						$html.=$followjs;			
+						$html.="$('#friends_item_".$key."').mouseover(function(){
+					        		$('#edit_list_".$key."').show();
+					        	});
+					        	
+					    		$('#friends_item_".$key."').mouseout(function(){
+					        		$('#edit_list_".$key."').hide();
+					        	});
+					        	
+					        	$('#colorbox_".$key."').colorbox();
+							});
+				    		
+				    	</script>";
+				}else{
+					
+					if(($_COOKIE['user_id']==$friends['id'][$key]) || is_my_friend($_COOKIE['user_id'], $friends['id'][$key],'connected') || is_my_friend($_COOKIE['user_id'], $friends['id'][$key],'unfollow')){
+						$follow_label='';
+					}elseif(is_my_friend($_COOKIE['user_id'], $friends['id'][$key],'pending')){
+						$follow_label="<span style='color:#CCC;'>Request pending.</span>";
+					}elseif(is_my_friend($_COOKIE['user_id'], $friends['id'][$key],'onrequest')){
+						$follow_label="<p><a class=\"button_add_friend\" href=\"../lumonata-functions/friends.php?add_friend=true&type=confirm&friendship_id=".$friends['fid'][$key]."&friend_id=".$friends['id'][$key]."&redirect=".urlencode(cur_pageURL())."&key=#add_friend\" id=\"add_friend_".$key."\" >Confirm Request</a></p>";
+						$follow_label.="<script type=\"text/javascript\">
+								   			$('#add_friend_".$key."').click(function(){
+								   				$('#add_friend_".$key."').colorbox();
+											});
+								   		</script>";
+					}else{
+						$follow_label="<p><a class=\"button_add_friend\" href=\"../lumonata-functions/friends.php?add_friend=true&type=add&friendship_id=0&friend_id=".$friends['id'][$key]."&redirect=".urlencode(cur_pageURL())."&key=#add_friend\" id=\"add_friend_".$key."\" >Add as friend</a></p>";
+						$follow_label.="<script type=\"text/javascript\">
+								   			$('#add_friend_".$key."').click(function(){
+								   				$('#add_friend_".$key."').colorbox();
+											});
+								   		</script>";
+					}
+					
+					$html.='<div class="friends_item clearfix" id="friends_item_'.$key.'">
+						    	<div class="friends_avatar">
+						    		<a href="'.get_state_url('my-profile').'&id='.$friends['id'][$key].'">
+						    			<img src="'.$friends['avatar'][$key].'" title="'.$friends['name'][$key].'" alt="'.$friends['name'][$key].'" />
+						    		</a>
+						    	</div>
+						    	<div class="friends_name_fof"><p><a href="'.get_state_url('my-profile').'&id='.$friends['id'][$key].'">'.$friends['name'][$key].'</a> '.$flist.'</p></div>
+						    	<div class="fof_add_friend">'.$follow_label.'</div>';
+								
+								
+					$html.='</div>';
+					
+					
+				}
 				
 				
 			}
