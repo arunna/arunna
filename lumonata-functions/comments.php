@@ -696,7 +696,7 @@
                                    ,$user_id
                                    ,$comment_type);
          
-         if(!is_duplicate_comment($comment)){
+         //if(!is_duplicate_comment($comment)){
          	$r=$db->do_query($sql);
          	$thepost->comment_id=mysql_insert_id();
 	         if($r){
@@ -724,7 +724,7 @@
 	         		
 	         	return update_count_comment($article_id);
 	         }
-         }
+         //}
         
     }
     
