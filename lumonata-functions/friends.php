@@ -804,17 +804,22 @@
 	}
 	
 	function friend_thumb_list($user_id){
-		
-		if(!isset($_GET['tab'])){
-   			$myfriends=myfriends($user_id, 0, 12);
-   			$flist_name=array();
-   			$list_id=0;
-   			$friend_cnt=count_all_friend($user_id);
+		if(is_dashboard()){
+			if(!isset($_GET['tab'])){
+	   			$myfriends=myfriends($user_id, 0, 12);
+	   			$flist_name=array();
+	   			$list_id=0;
+	   			$friend_cnt=count_all_friend($user_id);
+			}else{
+				$list_id=base64_decode($_GET['tab']); 
+	   			$myfriends=myfriends($user_id, 0, 12,$list_id);
+	   			$flist_name=flist_name(base64_decode($_GET['tab']));
+	   			$friend_cnt=count_all_friend($user_id,$list_id);
+			}
 		}else{
-			$list_id=base64_decode($_GET['tab']); 
-   			$myfriends=myfriends($user_id, 0, 12,$list_id);
-   			$flist_name=flist_name(base64_decode($_GET['tab']));
-   			$friend_cnt=count_all_friend($user_id,$list_id);
+			$friend_cnt=count_all_friend($user_id);
+			$flist_name=array();
+			$myfriends=myfriends($user_id, 0, 12);
 		}
    				
 		$friends_html='';
@@ -847,8 +852,8 @@
 								</div>";
 			}
 	   		
-		
-		    $friends_html.="	<script type=\"text/javascript\">
+			if(is_dashboard()){
+		    	$friends_html.="<script type=\"text/javascript\">
 									$(function(){
 										$('#invite_friend_fl').colorbox();
 									});
@@ -859,6 +864,7 @@
 									</a>
 								</div>
 								";
+			}
 			
 			$friends_html.="</div>";
 			
@@ -871,21 +877,22 @@
 									<a href=\"".$prolink."\">View All</a>
 								</div>";
 		}else{
-			  $friends_html.="<div  class='clearfix'>";
-			  $friends_html.="<h2>Add Friend to ".$fl_label."</h2>";
-			  $friends_html.="	<script type=\"text/javascript\">
-									$(function(){
-										$('#invite_friend_fl').colorbox();
-									});
-								</script>	
-								<div style='width:50px:height:50px;overflow:hidden;margin:5px 5px;float:left'>
-									<a href=\"../lumonata-functions/friends.php?manage_list=invite&amp;list_name=".$fl_label."&list_id=".$list_id."\" id=\"invite_friend_fl\" rel=\"friends\" title=\"Add more friends\">
-										<img src='".get_theme_img()."/add-more-friend.png' border='1' />
-									</a>
-								</div>
-								";
-			  $friends_html.="</div>";
-			  
+			  if(is_dashboard()){
+				  $friends_html.="<div  class='clearfix'>";
+				  $friends_html.="<h2>Add Friend to ".$fl_label."</h2>";
+				  $friends_html.="	<script type=\"text/javascript\">
+										$(function(){
+											$('#invite_friend_fl').colorbox();
+										});
+									</script>	
+									<div style='width:50px:height:50px;overflow:hidden;margin:5px 5px;float:left'>
+										<a href=\"../lumonata-functions/friends.php?manage_list=invite&amp;list_name=".$fl_label."&list_id=".$list_id."\" id=\"invite_friend_fl\" rel=\"friends\" title=\"Add more friends\">
+											<img src='".get_theme_img()."/add-more-friend.png' border='1' />
+										</a>
+									</div>
+									";
+				  $friends_html.="</div>";
+			  }
 		}
 		return $friends_html;
    }
