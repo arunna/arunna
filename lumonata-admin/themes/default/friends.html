@@ -52,11 +52,15 @@
     	  <div class="invite_friends clearfix" >
     	  		<div class="invite_email">
     	  			<form action="" method="post" >
-    	  			<h3>Your have {invite_credit} credit</h3>
-    	  			<p><strong>{alert}</strong></p>
-    	  			{sent_list}
-    	  			<div style="margin: 5px 0;"><strong>Invite email addresses</strong> (One email address per row)</div>
-	    	  			<textarea rows="5" cols="50" name="invited_email" class="textarea"></textarea>
+	    	  			<h3>Your have {invite_credit} credit</h3>
+	    	  			<p><strong>{alert}</strong></p>
+	    	  			{sent_list}
+	    	  			<div style="margin: 5px 0;"><strong>Invite email addresses</strong> (One email address per row)</div>
+		    	  		<textarea rows="5" cols="50" name="invited_email" class="textarea"></textarea>
+		    	  		
+		    	  		<div style="margin: 5px 0;"><strong>Personal Message</strong></div>
+		    	  		<textarea rows="5" cols="50" name="personal_message" class="textarea" style="height: 50px;"></textarea>
+	    	  		
 	    	  			<div style="text-align: right;margin: 5px 0;">
 	    	  				<input type="submit" name="invite" value="Send Invites" class="button" />
 	    	  			</div>

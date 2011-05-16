@@ -50,7 +50,7 @@
         		            if(isEmailAddress(trim($value))){
         		                  $enc_ulid=base64_encode($_POST['list_id']);
         		                  if($count>0){
-            		                  $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value,'',$enc_ulid);
+            		                  $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value,$_POST['personal_message'],$enc_ulid);
             		                  if($send_invite){
             		                      $count--;
             		                      $sent++;
@@ -61,7 +61,7 @@
                                       		  	</tr>";
             		                  }
             		              }elseif($count==-1){ //for unlimited invitation
-        	                          	  $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value,'',$enc_ulid);
+        	                          	  $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value,$_POST['personal_message'],$enc_ulid);
         	                          	  $sent++;
             		                      $no=$key+1;
                         		          $html.="<tr>
@@ -510,6 +510,10 @@
     					<div style=\"margin: 5px 0;\"><h3>You have ".$invite_credit." credit</h3></div>
     					<div style=\"margin: 5px 0;\"><strong>Invite Friends to ".$_GET['list_name']." List</strong> (One email address per row)</div>
     					<textarea rows='5' cols='50' name='invited_email' style='border:1px solid #ccc;'></textarea>
+    					
+    					<div style=\"margin: 5px 0;\"><strong>Personal Message</strong></div>
+    					<textarea rows='5' cols='50' name='personal_message' style='border:1px solid #ccc;height:50px;'></textarea>
+    					
     					<div style=\"text-align: right;margin: 5px 0;\">
         	  				<input type=\"button\" name=\"invite_to_list\" value=\"Send Invites\" class=\"button\" />
         	  			</div>
@@ -521,7 +525,8 @@
 							
 							$.post('../lumonata-functions/friends.php',
 									{ 
-										'emails' 			: $('textarea[name=invited_email]').val(),
+										'emails' 				: $('textarea[name=invited_email]').val(),
+										'personal_message'		: $('textarea[name=personal_message]').val(),
 									   	'list_id'				: ".$_GET['list_id'].",
 									   	'list_name'				: '".$_GET['list_name']."',
 									   	'manage_list'			: 'invite',
@@ -1831,20 +1836,20 @@
         	                  if(isset($_POST['sent_email'])){
         	                      if(!in_array(trim($value), $_POST['sent_email'])){
         	                          if($count>0){
-        	                              $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value);
+        	                              $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value,$_POST['personal_message']);
         	                              if($send_invite)
         	                              $count--;
         	                          }elseif($count==-1){ //for unlimited invitation
-        	                          	  $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value);	
+        	                          	  $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value,$_POST['personal_message']);	
         	                          }else break;
         	                      }
         	                  }else{
         	                      if($count>0){
-            	                      $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value);
+            	                      $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value,$_POST['personal_message']);
             	                      if($send_invite)
         	                          $count--;
         	                      }elseif($count==-1){ //for unlimited invitation
-        	                          	  $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value);	
+        	                          	  $send_invite=invitation_mail($user['lemail'],$user['ldisplay_name'],$value,$_POST['personal_message']);	
         	                      }else break;
         	                  }
         	                  
