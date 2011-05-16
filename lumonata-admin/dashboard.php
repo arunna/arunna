@@ -228,13 +228,13 @@
 								}
 							});
 							$('#postit').click(function(){
-							  
+							 
 							   if($.trim($('#postarea').val())!=''){
 									$('#post_loading').show();
 									$('#postit').attr('disabled',true);
 									$('#postarea').attr('disabled',true);";
 									if($feeds_type=='post_per_list'){
-										$return.="$.post('postit=status&share_to=".$share_to_id."&status='+encodeURIComponent($('#postarea').val()),function(data){";
+										$return.="$.post('dashboard.php','postit=status&share_to=".$share_to_id."&status='+encodeURIComponent($('#postarea').val()),function(data){";
 									}else{ 
 										$return.="$.post('dashboard.php','postit=status&status='+encodeURIComponent($('#postarea').val()),function(data){";
 									}
