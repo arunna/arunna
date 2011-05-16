@@ -770,14 +770,16 @@
 		
 		return $return;
 	}
-	function friendship_list_name($friendship_id){
+	
+	function friendship_list_name($id){
 		global $db;
 		$return=array();
 		
 		$query=$db->prepare_query("SELECT a.llist_name 
 								   FROM lumonata_friends_list a, lumonata_friends_list_rel b
-								   WHERE b.lfriendship_id=%d AND a.lfriends_list_id=b.lfriends_list_id ",$friendship_id);
+								   WHERE b.lfriendship_id=%d AND a.lfriends_list_id=b.lfriends_list_id ",$id);
 		
+			
 		$result=$db->do_query($query);
 		while($data=$db->fetch_array($result)){
 			$return['list_name'][]=$data['llist_name'];
@@ -785,24 +787,78 @@
 		
 		return $return;
 	}
+	function flist_name($id){
+		global $db;
+		$return=array();
+		
+		$query=$db->prepare_query("SELECT a.llist_name 
+								   FROM lumonata_friends_list a
+								   WHERE a.lfriends_list_id=%d ",$id);
+			
+		$result=$db->do_query($query);
+		while($data=$db->fetch_array($result)){
+			$return['list_name'][]=$data['llist_name'];
+		}
+		
+		return $return;
+	}
+	
 	function friend_thumb_list($user_id){
 		
-   		$myfriends=myfriends($user_id, 0, 12);
+		if(!isset($_GET['tab'])){
+   			$myfriends=myfriends($user_id, 0, 12);
+   			$flist_name=array();
+   			$list_id=0;
+   			$friend_cnt=count_all_friend($user_id);
+		}else{
+			$list_id=base64_decode($_GET['tab']); 
+   			$myfriends=myfriends($user_id, 0, 12,$list_id);
+   			$flist_name=flist_name(base64_decode($_GET['tab']));
+   			$friend_cnt=count_all_friend($user_id,$list_id);
+		}
+   				
 		$friends_html='';
 		tooltips('friends');
-		$friend_cnt=count_all_friend($user_id);
+		
+		
+		
+		
+		if(count($flist_name)>0){
+			$fl_name=" in ".$flist_name['list_name'][0];
+			$fl_label=$flist_name['list_name'][0];
+			$fl_label_to=' to '.$fl_label;
+		}else{ 
+			$fl_name='';
+			$fl_label='';
+			$fl_label_to='';
+		}
+		
 		if(count($myfriends)>0){
+						
 			$friends_html.="<div  class='clearfix'>";
-			$friends_html.="<h2>Friends (".$friend_cnt.")</h2>";
+			$friends_html.="<h2>Friends $fl_name (".$friend_cnt.")</h2>";
 			
-				foreach ($myfriends['id'] as $key=>$val){
-					$friends_html.="<div style='width:32px:height:32px;overflow:hidden;margin:5px 5px;float:left'>
-										<a href=\"".get_state_url('my-profile')."&id=".$myfriends['id'][$key]."\" rel=\"friends\" title=\"".$myfriends['name'][$key]."\">
-											<img src='".$myfriends['avatar'][$key]."' border='0' />
-										</a>
-									</div>";
-				}
-				
+			
+			foreach ($myfriends['id'] as $key=>$val){
+				$friends_html.="<div style='width:50px:height:50px;overflow:hidden;margin:5px 5px;float:left'>
+									<a href=\"".get_state_url('my-profile')."&id=".$myfriends['id'][$key]."\" rel=\"friends\" title=\"".$myfriends['name'][$key]."\">
+										<img src='".$myfriends['avatar'][$key]."' border='0' />
+									</a>
+								</div>";
+			}
+	   		
+		
+		    $friends_html.="	<script type=\"text/javascript\">
+									$(function(){
+										$('#invite_friend_fl').colorbox();
+									});
+								</script>	
+								<div style='width:50px:height:50px;overflow:hidden;margin:5px 5px;float:left'>
+									<a href=\"../lumonata-functions/friends.php?manage_list=invite&amp;list_name=".$fl_label."&list_id=".$list_id."\" id=\"invite_friend_fl\" rel=\"friends\" title=\"Add friends ".$fl_label_to."\">
+										<img src='".get_theme_img()."/add-more-friend.png' border='1' />
+									</a>
+								</div>
+								";
 			
 			$friends_html.="</div>";
 			
@@ -812,8 +868,24 @@
 				$prolink=get_state_url('friends');
 			}
 			$friends_html.="<div style=\"background:#f0f0f0;border-bottom:1px solid #ccc;margin-bottom:10px;padding:3px;text-align:right;\">
-								<a href=\"".$prolink."\">View All</a>
-							</div>";
+									<a href=\"".$prolink."\">View All</a>
+								</div>";
+		}else{
+			  $friends_html.="<div  class='clearfix'>";
+			  $friends_html.="<h2>Add Friend to ".$fl_label."</h2>";
+			  $friends_html.="	<script type=\"text/javascript\">
+									$(function(){
+										$('#invite_friend_fl').colorbox();
+									});
+								</script>	
+								<div style='width:50px:height:50px;overflow:hidden;margin:5px 5px;float:left'>
+									<a href=\"../lumonata-functions/friends.php?manage_list=invite&amp;list_name=".$fl_label."&list_id=".$list_id."\" id=\"invite_friend_fl\" rel=\"friends\" title=\"Add more friends\">
+										<img src='".get_theme_img()."/add-more-friend.png' border='1' />
+									</a>
+								</div>
+								";
+			  $friends_html.="</div>";
+			  
 		}
 		return $friends_html;
    }
@@ -1163,12 +1235,22 @@
 					});	
 				</script>";
 	}
-	function count_all_friend($user_id){
+	function count_all_friend($user_id,$list_id=0){
 		global $db;
-		$query=$db->prepare_query("SELECT *
+		if(empty($list_id))
+			$query=$db->prepare_query("SELECT *
 										FROM lumonata_friendship a
 										WHERE a.luser_id=%d AND (a.lstatus='connected' OR a.lstatus='unfollow') 
 										",$user_id);
+		else
+			$query=$db->prepare_query("SELECT *
+										FROM lumonata_friendship a, lumonata_friends_list_rel b
+										WHERE a.luser_id=%d 
+										AND (a.lstatus='connected' OR a.lstatus='unfollow') 
+										AND b.lfriendship_id=a.lfriendship_id 
+										AND b.lfriends_list_id=%d 
+										",$user_id,$list_id);
+			
 		return $num=$db->num_rows($db->do_query($query));
 	}
 	function myfriends($user_id,$limit,$viewed,$bylist=0){
