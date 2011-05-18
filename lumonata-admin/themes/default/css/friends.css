@@ -61,6 +61,16 @@
 	display: table-cell;
 	
 }
+.friends_name_fof{
+	float: left;
+	width: 70% !important;
+	width:67%;
+	height: 50px;
+	margin: 10px;
+	display: table-cell;
+}
+
+
 .friends_name_request{
 	float: left;
 	width: 46% !important;
@@ -70,12 +80,12 @@
 	display: table-cell;
 	
 }
-.friends_name a,.friends_name_request a{
+.friends_name a,.friends_name_request a, .friends_name_fof a{
 	color:#ef451e;
 	text-decoration: none;
 }
 
-.friends_name p, .friends_name_request p{
+.friends_name p, .friends_name_request p,.friends_name_fof p{
 	font-weight:bold;
 	vertical-align: middle;	
 	position:relative;
@@ -89,6 +99,15 @@
 	margin: 10px;
 	
 }
+
+.fof_add_friend{
+	width: 13%;
+	float: left;
+	height: 50px;
+	margin: 10px;
+}
+
+
 .follow_unfollow_request{
 	width: 19%;
 	float: left;
@@ -96,7 +115,7 @@
 	margin: 10px;
 	
 }
-.follow_unfollow p,.follow_unfollow_request p{
+.follow_unfollow p,.follow_unfollow_request p, .fof_add_friend p{
 	vertical-align: middle;	
 	margin-top:12px !important;
 	margin-top:0;
@@ -133,6 +152,7 @@
 .friends_list_name p{
 	cursor: pointer;
 }
+
 .invite_friends_list{
 	float: left;
 	width: 19%;
