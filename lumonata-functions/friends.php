@@ -868,10 +868,13 @@
 			
 			$friends_html.="</div>";
 			
-			if(!is_dashboard()){
-				$prolink=get_state_url('friends')."&tab=".$_GET['id'];
-			}else{
+			if(is_dashboard()){
 				$prolink=get_state_url('friends');
+			}else{
+				if(isset($_GET['tab']) && $_GET['tab']=="my-updates")
+					$prolink=get_state_url('friends');
+				else 
+					$prolink=get_state_url('friends')."&tab=".$_GET['id'];
 			}
 			$friends_html.="<div style=\"background:#f0f0f0;border-bottom:1px solid #ccc;margin-bottom:10px;padding:3px;text-align:right;\">
 									<a href=\"".$prolink."\">View All</a>

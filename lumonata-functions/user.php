@@ -189,6 +189,7 @@
 	 * 
 	 * @return boolean 
 	 */
+	
 	function post_login(){
 		if(count($_POST)>0)
 		return validate_login();
@@ -694,12 +695,17 @@
                                  WHERE lactivation_key=%s AND lstatus=0",$themail[0]);
         $r=$db->do_query($sql);
         $invited_user=$db->fetch_array($r);
+        
         if($db->num_rows($r)>0){
         	$query=$db->prepare_query("UPDATE lumonata_users
         								SET lstatus=1
         								WHERE lactivation_key=%s",$themail[0]);
         	$result=$db->do_query($query);
         	if($result){
+        		add_friend_list($invited_user['luser_id'], "Work");
+        		add_friend_list($invited_user['luser_id'], "School");
+        		add_friend_list($invited_user['luser_id'], "Family");
+        		
         		if(!empty($themail[1])){
         			$query=$db->prepare_query("UPDATE lumonata_comments
         										SET lcomment_status='approved' 

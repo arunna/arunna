@@ -182,8 +182,13 @@
         
         if($comment_allowed=='allowed'){
         	if(!$close_comment){
-	        	$comment.="<div class=\"the_comment write_comment_wrapper_".$post_id." writecomment\">
-	                       		<input id=\"writecomment_".$post_id."\" type=\"text\" value=\"Write your comment\" readonly=\"readonly\" class=\"inputtext\" style=\"width:98%;color:#666666;border:1px solid #bbb;\" />
+        		if($nn<1)
+        			$style="style=\"display:none;\"";
+        		else 
+        			$style='';
+        			
+	        	$comment.="<div class=\"the_comment write_comment_wrapper_".$post_id." writecomment\" ".$style.">
+	                       		<input id=\"writecomment_".$post_id."\" type=\"text\" value=\"Write your comment\" readonly=\"readonly\" class=\"inputtext\" style=\"width:98%;color:#666666;border:1px solid #BBB;\" />
 	                       </div>
 	                       <script type=\"text/javascript\">
 	                       	$(function(){
