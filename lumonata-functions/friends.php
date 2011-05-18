@@ -873,8 +873,10 @@
 			}else{
 				if(isset($_GET['tab']) && $_GET['tab']=="my-updates")
 					$prolink=get_state_url('friends');
-				else 
+				elseif(isset($_GET['id']))
 					$prolink=get_state_url('friends')."&tab=".$_GET['id'];
+				else 
+					$prolink=get_state_url('friends');
 			}
 			$friends_html.="<div style=\"background:#f0f0f0;border-bottom:1px solid #ccc;margin-bottom:10px;padding:3px;text-align:right;\">
 									<a href=\"".$prolink."\">View All</a>
