@@ -969,9 +969,11 @@
 		while($d=$db->fetch_array($result)){
 			$list.="<div class=\"list_item clearfix\" id=\"the_item_$i\">
 					<input type=\"checkbox\" name=\"select[]\" class=\"title_checkbox select\" value=\"".$d['luser_id']."\" />
-                                        <div class=\"avatar\" ><img src=\"".get_avatar($d['luser_id'], 3)."\" /></div>
-					<div class=\"title_username\" >".$d['lusername']."</div>
-					<div class=\"title_name\">".$d['ldisplay_name']."</div>
+                    <div class=\"avatar\" ><a href=\"".get_state_url('my-profile')."&id=".$d['luser_id']."\"><img src=\"".get_avatar($d['luser_id'], 3)."\" /></a></div>
+					<div class=\"title_username\" >
+						<a href=\"".get_state_url('my-profile')."&id=".$d['luser_id']."\" style=\"display:block;text-decoration:none;\">".$d['lusername']."</a>
+					</div>
+					<div class=\"title_name\"><a href=\"".get_state_url('my-profile')."&id=".$d['luser_id']."\" style=\"display:block;text-decoration:none;\">".$d['ldisplay_name']."</a></div>
 					<div class=\"title_email\">".$d['lemail']."</div>
 					<div class=\"title_category\">".ucfirst($d['luser_type'])."</div>
 					
