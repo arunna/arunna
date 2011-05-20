@@ -67,6 +67,128 @@ th{
 	text-align:right;
 	color:#ffffff;
 }
+/*Search Box*/
+.top_search_box{
+	width: 33%;
+	height: auto;
+	float: left;
+	margin-left: 170px;
+	margin-top: 9px;
+	text-align: left;
+	position: relative;
+}
+
+.search_result_header{
+	background: #F0F0F0;
+	font-weight: bold;
+	padding: 5px;
+	color: #333;
+}
+.top_search_wrapper{
+	width: 340px;
+	background: #EF835C;
+	padding: 6px 8px;
+	border-top: 1px solid #D03414;
+	border-left: 1px solid #D03414;
+	border-right: 1px solid #D03414;
+	-moz-border-radius:5px 5px 0 0;
+	-webkit-border-radius:5px 5px 0 0;
+}
+.top_search_button{
+	background-image:url(../images/searchbox.png);
+	width: 33px;
+	height: 25px;
+	border:1px solid #D03414;
+	margin: 0px 0 0 -2px;
+	padding: 0;
+}
+.input_search_wrapper{
+	height: 25px;
+	width: 300px;
+	float:left;
+	background: #CCC;
+}
+.button_search_wrapper{
+	float:left;
+	height: 25px;
+	width:33px;
+}
+.search_top_text{
+	border: 1px solid #F0F0F0;
+	height: 20px;
+	width: 300px;
+	font: inherit;
+	color: #CCC;
+	font-size: 11px; 	
+}
+#top_search_result_wrapper{
+	position: absolute;
+	background:#FFF;
+	z-index: 1;
+	width: 356px;
+	height:auto;
+	max-height:360px;
+	border:1px solid #D03414;
+}
+.top_search_result_wrapper{
+	width: 356px;
+	height:auto;
+	max-height:330px;
+	overflow: hidden;
+}
+.top_search_result{
+	width: 100%;
+	height: auto;
+	cursor: pointer;
+	color: #EF451E;
+}
+.top_search_result:hover{
+	background:#EF835C;
+	color: #FFF; 
+}
+.top_search_avatar{
+	width:50px;
+	height: 50px;
+	overflow: hidden;
+	float: left;
+	margin: 5px;
+}
+.top_search_avatar a{
+	display: block;
+}
+.top_search_name{
+	width:250px;
+	height: 50px;
+	overflow: hidden;
+	float:left;
+	margin: 5px;
+}
+.top_search_name a{
+	display: block;
+	color: inherit;
+	text-decoration: none;
+	height: 50px;
+}
+.more_search_result{
+	width: 345px;
+	height: 20px;
+	background: #F0F0F0;
+	color: #333;
+	margin-top: 0px;
+	text-align: center;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 5px;
+	
+}
+
+/*End of Search Box*/
+
+.topnav{
+	width: 50%;
+	height: 47px;
+	float: left;
+}
 .lumonata_header ul{
 	margin:0;
 	padding:25px 20px 0 0;

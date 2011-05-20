@@ -406,25 +406,35 @@
 					echo "<div>Something went wrong. Please try again later</div>";
 				}
 			}
-		}elseif(isset($_POST['search'])){
+		}elseif(isset($_POST['search']) || isset($_POST['top_search'])){
 			require_once('../lumonata_config.php');
 			require_once 'user.php';
 			if(is_user_logged()){
 				require_once('../lumonata_settings.php');
 	    		require_once('settings.php');
+	    		
 	    		if(!defined('SITE_URL'))
 				define('SITE_URL',get_meta_data('site_url'));
+				
 				
 				if(isset($_POST['fid'])){
 					$friend_result=friend_search($_POST['s'],$_POST['fid']);
 					$friend_of_friend=true;
 				}else{
-					$friend_result=friend_search($_POST['s'],$_COOKIE['user_id']);
-					$friend_of_friend=false;
+					if(isset($_POST['top_search'])){
+						$friend_result=search_all_user($_POST['s']);
+						$friend_of_friend=false;
+					}else{
+						$friend_result=friend_search($_POST['s'],$_COOKIE['user_id']);
+						$friend_of_friend=false;
+					}
 				}
 				
 				if(count($friend_result)>0)
-					echo friends_list_array($friend_result,$friend_of_friend);
+					if(isset($_POST['top_search']))
+						echo top_search_result($friend_result);
+					else 
+						echo friends_list_array($friend_result,$friend_of_friend);
 				else 
 					echo "<div class=\"alert_yellow_form\">No result found for <em>".$_POST['s']."</em>.</div>";
 				
@@ -1118,6 +1128,8 @@
 			return manage_user_list($tabs);
 		}elseif(isset($_GET['tab']) && is_numeric($_GET['tab'])){
 			return friend_of_friend($_GET['tab']);
+		}elseif($_GET['tab']=='search'){
+			return fsearch_results();
 		}
 		
 	}
@@ -1302,12 +1314,32 @@
 		}
 		return $friends;
 	}
+	function search_all_user($terms){
+		global $db;
+		$users=array();
+		
+		$sql=$db->prepare_query("SELECT * FROM lumonata_users where ldisplay_name like %s AND lstatus=1 order by ldlu desc","%".$terms."%");
+		$result=$db->do_query($sql);
+		
+		while($user=$db->fetch_array($result)){
+			
+			$users['username'][]=$user['lusername'];
+			$users['name'][]=$user['ldisplay_name'];
+			$users['id'][]=$user['luser_id'];
+			$users['avatar'][]=get_avatar($user['luser_id'], 2);
+			$users['email'][]=$user['lemail'];
+
+			
+		}
+		
+		return $users;
+	}
 	function friend_search($sterms='',$user_id){
 		global $db;
 		$friends=array();
 		$viewed=list_viewed();
 		
-		if(!empty($sterms))
+		if(!empty($sterms) && !empty($user_id))
 			$query=$db->prepare_query("SELECT a.lfriendship_id,a.lfriend_id,a.lstatus
 										FROM lumonata_friendship a, lumonata_users b
 										WHERE a.luser_id=%d 
@@ -1315,12 +1347,13 @@
 										AND a.lfriend_id=b.luser_id 
 										AND b.ldisplay_name like %s
 										ORDER BY b.ldlu DESC",$user_id,"%".$sterms."%");
-		else 
+		elseif(empty($sterms) && !empty($user_id)) 
 			$query=$db->prepare_query("SELECT a.lfriendship_id,a.lfriend_id,a.lstatus
 										FROM lumonata_friendship a, lumonata_users b
 										WHERE a.luser_id=%d AND (a.lstatus='connected' OR a.lstatus='unfollow') AND a.lfriend_id=b.luser_id
 										ORDER BY b.ldlu DESC 
 										LIMIT %d,%d",$user_id,0,$viewed);
+		
 			
 		$result=$db->do_query($query);
 		while($friend=$db->fetch_array($result)){
@@ -1538,23 +1571,104 @@
 		parse_template('friendshipBlock','fBlock');
 		return return_template('friends'); 
 	}
-	function friends_list_array($friends=array(),$friend_of_friend=false){
+	
+	function fsearch_results(){
+		global $db;$followjs='';
+		
+		if(isset($_GET['s']))
+		$terms=kses($_GET['s'],array());
+		else 
+		$terms="";
+		//set template
+		set_template(TEMPLATE_PATH."/friends.html",'friends');
+		
+		//set block
+		add_block('friendshipBlock','fBlock','friends');
+		add_block('inviteFriendsBlock','ifBlock','friends');
+		add_block('friendsRequestBlock','frBlock','friends');
+		add_block('manageFriendListBlock','mflBlock','friends');
+		
+		//Add variable
+		//configure the tabs
+		
+		
+		$tabs=array('search' =>"Search For ".$terms);
+		
+		$tabb='';
+		if(empty($fid))
+			$the_tab='search';
+		else
+			$the_tab='search';
+		
+
+		add_actions('section_title',"Search Results");	
+		add_variable('title',"Search Results");
+		add_variable('tabs',set_tabs($tabs,$the_tab));
+		
+		$html='<span id="response"></span>';
+		
+		$viewed=list_viewed();
+        if(isset($_GET['page'])){
+            $page= $_GET['page'];
+        }else{
+            $page=1;
+        }
+        
+        $limit=($page-1)*$viewed;
+		
+		
+		$err="Result not found.";
+		$friends=search_all_user($terms);
+		
+		if(isset($friends['id']))		
+			$num_rows=count($friends['id']);
+		else
+			$num_rows=0;
+		
+		$url=cur_pageURL()."&page=";
+			
+		
+		
+		if(count($friends)==0){
+			$html="<div class=\"alert_yellow_form\">".$err."</div>";
+		}else{	
+			
+			$html.=friends_list_array($friends,true,true);
+			$html.="<div class=\"paging_right\">". paging($url,$num_rows,$page,$viewed,10)."</div>";
+
+			$fl_html="<div>".dashboard_invite_friends()."</div>";
+			
+			add_variable('friend_list',$fl_html);
+		}
+			
+		
+		add_variable('myfriends_list',$html);
+		//add_variable('friends_search',search_box('../lumonata-functions/friends.php','friendship','search=true&fid='.$fid.'&','left','alert_green_form','Search Friends'));
+		parse_template('friendshipBlock','fBlock');
+		return return_template('friends'); 
+	}
+	
+	function friends_list_array($friends=array(),$friend_of_friend=false,$search_all_user=false){
 		$html='';
 		$followjs='';
 		if(count($friends)<1)
 		return;
 		
 		foreach($friends['id'] as $key=>$value){
+				if(!$search_all_user)
 				$flist=the_fs_list($friends['fid'][$key]);
+				else 
+				$flist='';
 				
 				$follow_label='';
 				
 				if(!(is_administrator($friends['id'][$key]))){
-					if($friends['status'][$key]=='connected'){
-						$follow_label="<p><a class=\"button_add_friend\" id=\"follow_unfollow_".$key."\" >Unfollow</a></p>";
-					}else{ 
-						$follow_label="<p><a class=\"button_add_friend\" id=\"follow_unfollow_".$key."\" >Follow</a></p>";
-					}
+					if(!$search_all_user)
+						if($friends['status'][$key]=='connected'){
+							$follow_label="<p><a class=\"button_add_friend\" id=\"follow_unfollow_".$key."\" >Unfollow</a></p>";
+						}else{ 
+							$follow_label="<p><a class=\"button_add_friend\" id=\"follow_unfollow_".$key."\" >Follow</a></p>";
+						}
 					$followjs="$('#follow_unfollow_".$key."').click(function(){
 					   				label=jQuery.trim($('#follow_unfollow_".$key."').html());
 					   				
@@ -1655,6 +1769,111 @@
 			
 			
 			return $html;
+	}
+	
+	function top_search_box(){
+		add_actions('header_elements','top_search_box_js');
+		$box="<div class=\"top_search_wrapper\">
+				<form>
+					<div class=\"clearfix\">
+						<div class=\"input_search_wrapper\">
+							<input type=\"text\" name=\"top_search\" value=\"Search\" class=\"search_top_text\" />
+						</div>
+						<div class=\"button_search_wrapper\">
+							<input type=\"submit\" value=\" \" class=\"top_search_button\" />
+						</div>
+					</div>
+				</form>
+			</div>
+			<div id=\"top_search_result_wrapper\" style=\"display:none;\" >
+				<div class=\"top_search_result_wrapper\">
+					<div id=\"top_search_result\">
+						<br clear=\"all\" />
+					</div>
+					
+				</div>
+				<div class=\"more_search_result\">
+					<img src=\"http://".SITE_URL."/lumonata-admin/includes/media/loader.gif\" id=\"top_search_loader\"  />
+					<a href=\"?state=friends&tab=search\" id=\"more_result_link\"><strong>See more results</strong></a>
+				</div>
+			</div>
+			";
+			return $box;
+	}
+	function top_search_box_js(){
+		
+		$box="<script type=\"text/javascript\">
+				var mouse_on_search=false;
+				
+				$(document).ready(function(){
+					$('input[name=top_search]').focus(function(){
+						$('input[name=top_search]').val('');
+					});
+					
+					$('input[name=top_search]').blur(function(){
+						if($(this).val()=='')
+							$('input[name=top_search]').val('Search');
+							
+							
+					});
+					
+					$('input[name=top_search]').keyup(function(){
+						$('#top_search_result_wrapper').show();
+						$('#more_result_link').hide();
+						$('#top_search_loader').show();
+						
+						if($('input[name=top_search]').val()!='Search'){
+							 $('#more_result_link').attr('href','?state=friends&tab=search&s='+$('input[name=top_search]').val());
+						}
+						$.post('../lumonata-functions/friends.php','top_search=true&s='+$('input[name=top_search]').val(),function(data){
+							 $('#top_search_result').html(data);
+							 $('#top_search_loader').hide();
+							 $('#more_result_link').show();
+							
+						});
+					});
+					
+					
+										
+                    $('#top_search_result_wrapper').mouseover(function(){ 
+                           mouse_on_search=true;
+                    }).mouseleave(function(){ 
+                           mouse_on_search=false;
+                    });
+                    
+					$('body').mousedown(function(){
+						if(!mouse_on_search){
+							$('#top_search_result_wrapper').hide();
+						}
+					});
+					
+				});
+			 </script>";
+		
+		return $box;
+	}
+	function top_search_result($friends=array()){
+		
+		$result="<div class=\"search_result_header\">People</div>";
+		foreach($friends['id'] as $key=>$value){
+			$result.="
+						<div class=\"top_search_result clearfix\">
+							<div class=\"top_search_avatar\">
+								<a href=\"".get_state_url('my-profile')."&id=".$friends['id'][$key]."\">
+									<img src=\"".$friends['avatar'][$key]."\" title=\"".$friends['name'][$key]."\" alt=\"".$friends['name'][$key]."\" />
+								</a>
+							</div>
+							<div class=\"top_search_name\">
+								<a href=\"".get_state_url('my-profile')."&id=".$friends['id'][$key]."\">
+									<strong>".$friends['name'][$key]."</strong>
+								</a>
+							</div>
+							
+						</div>";
+		}
+		
+		
+		return $result;
 	}
 	
 	function colek_button($coleked_id){

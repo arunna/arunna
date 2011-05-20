@@ -114,12 +114,18 @@
 		//setting up navigation menu
 		add_variable('navmenu',get_admin_menu());
 		
+		/*Add Top Search*/
+		add_variable('top_search_box',top_search_box());
+		
 		//Attempt the action that already add in the whole script
 		/*get jQuery*/
 		add_variable('jquery',get_javascript('jquery'));
 		add_variable('header_elements',attemp_actions('header_elements'));
 		add_variable('section_title',attemp_actions('section_title'));
 		add_variable('admin_tail',attemp_actions('admin_tail'));
+		
+		
+		
 		
 		//print the template
 		parse_template('adminArea','aBlock');
