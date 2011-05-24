@@ -894,7 +894,7 @@
 		}else{
 			  if(is_dashboard()){
 				  $friends_html.="<div  class='clearfix'>";
-				  $friends_html.="<h2>Add Friend to ".$fl_label."</h2>";
+				  $friends_html.="<h2>Add Friend ".$fl_label_to."</h2>";
 				  $friends_html.="	<script type=\"text/javascript\">
 										$(function(){
 											$('#invite_friend_fl').colorbox();
