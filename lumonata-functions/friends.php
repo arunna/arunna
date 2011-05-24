@@ -1318,7 +1318,14 @@
 		global $db;
 		$users=array();
 		
-		$sql=$db->prepare_query("SELECT * FROM lumonata_users where ldisplay_name like %s AND lstatus=1 order by ldlu desc","%".$terms."%");
+		$sql=$db->prepare_query("SELECT * FROM lumonata_users 
+								 WHERE ( ldisplay_name like %s 
+								 OR lemail like %s 
+								 OR lusername like %s ) 
+								 AND lstatus=1 order by ldlu desc",
+								 "%".$terms."%",
+								 "%".$terms."%",
+								 "%".$terms."%");
 		$result=$db->do_query($sql);
 		
 		while($user=$db->fetch_array($result)){
