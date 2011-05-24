@@ -8,6 +8,7 @@ ul.tabs {
 	border-bottom: 1px solid #999;
 	border-left: 1px solid #999;
 	width: 100%;
+	
 }
 ul.tabs li {
 	float: left;
@@ -26,15 +27,15 @@ ul.tabs li a {
 	text-decoration: none;
 	color: #000;
 	display: block;
-	font-size:14px;
-	padding: 0 20px;
+	font-size:12px;
+	padding: 0 7px;
 	border: 1px solid #fff; /*--Gives the bevel look with a 1px white border inside the list item--*/
 	outline: none;
 	float:left;
 }
 ul.tabs li span{
-	float:left;
-	padding: 0 10px;
+	
+	padding: 0 2px;
 	cursor: pointer;
 	
 }
@@ -47,13 +48,13 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that th
 }
 
 .tab_container {
-	border: 1px solid #999;
+	border-left: 1px solid #999;
 	border-top: none;
 	overflow: hidden;
 	clear: both;
 	float: left; 
 	width: 100%;
-	background: #fff;
+	
 }
 .tab_content {
 	font-size:12px;

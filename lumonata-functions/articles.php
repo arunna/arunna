@@ -610,6 +610,12 @@
                     <div class=\"single_content\">
                         <div id=\"response\"></div>
                         <form action=\"".get_state_url('pages')."\" method=\"post\" name=\"alist\">
+                           <div class=\"button_right\">
+                                ".search_box('articles.php','list_item','state=pages&prc=search&','right','alert_green_form','Search pages')."
+                                
+                           </div>
+                           <br clear=\"all\" />
+                           
                            <input type=\"hidden\" name=\"start_order\" value=\"$start_order\" />
                            <input type=\"hidden\" name=\"state\" value=\"pages\" />
                             <div class=\"button_wrapper clearfix\">
@@ -618,9 +624,7 @@
                                                 $button
                                         </ul>
                                 </div>
-                                <div class=\"button_right\">
-                                ".search_box('articles.php','list_item','state=pages&prc=search&','right','alert_green_form')."
-                                </div>
+                               
                             </div>
                             <div class=\"status_to_show\">Show: $option_viewed</div>
                             <div class=\"list\">
@@ -645,9 +649,9 @@
                                          $button
                                     </ul>   
                                 </div>
-                                <div class=\"paging_right\">
+                        </div>
+                        <div class=\"paging_right\">
                                     ". paging($url,$num_rows,$page,$viewed,5)."
-                                </div>
                         </div>
                     </div>
                 </div>
@@ -777,6 +781,10 @@
                 <div class=\"tab_container\">
                         <div id=\"response\"></div>
                         <form action=\"\" method=\"post\" name=\"alist\">
+                         	<div class=\"button_right\">
+                                ".search_box('articles.php','list_item','state='.$type.'&prc=search&','right','alert_green_form','Search articles')."
+                            </div>
+                            <br clear=\"all\" />
                            <input type=\"hidden\" name=\"start_order\" value=\"$start_order\" />
                            <input type=\"hidden\" name=\"state\" value=\"".$type."\" />
                             <div class=\"button_wrapper clearfix\">
@@ -784,9 +792,6 @@
                                         <ul class=\"button_navigation\">
                                                 $button
                                         </ul>
-                                </div>
-                                <div class=\"button_right\">
-                                ".search_box('articles.php','list_item','state='.$type.'&prc=search&','right','alert_green_form')."
                                 </div>
                             </div>
                             <div class=\"status_to_show\">Show: $option_viewed</div>
@@ -811,10 +816,10 @@
                                          $button
                                     </ul>   
                                 </div>
-                                <div class=\"paging_right\">
-                                    ". paging($url,$num_rows,$page,$viewed,5)."
-                                </div>
                         </div>
+                         <div class=\"paging_right\">
+                          	". paging($url,$num_rows,$page,$viewed,5)."
+                          </div>
                 </div>
             <script type=\"text/javascript\" language=\"javascript\">
                 

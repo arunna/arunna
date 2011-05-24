@@ -1,5 +1,5 @@
 #dashboard_left{
-	width:70%;
+	width:550px;
 	min-width:300px !important;
 	min-width:500px;
 	height:auto;
@@ -8,7 +8,7 @@
 	
 }
 #dashboard_right{
-	width:250px !important;
+	width:226px !important;
 	width:200px;
 	min-width:200px !important;
 	min-width:150px;
@@ -20,14 +20,12 @@
 	
 }
 #dashboard_left .home_plug1{
-	
 	width:100%;
 	min-width:400px !important;
 	min-width:600px;
 	height:auto;
 	margin-bottom:15px;
 	padding: 0px 0px 5px 0;
-	
 }
 
 #dashboard_right h2{
@@ -49,11 +47,13 @@
 
 
 .the_feeds{
-	width:95%;
+	width:535px;
 	height: auto;
-	padding: 10px;
+	padding: 5px 0px;
 	border-top: 1px solid #ffece9;
 	margin:10px 0 0 10px;
+	
+	
 }
 .the_feeds_avatar{
 	width:50px;
@@ -62,10 +62,10 @@
 	background: #666;
 }
 .the_feeds_content{
-	width:89%;
+	width:465px;
 	height:auto;
 	float:left;
-	margin: 0 0 0 15px;
+	margin: 0 0 0 10px;
 	border-right: 1px solid #ccc;
 }
 .the_author{
@@ -162,9 +162,9 @@ p.the_text_content{
 .load_more_feeds{
 	background:url(../images/panel_bg.jpg) repeat-x;
 	height:20px;
-	margin:10px 0 10px 20px;
+	margin:10px 0 10px 10px;
 	border:1px solid #bbbbbb;
-	width: 93%;
+	width:520px;
 	padding: 5px;
 	text-align: center;
 	font-weight: bold;

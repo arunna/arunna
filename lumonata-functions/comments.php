@@ -12,6 +12,7 @@
                         }, function(){ 
                             mouse_is_inside=false; 
                         });
+
                         $('.comment_area_loged').focus(function(){ 
                             mouse_is_inside=true; 
                         }, function(){ 
@@ -1137,9 +1138,9 @@
                             <div class=\"list\">
                                 <div class=\"list_title\">
                                     <input type=\"checkbox\" name=\"select_all\" class=\"title_checkbox\" />
-                                    <div class=\"pages_title\">Post Title</div>
+                                    <div class=\"pages_title\" style=\"width:200px;\">Post Title</div>
                                     <div class=\"list_author\">Commentator</div>
-                                    <div class=\"thecomments\">Comments</div>
+                                    <div class=\"thecomments\" style=\"width:240px;\">Comments</div>
                                 </div>
                                 <div id=\"list_item\">";
                                 if($num_rows>0){
@@ -1173,9 +1174,10 @@
 	                                	}
 	                                	$list.="<div class=\"list_item clearfix\" id=\"theitem_".$d['lcomment_id']."\" $higlight >";
 	                                		$list.="<input type=\"checkbox\" name=\"select[]\" class=\"title_checkbox select\" value=\"".$d['lcomment_id']."\" />";
-	                                		$list.="<div class=\"pages_title\">".$d['larticle_title']."</div>";
+	                                		$list.="<div class=\"pages_title\" style=\"width:200px;\">".$d['larticle_title']."</div>";
 	                                		$list.="<div class=\"list_author\"><div class=\"avatar\"><img src=\"".get_avatar($d['luser_id'], 3)."\" /></div>".$commentator_name."</div>";
-	                                		$list.="<div class=\"thecomments\">".$d['lcomment']."</div>";
+	                                		$list.="<div class=\"thecomments\" style=\"width:240px;\">".$d['lcomment']."</div>";
+	                                		
 	                                		$list.="<div class=\"the_navigation_list\">
 				                                        <div class=\"list_navigation\" style=\"display:none;\" id=\"the_navigation_".$d['lcomment_id']."\">
 				                                                <a href=\"".get_state_url('comments')."&prc=edit&id=".$d['lcomment_id']."&tab=".$tabed."\">Edit</a> |
@@ -1257,10 +1259,10 @@
                                          $button
                                     </ul>   
                                 </div>
-                                <div class=\"paging_right\">
-                                    ". paging($url,$num_rows,$page,$viewed,5)."
-                                </div>
                         </div>
+                         <div class=\"paging_right\">
+                         	". paging($url,$num_rows,$page,$viewed,5)."
+                         </div>
                     </div>
        			  </div>";
                                          

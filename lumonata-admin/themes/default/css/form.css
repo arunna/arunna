@@ -240,31 +240,25 @@ select{
 }
 
 .button_left{
-	width:53% !important;
-	width:51%;
+	width:100% !important;
+	width:100%;
 	min-width:300px;
 	height:auto;
-	float:left;
 	
 	
 }
 .button_right{
-	width:47% !important;
-	width:48%;
+	width:100%;
 	height:auto;
 	margin:3px 0 0 0;
-	min-width:300px;
-	float:right;
-	text-align:right;
-	
-	
+	float: right;
+	padding: 0 5px 0 0;
 }
 .paging_right{
-	width:46% !important;
-	width:47%;
+	width:100%;
 	height:30px;
 	float:right;
-	margin:5px 3px 0 0;
+	margin:5px 10px 0 0;
 	padding:5px 0 0 0;
 	min-width:300px;
 	text-align:right;
@@ -570,14 +564,14 @@ button[type]{
 }
 .list_title{
 	width:100%;
-	height:33px;
+	height:30px;
 	background:url(../images/panel_bg.jpg) repeat-x;
 	border-top:1px solid #bbbbbb;
 	border-bottom:1px solid #bbbbbb;
-	font-size:14px;
+	font-size:12px;
 	font-weight:bold;
 	margin:10px 0;
-	vertical-align:middle;
+	
 }
 .the_navigation_list{
 	height:20px;
@@ -621,14 +615,16 @@ button[type]{
     margin:5px 5px 0 5px;
 }
 .title_username{
-	width:20%;
+	width:150px;
 	padding:2px;
 	float:left;
+	
 }
 .title_name{
-	width:30%;
+	width:200px;
 	padding:2px;
 	float:left;
+	
 }
 .title_email{
 	width:30%;
@@ -641,12 +637,12 @@ button[type]{
 	float:left;
 }
 .pages_title{
-	width:50%;
+	width:330px;
 	padding:2px;
 	float:left;
 }
 .article_title{
-	width:49%;
+	width:330px;
 	padding:2px;
 	float:left;
 }
@@ -656,26 +652,29 @@ button[type]{
 	float:left;
 }
 .list_author{
-	width:16%;
+	width:130px;
 	padding:2px;
 	float:left;
+	
 	
 }
 .list_comments{
-	width:10%;
+	width:90px;
 	padding:2px;
 	float:left;
+	text-align:center;
 	
 }
 .thecomments{
-	width:30%;
+	width:50px;
 	padding:2px;
 	float:left;
 }
 .list_date{
-	width:15%;
+	width:90px;
 	padding:2px;
 	float:left;
+	
 	
 }
 .list_order{
@@ -694,17 +693,17 @@ button[type]{
 	float:left;
 }
 .rule_parent{
-	width:35%;
+	width:250px;
 	padding:2px;
 	float:left;
 }
 .rule_name{
-	width:25%;
+	width:150px;
 	padding:2px;
 	float:left;
 }
 .rule_description{
-	width:36%;
+	width:200px;
 	padding:2px;
 	float:left;
 }

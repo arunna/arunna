@@ -1,12 +1,10 @@
 .the_apps_set{
-	width:27% !important;
-	width:26%;
-	min-width:200px !important;
-	min-width:150px;
+	width:250px;
 	height:auto;
 	margin-left:0px;
 	border: 1px solid #bbbbbb;
 	float: left;
+	margin-top: 10px;
 }
 .the_apps_set ul{
 	padding:0;
@@ -26,14 +24,13 @@
 	font-size:14px;
 }
 .the_menus_set{
-	width:70%;
-	min-width:400px !important;
-	min-width:600px;
+	width:530px;
 	height:auto;
 	border: 1px solid #bbbbbb;
 	float: left;
-	margin: 0 0 0 20px;
+	margin: 0 0 0 5px;
 	background: #fff;
+	margin-top: 10px;
 	
 }
 .the_menus_set ul{
@@ -45,7 +42,7 @@
 	
 }
 .sets_apps_item{
-	width:97%;
+	width:240px;
 	height: 400px;
 	padding:5px;
 	overflow: auto;
@@ -68,25 +65,25 @@
 	cursor:move;
 }
 .the_sets  .apps_item .apps_item_text{
-	width:86%;
+	width:85%;
 	height:auto;
 	background: #ccc;
 	float:left;
 	padding: 8px 5px;
 }
 .sets_apps_item .apps_item .apps_item_text{
-	width:80%;
+	width:79%;
 	height:auto;
 	background: #ccc;
 	float:left;
 	padding: 8px 5px;
 }
 .sets_apps_item .apps_item .add{
-	width:8%;
+	width:9%;
 	height:20px;
 	float: left;
 	cursor: pointer;
-	border-right: 1px dashed #bbb;
+	
 	padding: 5px 0;
 }
 .sets_apps_item .apps_item .view{
@@ -104,10 +101,7 @@
 	cursor: pointer;
 }
 .apps_details_item{
-	width:94% !important;
-	width:93%;
-	min-width:200px !important;
-	min-width:150px;
+	width:230px;
 	height:auto;
 	background: #fff;
 	border: 1px dashed #bbb;
@@ -134,7 +128,7 @@
 }
 .setname{
 	background: #ccc;
-	width: 99%;
+	width: 520px;
 	height: 30px;
 	padding: 10px 5px;
 }

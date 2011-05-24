@@ -54,36 +54,28 @@
 }
 .friends_name{
 	float: left;
-	width:300px;
+	width: 55% !important;
+	width:52%;
 	height: 50px;
 	margin: 10px;
 	display: table-cell;
 	
 }
-.friends_name_fof{
-	float: left;
-	width: 70% !important;
-	width:67%;
-	height: 50px;
-	margin: 10px;
-	
-}
-
-
 .friends_name_request{
 	float: left;
-	width:300px;
+	width: 46% !important;
+	width:43%;
 	height: 50px;
 	margin: 10px;
-	
+	display: table-cell;
 	
 }
-.friends_name a,.friends_name_request a, .friends_name_fof a{
+.friends_name a,.friends_name_request a{
 	color:#ef451e;
 	text-decoration: none;
 }
 
-.friends_name p, .friends_name_request p,.friends_name_fof p{
+.friends_name p, .friends_name_request p{
 	font-weight:bold;
 	vertical-align: middle;	
 	position:relative;
@@ -91,29 +83,20 @@
 	
 }
 .follow_unfollow{
-	width: 70px;
+	width: 10%;
 	float: left;
 	height: 50px;
 	margin: 10px;
 	
 }
-
-.fof_add_friend{
-	width: 13%;
-	float: left;
-	height: 50px;
-	margin: 10px;
-}
-
-
 .follow_unfollow_request{
-	width: 80px;
+	width: 19%;
 	float: left;
 	height: 50px;
 	margin: 10px;
 	
 }
-.follow_unfollow p,.follow_unfollow_request p, .fof_add_friend p{
+.follow_unfollow p,.follow_unfollow_request p{
 	vertical-align: middle;	
 	margin-top:12px !important;
 	margin-top:0;
@@ -142,17 +125,17 @@
 }
 .friends_list_name{
 	float: left;
-	width:300px;
+	width: 50% !important;
+	width:47%;
 	height: 50px;
 	margin: 10px;
 }
 .friends_list_name p{
 	cursor: pointer;
 }
-
 .invite_friends_list{
 	float: left;
-	width: 120px;
+	width: 19%;
 	height: 50px;
 	margin: 10px 0 0 10px;
 	
@@ -236,7 +219,8 @@
 	
 }
 .invite_email{
-	width: 350px;
+	width: 45% !important;
+	width: 40%;
 	height:auto;
 	float: left;
 	margin: 10px;
@@ -248,11 +232,12 @@
 	color:#ef451e;
 }
 .invite_contacts{
-	width:300px;
+	width: 40% !important;
+	width:40%;
 	height: auto;
 	float: left;
 	margin: 10px;
-	padding-left: 10px;
+	padding-left: 40px;
 }
 
 .iservices{
@@ -268,7 +253,6 @@ a.button_add_friend{
 	font-weight:bold;
 	font-size:12px;
 	padding: 5px;
-	
 }
 a.button_add_friend_user{
 	text-decoration: none;

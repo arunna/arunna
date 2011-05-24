@@ -12,7 +12,8 @@
 @import "friends.css";
 @import "profile.css";
 body{
-	background:url(../images/bg-pattern.jpg);
+	/*background:url(../images/bg-pattern.jpg);*/
+	background: #FFF;
 	margin:0;
 	padding:0;
 	font-family:Arial,"Lucida Sans", Helvetica, sans-serif;
@@ -56,23 +57,30 @@ th{
 	height:63px;
 	background:#ffffff;
 	border-bottom:1px solid #e5e5e5;
+	
 }
-.lumonata_header{
-	width:100%;
+.header_orange{
+	width: 100%;
 	height:47px;
 	background-color:#ef451e;
+	color:#ffffff;
+}
+.lumonata_header{
+	width:960px;
+	height:47px;
+	margin:0 auto;
 	background-image:url(../images/arunna-logo.png);
 	background-repeat:no-repeat;
-	background-position:70px 10px;
+	background-position:0px 10px;
 	text-align:right;
 	color:#ffffff;
 }
 /*Search Box*/
 .top_search_box{
-	width: 33%;
+	width: 358px;
 	height: auto;
 	float: left;
-	margin-left: 170px;
+	margin-left: 100px;
 	margin-top: 9px;
 	text-align: left;
 	position: relative;
@@ -185,13 +193,14 @@ th{
 /*End of Search Box*/
 
 .topnav{
-	width: 50%;
+	width:500px;
 	height: 47px;
 	float: left;
+	
 }
 .lumonata_header ul{
 	margin:0;
-	padding:25px 20px 0 0;
+	padding:25px 0px 0 0;
 	
 }
 .lumonata_header ul li{
@@ -203,11 +212,11 @@ th{
 	text-decoration:none;
 }
 .lumonata_content{
-	margin:20px 0 0 0;
-	width:86%;
-	min-width:975px;
+	margin:0px auto;
+	width:960px;
 	height:auto;
-	padding-left:152px;
+	padding-top:0px;
+	border-right:1px solid #bbbbbb;
 	
 	
 }
@@ -228,13 +237,18 @@ h2{
 	margin:0;
 }
 .footer{
-	width:98.6%;
+	width:100%;
 	height:10px;
 	background:#ef451e;
 	margin:20px 0 0 0;
 	font-style:italic;
 	color:#ffffff;
-	padding:10px;
+	padding:10px 0;
+}
+.footer_wrap{
+	width: 960px;
+	height: inherit;
+	margin: 0 auto;
 }
 
 .footer a{
@@ -368,15 +382,14 @@ ul.pagging li a.selected{
 /*Application Area*/
 .application_area{
 	margin:0 0 0 10px;
-	background:#fbfafa;
-	width:96%;
-	min-width:800px !important;
-	min-width:800px;
+	/*background:#fbfafa;*/
+	background:#FFF;
+	width:798px;
 	height:auto;
-	border:1px solid #bbbbbb;
+	/*border:1px solid #bbbbbb;*/
+	border-bottom:1px solid #bbbbbb;
 	float:left;
-	padding:10px;
-	
+	padding:0px 0;
 	
 
 }
@@ -462,8 +475,8 @@ ul.pagging li a.selected{
 	width:152px;
 	height:auto;
 	float:left;
-	margin-left:-152px !important;
-	margin-left:-76px;
+	margin-top:10px;
+	
 	
 }
 .preview_website{

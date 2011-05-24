@@ -13,14 +13,13 @@
 	
 }
 #profile_right{
-	width:250px !important;
-	width:250px;
-	min-width:200px !important;
-	min-width:150px;
+	width:226px !important;
+	width:200px;
 	height:auto;
 	margin-left:5px;
 	margin-bottom:10px;
 	float:left;
+	
 }
 #profile_right h2,.work h2,.education h2{
 	font-weight: bold;
@@ -71,12 +70,12 @@
 }
 .the_school  .shool_name,.the_work  .comp_name{
 	float:left;
-	width:79%;
+	width:200px;
 	
 }
 .the_school  .action,.the_work  .action{
 	float:left;
-	width:21%;
+	width:80px;
 	text-align: right;
 	
 }

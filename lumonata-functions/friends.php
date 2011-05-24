@@ -855,7 +855,7 @@
 			
 			
 			foreach ($myfriends['id'] as $key=>$val){
-				$friends_html.="<div style='width:50px:height:50px;overflow:hidden;margin:5px 5px;float:left'>
+				$friends_html.="<div style='width:50px:height:50px;overflow:hidden;margin:3px 3px;float:left'>
 									<a href=\"".get_state_url('my-profile')."&id=".$myfriends['id'][$key]."\" rel=\"friends\" title=\"".$myfriends['name'][$key]."\">
 										<img src='".$myfriends['avatar'][$key]."' border='0' />
 									</a>
@@ -1186,14 +1186,14 @@
 				   		<div class="invite_friends_list">
 					    	<p id="invite_friend_'.$the_fl['friends_list_id'][$key].'">
 						    	<a  href="../lumonata-functions/friends.php?manage_list=invite&amp;list_name='.$the_fl['list_name'][$key].'&list_id='.$the_fl['friends_list_id'][$key].'" id="invite_'.$the_fl['friends_list_id'][$key].'" >
-						    		Invite friends to this list
+						    		Invite friends to list
 						    	</a>
 					    	</p>
 				    	</div>
 				   		<div class="invite_friends_list">
 					    	<p>
 						    	<a  href="../lumonata-functions/friends.php?manage_list=add_friend&amp;list_id='.$the_fl['friends_list_id'][$key].'" id="add_friend_to_list_'.$the_fl['friends_list_id'][$key].'" >
-						    		Add friends to this list
+						    		Add friends to list
 						    	</a>
 					    	</p>
 				    	</div>
@@ -2015,7 +2015,7 @@
 					    	<div class="follow_unfollow_request">
 						    	<p id="edit_list_'.$key.'">
 							    	<a class="button_add_friend"  href="../lumonata-functions/friends.php?add_friend=true&type=confirm_nofollow&friendship_id='.$friends['fid'][$key].'&friend_id='.$friends['id'][$key].'&redirect='.urlencode(cur_pageURL()).'&key=#confirm_'.$key.'" id="confirm_nofollow_'.$key.'" >
-							    		Confirm &amp; Unfollow
+							    		No Follow
 							    	</a>
 						    	</p>
 					    	</div>

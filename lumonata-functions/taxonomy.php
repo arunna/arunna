@@ -486,6 +486,10 @@
                 <div class=\"tab_container\">
                         <div id=\"response\"></div>
                         <form action=\"\" method=\"post\" name=\"alist\">
+                            <div class=\"button_right\">
+                                ".search_box('taxonomy.php','list_taxonomy','state='.$_GET['state'].'&rule='.$rule.'&group='.$type.'&prc=search&','right','alert_green_form')."
+                            </div>
+                            <br clear=\"all\" />	
                            <input type=\"hidden\" name=\"start_order\" value=\"$start_order\" />
                            <input type=\"hidden\" name=\"state\" value=\"".$type."\" />
                             <div class=\"button_wrapper clearfix\">
@@ -493,9 +497,6 @@
                                         <ul class=\"button_navigation\">
                                                 $button
                                         </ul>
-                                </div>
-                                <div class=\"button_right\">
-                                ".search_box('taxonomy.php','list_taxonomy','state='.$_GET['state'].'&rule='.$rule.'&group='.$type.'&prc=search&','right','alert_green_form')."
                                 </div>
                             </div>
                             <div class=\"status_to_show\">Ordering: $option_viewed</div>
@@ -518,9 +519,9 @@
                                          $button
                                     </ul>   
                                 </div>
-                                <div class=\"paging_right\">
-                                    ". paging($url,$num_rows,$page,$viewed,5)."
-                                </div>
+                        </div>
+                        <div class=\"paging_right\">
+                        	". paging($url,$num_rows,$page,$viewed,5)."
                         </div>
                 </div>
             <script type=\"text/javascript\" language=\"javascript\">

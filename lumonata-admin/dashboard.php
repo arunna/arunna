@@ -110,11 +110,12 @@
 				
 		$dashboard="<h1>Dashboard</h1>";
 		$dashboard.="<div id=\"dashboard_left\">";
-		$dashboard.="<div class=\"home_plug1\" id=\"dash_left\">";
-		$dashboard.=attemp_actions('basic_dashboard_left');
-		$dashboard.=attemp_actions('dashboard_left');
-		$dashboard.="</div>";
-		
+			
+			$dashboard.="<div class=\"home_plug1\" id=\"dash_left\">";
+			$dashboard.=attemp_actions('basic_dashboard_left');
+			$dashboard.=attemp_actions('dashboard_left');
+			$dashboard.="</div>";
+			
 		$dashboard.="</div>";
 				
 		
@@ -122,6 +123,7 @@
 		$dashboard.=attemp_actions('basic_dashboard_right');
 		$dashboard.=attemp_actions('dashboard_right');
 		$dashboard.="</div>";
+		
 		add_actions('section_title','Dashboard');
 		
 		return $dashboard;
@@ -190,7 +192,7 @@
   		$return.="</ul>";
 				
 		}else{
-			$return.="<div style='border-right:1px solid #cccccc;'>";
+			$return.="<div>";
 		}
 		
 		if($post_box){
@@ -602,7 +604,7 @@
 			return "<div id=\"refresh_update\">
 					<div id=\"noupdates_alert\" >
 						<div style=\"width:95%;padding:5px;background-color:#84ff90;color:#333333;font-size:14px;margin:20px 0 20px 20px;-moz-border-radius:5px;-webkit-border-radius:5px;\">
-							There are no updates yet. Update Now!
+							There are no updates yet!
 						</div>
 					</div>
 				</div>";
@@ -619,11 +621,11 @@
 			$flist=the_fs_list($data_fs['lfriendship_id']);
 			
 			//$user=fetch_user($data['lpost_by']);
-			$return.="<div class=\"the_feeds clearfix\" id=\"the_feeds_".$data['larticle_id']."\">";
+			$return.="<div class=\"the_feeds clearfix\" >";
 				$return.="<div class=\"the_feeds_avatar\">";
 				$return.="<a href=\"".user_url($data['lpost_by'])."\"><img src=\"".get_avatar($data['lpost_by'],2)."\" alt=\"$name\" title=\"$name\" border=\"0\" /></a>";
 				$return.="</div>";
-				$return.="<div class=\"the_feeds_content\">";
+				$return.="<div class=\"the_feeds_content\" id=\"the_feeds_".$data['larticle_id']."\">";
 					$return.="<div class=\"the_author\">";
 						$return.="<a href=\"".user_url($data['lpost_by'])."\">$name</a> ".$flist;
 					$return.="</div>";

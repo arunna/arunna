@@ -903,24 +903,24 @@
 			<div class=\"tab_container\">
 			<div id=\"response\"></div>
 			<form action=\"".get_state_url('users')."\" method=\"post\">
-			    <div class=\"button_wrapper clearfix\">
-				
-				<div class=\"button_left\">
-					<ul class=\"button_navigation\">
-						<li>".button("button=add_new",get_state_url("users")."&prc=add_new")."</li>
-						<li>".button('button=edit&type=submit&enable=false')."</li>
-						<li>".button('button=delete&type=submit&enable=false')."</li>
-					</ul>
-				</div>
 				<div class=\"button_right\">
-				".search_box('user.php','list_item','prc=search&','right','alert_green_form')."
+					".search_box('user.php','list_item','prc=search&','right','alert_green_form','Search users')."
 				</div>
-				
+				<br clear=\"all\" />
+			    <div class=\"button_wrapper clearfix\">				
+					<div class=\"button_left\">
+						<ul class=\"button_navigation\">
+							<li>".button("button=add_new",get_state_url("users")."&prc=add_new")."</li>
+							<li>".button('button=edit&type=submit&enable=false')."</li>
+							<li>".button('button=delete&type=submit&enable=false')."</li>
+						</ul>
+					</div>
 			    </div>
 			    <div class=\"list\">
 				<div class=\"list_title\">
 				    <input type=\"checkbox\" name=\"select_all\" class=\"title_checkbox\" />
 				    <div class=\"title_username\">Username</div>
+				    <div class=\"avatar\" ></div>
 				    <div class=\"title_name\">Name</div>
 				    <div class=\"title_email\">Email</div>
 				    <div class=\"title_category\">User Type</div>
@@ -938,9 +938,9 @@
 					<li>".button('button=delete&type=submit&enable=false')."</li>
 				    </ul>   
 				</div>
-				<div class=\"paging_right\">
+			</div>
+			<div class=\"paging_right\">
 				    ". paging($url,$num_rows,$page,$viewed,5)."
-				</div>
 			</div>
 		    </div>";
 		    
