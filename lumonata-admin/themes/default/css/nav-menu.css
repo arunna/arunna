@@ -103,8 +103,8 @@ a#application_list,a#plugin_list{
 	
 }
 .count_updates{
-	background:#ccc;
-	color:#666666;
+	background:#EF451E;
+	color:#FFF;
 	padding:2px 5px;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
