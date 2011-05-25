@@ -102,23 +102,31 @@ if(isset($_POST['comment_type'])){
 			$result=$db->do_query($sql);
 			$dc=$db->fetch_array($result);
 			if($dc['lcount_like']>0){
-		        if($dc['lcount_like']>1)
-		    	    $liked="<a href=\"javascript:;\" class=\"commentview\">".$dc['lcount_like']." peoples like this post</a>";
-		        else 
-		    	    $liked="<a href=\"javascript:;\" class=\"commentview\">".$dc['lcount_like']." people like this post</a>";
+				
+				$people_like=get_who_likes($_POST['article_id'],'like');
+				$people_like=json_encode($people_like);
+				$people_like=base64_encode($people_like);
+				
+				$liked="<script type=\"text/javascript\">
+        						$(function(){
+        							$('.peoplelike').colorbox();
+        						});
+        			        </script>";
+		    	$liked.="<a href=\"http://".site_url()."/lumonata-functions/comments.php?people_like=".$people_like."\" class=\"commentview peoplelike\" > - ".$dc['lcount_like']." people like this</a>";
+		        
 		    }else{
 		        $liked="";
 		    }
 		}elseif($_POST['comment_type']=="like_comment" || $_POST['comment_type']=="unlike_comment"){
-			$sql=$db->prepare_query("SELECT lcomment_like FROM lumonata_comments WHERE lcomment_id=%d",$_POST['article_id']);
+			$sql=$db->prepare_query("SELECT lcomment_like,luser_id FROM lumonata_comments WHERE lcomment_id=%d",$_POST['article_id']);
 			
 			$result=$db->do_query($sql);
 			$dc=$db->fetch_array($result);
 			if($dc['lcomment_like']>0){
 		        if($dc['lcomment_like']>1)
-		    	    $liked="<a href=\"javascript:;\" class=\"commentview\">".$dc['lcomment_like']." peoples like this comment</a>";
+		    	    $liked="<a href=\"javascript:;\" class=\"commentview\"> - ".$dc['lcomment_like']." peoples like this comment</a>";
 		        else 
-		    	    $liked="<a href=\"javascript:;\" class=\"commentview\">".$dc['lcomment_like']." people like this comment</a>";
+		    	    $liked="<a href=\"javascript:;\" class=\"commentview\"> - ".$dc['lcomment_like']." people like this comment</a>";
 		    }else{
 		        $liked="";
 		    }

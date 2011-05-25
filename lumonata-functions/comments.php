@@ -1,6 +1,19 @@
 <?php
    
-    add_actions('tail','get_javascript','textarea-expander');
+    if(isset($_GET['people_like'])){
+    	require_once('../lumonata_config.php');
+		require_once 'user.php';
+		if(is_user_logged()){
+	    	require_once('../lumonata_settings.php');
+	    	require_once('settings.php');
+	    	if(!defined('SITE_URL'))
+				define('SITE_URL',site_url());
+				
+    		echo get_who_likes_html($_GET['people_like']);
+		}
+    }else{
+    	add_actions('tail','get_javascript','textarea-expander');
+    }	
     //add_actions('tail','hide_comment_onmouseup'); 
     function hide_comment_onmouseup(){
         return "<script type=\"text/javascript\">
@@ -132,10 +145,44 @@
         $comment.="<div class=\"comment_box comment_box_".$post_id."\" id=\"comment_box_".$post_id."\">";
         
     	if($dc['lcount_like']>0){
-        	if($dc['lcount_like']>1)
-        		$liked="- <a href=\"javascript:;\" class=\"commentview\">".$dc['lcount_like']." peoples like this post</a>";
-        	else 
-        		$liked="- <a href=\"javascript:;\" class=\"commentview\">".$dc['lcount_like']." people like this post</a>";
+    		$who_like=get_who_likes($post_id,'like');
+    		$people_like=json_encode($who_like);
+    		$people_like=base64_encode($people_like);
+    		
+        	if($dc['lcount_like']>1){
+        		$count_like_1=count($who_like)-1;
+        		
+        		if($who_like[0]['luser_id']==$_COOKIE['user_id']){
+        			$who_like_name_1="You";
+        		}else{
+        			$who_like_name_1=$who_like[0]['ldisplay_name'];
+        		}
+        		
+        		if($who_like[1]['luser_id']==$_COOKIE['user_id']){
+        			$who_like_name_2="You";
+        		}else{
+        			$who_like_name_2=$who_like[1]['ldisplay_name'];
+        		}
+        		
+        		if($count_like_1 > 1){
+        			$liked="<script type=\"text/javascript\">
+        						$(function(){
+        							$('.peoplelike').colorbox();
+        						});
+        			        </script>";
+        			$liked.="- <a href=\"".get_state_url('my-profile').'&id='.$who_like[0]['luser_id']."\" class=\"commentview\">".$who_like_name_1."</a> and <a href=\"http://".site_url()."/lumonata-functions/comments.php?people_like=".$people_like."\" class=\"commentview peoplelike\" >".$count_like_1." other </a> people like this";
+        			
+        		}else{ 
+        			$liked="- <a href=\"".get_state_url('my-profile').'&id='.$who_like[0]['luser_id']."\" class=\"commentview\">".$who_like_name_1."</a> and <a href=\"".get_state_url('my-profile').'&id='.$who_like[1]['luser_id']."\" class=\"commentview\">".$who_like_name_2."</a> like this";
+        		}
+        	}else{
+        		if($who_like[0]['luser_id']==$_COOKIE['user_id']){
+        			$who_like_name_1="You";
+        		}else{
+        			$who_like_name_1=$who_like[0]['ldisplay_name'];
+        		}
+        		$liked="- <a href=\"".get_state_url('my-profile').'&id='.$who_like[0]['luser_id']."\" class=\"commentview\">".$who_like_name_1."</a> like this";
+        	}
         }else{
         	$liked="";
         }
@@ -226,6 +273,44 @@
         
         return $comment;
     }
+    function get_who_likes($post_id,$post_type){
+    	global $db;
+    	
+    	$query=$db->prepare_query("SELECT luser_id 
+    	                    FROM lumonata_comments
+    	                    WHERE larticle_id=%d AND lcomment_type=%s",$post_id,$post_type);
+    	
+    	$result=$db->do_query($query);
+    	while($comment=$db->fetch_array($result)){
+    		$users[]=fetch_user($comment['luser_id']);
+    	}
+    	return $users;
+    }
+    function get_who_likes_html($string){
+		$people=base64_decode($string);
+		$people=json_decode($people,true);
+		$return="<div style=\"width:400px;height:350px;overflow:auto;\">";
+		foreach ($people as $key=>$value){
+			$return.="<div class=\"fl_item clearfix\" >";
+					$return.="<div class=\"clearfix\" >";
+						$return.="<div class=\"fl_image\">";
+							$return.="<a href=\"".get_state_url('my-profile').'&id='.$people[$key]['luser_id']."\">";
+							$return.="<img src=\"".get_avatar($people[$key]['luser_id'],2)."\" />";
+							$return.="</a>";
+						$return.="</div>";
+						$return.="<div class=\"fl_name\">";
+							$return.="<a href=\"".get_state_url('my-profile').'&id='.$people[$key]['luser_id']."\" style=\"display:block;text-decoration:none;height:inherit;\">";
+								$return.=$people[$key]['ldisplay_name'];
+							$return.="</a>";
+						$return.="</div>";
+					$return.="</div>";
+				$return.="</div>";
+		}
+		$return.="</div>";
+		
+		return $return;
+		
+	}
     function fetch_comments_list($limit,$nn,$start_row,$avatar_thmb,$post_id){
     	global $db;
     	$comment="";
