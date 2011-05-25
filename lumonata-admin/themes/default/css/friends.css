@@ -62,8 +62,7 @@
 }
 .friends_name_fof{
 	float: left;
-	width: 70% !important;
-	width:67%;
+	width: 400px;
 	height: 50px;
 	margin: 10px;
 	
@@ -99,7 +98,7 @@
 }
 
 .fof_add_friend{
-	width: 13%;
+	width: 100px;
 	float: left;
 	height: 50px;
 	margin: 10px;
