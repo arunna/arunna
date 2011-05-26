@@ -88,10 +88,13 @@
 		add_actions('header_elements','get_javascript','navigation');
 		
 		/*get jQuery for colobox popup plugin*/
-		add_actions('header_elements','get_javascript','jquery.colorbox');
+		add_actions('header_elements','get_javascript_inc','colorbox-4/jquery.colorbox.js');
 		
 		/*get jQuery for colobox popup function*/
-		add_actions('header_elements','get_javascript','colorbox');
+		add_actions('header_elements','get_javascript_inc','colorbox-4/colorbox.js');
+		
+		/*get the CSS for colobox popup function*/
+		add_actions('header_elements','get_css_inc','colorbox-4/colorbox.css');
 		
 		/*get jQuery for dialog box*/
 		add_actions('header_elements','get_javascript','dialog');
