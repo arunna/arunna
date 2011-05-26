@@ -1062,14 +1062,15 @@
 	 */
 	function add_friend_to_admin($friend_id, $inviter=NULL){
 	    global $db;
+	    	    
         $administrator=fetch_user_per_type('administrator');
 		//$friend_id=mysql_insert_id();
 		foreach ($administrator as $key=>$value){
-		    if(!is_null($inviter) && $inviter!=$value){
+		    //if(!is_null($inviter) && $inviter!=$value){
 			    $return=add_friendship($value, $friend_id,'connected');
 			    if($return)
 			    $return=add_friendship($friend_id, $value,'connected');
-		    }
+		    //}
 		}
 		return $return;
 	}

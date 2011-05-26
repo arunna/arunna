@@ -568,7 +568,7 @@
 				}
 			}elseif(is_edit()){
 				
-				$validation_rs=is_valid_user_input($_POST['username'][0],$_POST['password'][0],$_POST['re_password'][0],$_POST['email'][0],$_POST['sex'][0],$_POST['website'][0]);
+				$validation_rs=is_valid_user_input($_POST['username'][0],$_POST['first_name'][0],$_POST['last_name'][0],$_POST['password'][0],$_POST['re_password'][0],$_POST['email'][0],$_POST['sex'][0],$_POST['website'][0]);
 				if($validation_rs=="OK"){	
 					
 					if(!empty($_POST['birthday'][0]) && !empty($_POST['birthmonth'][0]) && !empty($_POST['birthyear'][0])){
@@ -604,7 +604,7 @@
 			}elseif(is_edit_all()){
 				
 				foreach($_POST['select'] as $key=>$val){
-					$validation_rs=is_valid_user_input($_POST['username'][$key],$_POST['password'][$key],$_POST['re_password'][$key],$_POST['email'][$key],$_POST['sex'][$key],$_POST['website'][$key]);
+					$validation_rs=is_valid_user_input($_POST['username'][$key],$_POST['first_name'][$key],$_POST['last_name'][$key],$_POST['password'][$key],$_POST['re_password'][$key],$_POST['email'][$key],$_POST['sex'][$key],$_POST['website'][$key]);
 					if($validation_rs=="OK"){	
 						if(!empty($_POST['birthday'][$key]) && !empty($_POST['birthmonth'][$key]) && !empty($_POST['birthyear'][$key])){
 							$thebirthday=$_POST['birthmonth'][$key]."/".$_POST['birthday'][$key]."/".$_POST['birthyear'][$key];
