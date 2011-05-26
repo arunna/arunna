@@ -740,9 +740,7 @@
         		//if invite from friend
         		if(isset($_GET['iid']) && !empty($_GET['iid'])){
         		    
-        		   
         		    $invitr_user=fetch_user($_GET['iid']);
-        		    
         		    add_friend_to_admin($invited_user['luser_id'],$_GET['iid']);
         		    
         		    //update friendship status
@@ -1060,17 +1058,24 @@
 	 * 
 	 * @return boolean True if the insert process is success  
 	 */
-	function add_friend_to_admin($friend_id, $inviter=NULL){
+	function add_friend_to_admin($friend_id, $inviter=0){
 	    global $db;
 	    	    
         $administrator=fetch_user_per_type('administrator');
 		//$friend_id=mysql_insert_id();
 		foreach ($administrator as $key=>$value){
-		    //if(!is_null($inviter) && $inviter!=$value){
-			    $return=add_friendship($value, $friend_id,'connected');
+		    if(isset($inviter)){
+		    	if(inviter!=$value){
+			    	$return=add_friendship($value, $friend_id,'connected');
+			    	if($return)
+			    	$return=add_friendship($friend_id, $value,'connected');
+		    	}
+			    
+		    }else{
+		    	$return=add_friendship($value, $friend_id,'connected');
 			    if($return)
 			    $return=add_friendship($friend_id, $value,'connected');
-		    //}
+		    }
 		}
 		return $return;
 	}

@@ -1765,16 +1765,9 @@
 								
 								
 					$html.='</div>';
-					
-					
 				}
 				
-				
 			}
-			
-			
-			
-			
 			return $html;
 	}
 	
@@ -2232,9 +2225,11 @@
 	function add_friendship($user_id,$friend_id,$status='onrequest'){
 		global $db;
 		if($user_id!=$friend_id){
-			
 				$query=$db->prepare_query("INSERT INTO lumonata_friendship (luser_id,lfriend_id,lstatus)
 										   VALUES (%d,%d,%s)",$user_id,$friend_id,$status);
+				
+				$sf=search_friendship($user_id,$friend_id);
+				if(count($sf['friend_id']) < 1)
 				return $r=$db->do_query($query);
 			
 		}
