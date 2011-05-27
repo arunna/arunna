@@ -1827,27 +1827,6 @@
 					});
 					
 					$('input[name=top_search]').keydown(function(event){
-						if(event.which!='38' && event.which!='40'){
-							$('#top_search_result_wrapper').show();
-							$('#more_result_link').hide();
-							$('#top_search_loader').show();
-							
-							if($('input[name=top_search]').val()!='Search'){
-								 $('#more_result_link').attr('href','?state=friends&tab=search&s='+$('input[name=top_search]').val());
-							}
-							$.post('../lumonata-functions/friends.php','top_search=true&s='+$('input[name=top_search]').val(),function(data){
-								 $('#top_search_result').html(data);
-								 $('#top_search_loader').hide();
-								 $('#more_result_link').show();
-								
-							});
-						}
-						
-						if(event.which=='13'){
-							if(selected_pro!='')
-								location=selected_pro;
-						}
-						
 					});
 					
 					$('input[name=top_search]').keyup(function(event){
@@ -1883,6 +1862,27 @@
 								}
 								selected_pro=jQuery('.top_search_result.active a').attr('href');
 
+							}
+							
+							if(event.which!='38' && event.which!='40'){
+								$('#top_search_result_wrapper').show();
+								$('#more_result_link').hide();
+								$('#top_search_loader').show();
+								
+								if($('input[name=top_search]').val()!='Search'){
+									 $('#more_result_link').attr('href','?state=friends&tab=search&s='+$('input[name=top_search]').val());
+								}
+								$.post('../lumonata-functions/friends.php','top_search=true&s='+$('input[name=top_search]').val(),function(data){
+									 $('#top_search_result').html(data);
+									 $('#top_search_loader').hide();
+									 $('#more_result_link').show();
+									
+								});
+							}
+							
+							if(event.which=='13'){
+								if(selected_pro!='')
+									location=selected_pro;
 							}
 					
 					});
