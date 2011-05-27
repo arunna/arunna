@@ -3,14 +3,14 @@
     if(isset($_GET['people_like'])){
     	require_once('../lumonata_config.php');
 		require_once 'user.php';
-		if(is_user_logged()){
+		//if(is_user_logged()){
 	    	require_once('../lumonata_settings.php');
 	    	require_once('settings.php');
 	    	if(!defined('SITE_URL'))
 				define('SITE_URL',site_url());
 				
     		echo get_who_likes_html($_GET['people_like']);
-		}
+		//}
     }else{
     	add_actions('tail','get_javascript','textarea-expander');
     }	
@@ -116,7 +116,7 @@
         		}
         		$comment.="<script type=\"text/javascript\">
         					 $('#like_post_".$post_id."').click(function(){
-        					 		$.post('http://".site_url()."/lumonata_comments.php','comment_type=like&article_id=".$post_id."&parent_id=0',function(data){
+        					 		$.post('http://".site_url()."/lumonata_comments.php','comment_type=like&article_id=".$post_id."&parent_id=0&lad=".LUMONATA_ADMIN."',function(data){
                                     	$('#people_like_".$post_id."').html(data);
                                     	$('#unlike_post_".$post_id."').show();
                                     	$('#like_post_".$post_id."').hide();
@@ -125,7 +125,7 @@
                              });
                              
                              $('#unlike_post_".$post_id."').click(function(){
-        					 		$.post('http://".site_url()."/lumonata_comments.php','comment_type=unlike&article_id=".$post_id."&parent_id=0',function(data){
+        					 		$.post('http://".site_url()."/lumonata_comments.php','comment_type=unlike&article_id=".$post_id."&parent_id=0&lad=".LUMONATA_ADMIN."',function(data){
                                     	$('#people_like_".$post_id."').html(data);
                                     	$('#unlike_post_".$post_id."').hide();
                                     	$('#like_post_".$post_id."').show();
@@ -152,24 +152,20 @@
         	if($dc['lcount_like']>1){
         		$count_like_1=count($who_like)-1;
         		
-        		if($who_like[0]['luser_id']==$_COOKIE['user_id']){
+        		if(isset($_COOKIE['user_id']) && $who_like[0]['luser_id']==$_COOKIE['user_id']){
         			$who_like_name_1="You";
         		}else{
         			$who_like_name_1=$who_like[0]['ldisplay_name'];
         		}
         		
-        		if($who_like[1]['luser_id']==$_COOKIE['user_id']){
+        		if(isset($_COOKIE['user_id']) && $who_like[1]['luser_id']==$_COOKIE['user_id']){
         			$who_like_name_2="You";
         		}else{
         			$who_like_name_2=$who_like[1]['ldisplay_name'];
         		}
         		
         		if($count_like_1 > 1){
-        			$liked="<script type=\"text/javascript\">
-        						$(function(){
-        							$('.peoplelike').colorbox();
-        						});
-        			        </script>";
+        			$liked="";
         			$liked.="- <a href=\"".get_state_url('my-profile').'&id='.$who_like[0]['luser_id']."\" class=\"commentview\">".$who_like_name_1."</a> and <a href=\"http://".site_url()."/lumonata-functions/comments.php?people_like=".$people_like."\" class=\"commentview peoplelike\" >".$count_like_1." other </a> people like this";
         			
         		}else{ 
@@ -186,10 +182,17 @@
         }else{
         	$liked="";
         }
+        
     	if(!LUMONATA_ADMIN){
         		$link=permalink($post_id)."#comment_box_".$post_id;
         		$loader="";
+        		$comment.="<script type=\"text/javascript\">
+        						$(function(){
+        							$('.peoplelike').fancybox();
+        						});
+        			        </script>";
         }else{
+        	
         	$link="javascript:;";
         	$loader="&nbsp;&nbsp;
         			<span id=\"loading_comments_".$post_id."\" style=\"display:none;\">
@@ -208,6 +211,11 @@
 	        					});
         					});
         				</script>";
+        	$comment.="<script type=\"text/javascript\">
+        						$(function(){
+        							$('.peoplelike').colorbox();
+        						});
+        			        </script>";
         }
         if($nn>$limit || $dc['lcount_like']>0){
         	
@@ -291,14 +299,14 @@
 		$people=json_decode($people,true);
 		$return="<div style=\"width:400px;height:350px;overflow:auto;\">";
 		foreach ($people as $key=>$value){
-			$return.="<div class=\"fl_item clearfix\" >";
+			$return.="<div class=\"clearfix\" style=\"width:185px;height:60px;border:1px solid #ccc;margin:5px 5px;cursor: pointer;float:left;\" >";
 					$return.="<div class=\"clearfix\" >";
-						$return.="<div class=\"fl_image\">";
+						$return.="<div style=\"width:50px;height:50px;overflow:hidden;margin:5px 5px;float:left;\">";
 							$return.="<a href=\"".get_state_url('my-profile').'&id='.$people[$key]['luser_id']."\">";
 							$return.="<img src=\"".get_avatar($people[$key]['luser_id'],2)."\" />";
 							$return.="</a>";
 						$return.="</div>";
-						$return.="<div class=\"fl_name\">";
+						$return.="<div style=\"width:110px;height:50px;overflow:hidden;margin:5px 5px;float:left;font-weight:bold;\">";
 							$return.="<a href=\"".get_state_url('my-profile').'&id='.$people[$key]['luser_id']."\" style=\"display:block;text-decoration:none;height:inherit;\">";
 								$return.=$people[$key]['ldisplay_name'];
 							$return.="</a>";
@@ -363,7 +371,7 @@
 
             //like comments
 	        $likeit=get_like_button($data['lcomment_id'],$post_id);
-        	$liked_comment=get_liked_comment($data['lcomment_like']);
+        	$liked_comment=get_liked_comment($data['lcomment_like'],$data['lcomment_id']);
         	$manageit=get_manage_comment($post_id,$data['luser_id'],$data['lcomment_id']);
 	        
 	        
@@ -384,12 +392,14 @@
         }
         return $comment;
     }
-    function get_liked_comment($liked){
+    function get_liked_comment($liked,$post_id=0){
     	if($liked>0){
-        	if($liked>1)
-        		$liked_comment=" - <a href=\"javascript:;\" class=\"commentview\">".$liked." peoples like this comment</a>";
-        	else 
-        		$liked_comment=" - <a href=\"javascript:;\" class=\"commentview\">".$liked." people like this comment</a>";
+    		$people_who_like=get_who_likes($post_id, 'like_comment');
+    		$people_like=json_encode($people_who_like);
+    		$people_like=base64_encode($people_like);
+    		$liked_comment="";
+        	$liked_comment.=" - <a href=\"http://".site_url()."/lumonata-functions/comments.php?people_like=".$people_like."\" class=\"commentview peoplelike\">".$liked." people like this</a>";
+        	
         }else{
         	$liked_comment="";
         	
@@ -444,7 +454,7 @@
     function hit_like($comment_id){
     	$likeit="<script type=\"text/javascript\">
         			 $('#like_comment_".$comment_id."').click(function(){
-        			 		$.post('http://".site_url()."/lumonata_comments.php','comment_type=like_comment&article_id=".$comment_id."&parent_id=0',function(data){
+        			 		$.post('http://".site_url()."/lumonata_comments.php','comment_type=like_comment&article_id=".$comment_id."&parent_id=0&lad=".LUMONATA_ADMIN."',function(data){
                                     $('#people_like_comment_".$comment_id."').html(data);
                                     $('#unlike_comment_".$comment_id."').show();
                                     $('#like_comment_".$comment_id."').hide();
@@ -453,7 +463,7 @@
                              
                              $('#unlike_comment_".$comment_id."').click(function(){
                              
-        			 		$.post('http://".site_url()."/lumonata_comments.php','comment_type=unlike_comment&article_id=".$comment_id."&parent_id=0',function(data){
+        			 		$.post('http://".site_url()."/lumonata_comments.php','comment_type=unlike_comment&article_id=".$comment_id."&parent_id=0&lad=".LUMONATA_ADMIN."',function(data){
                                     $('#people_like_comment_".$comment_id."').html(data);
                                     $('#unlike_comment_".$comment_id."').hide();
                                     $('#like_comment_".$comment_id."').show();

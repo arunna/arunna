@@ -106,12 +106,19 @@ if(isset($_POST['comment_type'])){
 				$people_like=get_who_likes($_POST['article_id'],'like');
 				$people_like=json_encode($people_like);
 				$people_like=base64_encode($people_like);
-				
+				if($_POST['lad']==false){
+					$liked="<script type=\"text/javascript\">
+        						$(function(){
+        							$('.peoplelike').fancybox();
+        						});
+        			        </script>";
+				}else{
 				$liked="<script type=\"text/javascript\">
         						$(function(){
         							$('.peoplelike').colorbox();
         						});
         			        </script>";
+				}
 		    	$liked.="<a href=\"http://".site_url()."/lumonata-functions/comments.php?people_like=".$people_like."\" class=\"commentview peoplelike\" > - ".$dc['lcount_like']." people like this</a>";
 		        
 		    }else{
@@ -123,10 +130,26 @@ if(isset($_POST['comment_type'])){
 			$result=$db->do_query($sql);
 			$dc=$db->fetch_array($result);
 			if($dc['lcomment_like']>0){
-		        if($dc['lcomment_like']>1)
-		    	    $liked="<a href=\"javascript:;\" class=\"commentview\"> - ".$dc['lcomment_like']." peoples like this comment</a>";
-		        else 
-		    	    $liked="<a href=\"javascript:;\" class=\"commentview\"> - ".$dc['lcomment_like']." people like this comment</a>";
+				
+				$people_like=get_who_likes($_POST['article_id'],'like_comment');
+				$people_like=json_encode($people_like);
+				$people_like=base64_encode($people_like);
+				
+				if($_POST['lad']==false){
+					$liked="<script type=\"text/javascript\">
+        						$(function(){
+        							$('.peoplelike').fancybox();
+        						});
+        			        </script>";
+				}else{
+					$liked="<script type=\"text/javascript\">
+        						$(function(){
+        							$('.peoplelike').colorbox();
+        						});
+        			        </script>";
+				}   
+		        $liked.="<a href=\"http://".site_url()."/lumonata-functions/comments.php?people_like=".$people_like."\" class=\"commentview peoplelike\"> - ".$dc['lcomment_like']." people like this</a>";
+		        
 		    }else{
 		        $liked="";
 		    }
