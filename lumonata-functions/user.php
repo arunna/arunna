@@ -1630,7 +1630,7 @@
 		$content_left=dashboard_latest_update($query,get_meta_data('comment_per_page'),false,$feed_type);
 		
 		$user=fetch_user($id);
-		add_actions('section_title',$user['ldisplay_name']);
+		add_actions('section_title',ucwords($user['ldisplay_name']));
 		$add_friend_button="";
 		
 		if($id==$_COOKIE['user_id']){
@@ -1646,10 +1646,10 @@
 			$id=kses($_GET['id'], array());
 			if(isset($_GET['tab']) && $_GET['tab']=='profile'){
 				$content_left=user_profile($id);
-				$the_tabs="<li><a href=\"".get_state_url('my-profile')."&id=".$id."\">".$user['ldisplay_name']." Updates</a></li>";
+				$the_tabs="<li><a href=\"".get_state_url('my-profile')."&id=".$id."\">".ucwords($user['ldisplay_name'])." Updates</a></li>";
 				$the_tabs.="<li class=\"active\"><a href=\"".get_state_url('my-profile')."&tab=profile&id=".$id."\">Profile</a></li>";
 			}else{
-				$the_tabs="<li class=\"active\"><a href=\"".get_state_url('my-profile')."&id=".$id."\">".$user['ldisplay_name']." Updates</a></li>";
+				$the_tabs="<li class=\"active\"><a href=\"".get_state_url('my-profile')."&id=".$id."\">".ucwords($user['ldisplay_name'])." Updates</a></li>";
 				$the_tabs.="<li><a href=\"".get_state_url('my-profile')."&tab=profile&id=".$id."\">Profile</a></li>";
 			}
 			
