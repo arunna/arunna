@@ -1,35 +1,37 @@
 /*LOGIN FORM*/
 .login_form{
-	margin:50px auto 0 auto;
-	border:1px solid #ccc;
-	width:284px;
+	margin:10px auto 0 auto;
+	border-bottom:1px solid #ccc;
+	width:100%;
 	height:auto;
-	background:#ffffff url(../images/logo-med.png) no-repeat 120px 50px;
-	padding:77px 10px 25px 10px;
-	-moz-border-radius:10px;
-	-webkit-border-radius:10px;
-
+	background:#ffffff no-repeat 120px 50px;
+	padding:25px 10px 25px 10px;
 }
 .login_yellow{
-	background:#fcaf17;
-	width:230px;
+	background:#FFF;
+	width:340px;
 	height:auto;
-	margin:3px auto;
+	margin:1px auto;
 	padding:5px;
-	color:#ffffff;
+	color:#333;
 	font-size:15px;
-	
 }
 
 .login_text{
 	font-size:18px;	
 	height:30px;
-	width:220px;
+	width:340px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border:1px solid #999;
+	margin: 0;
+	padding: 0;
 }
 .login_btn_wrp{
 	margin:0 auto;
-	width:240px;
+	width:340px;
 	height:auto;
+	
 }
 .login_btn{
 	background:#f26531;
@@ -38,11 +40,13 @@
 	border:0;
 	padding:5px;
 	margin:0;
-
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border: 1px solid #ef451e;
 }
 .alert_login{
 	margin:10px auto 10px auto;
-	width:240px;
+	width:340px;
 	height:auto;
 }
 .lost_password{
@@ -61,10 +65,7 @@
 	border:1px solid #ccc;
 	width:450px;
 	background-color:#ffffff;
-	background-image: url(../images/logo-med.png);
-	background-repeat: no-repeat; 
-	background-position: 280px 40px;
 	padding:77px 10px 25px 20px;
-	-moz-border-radius:10px;
-	-webkit-border-radius:10px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
 }
