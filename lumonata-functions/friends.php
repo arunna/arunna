@@ -1322,7 +1322,8 @@
 								 WHERE ( ldisplay_name like %s 
 								 OR lemail like %s 
 								 OR lusername like %s ) 
-								 AND lstatus=1 order by ldlu desc",
+								 AND lstatus=1 order by ldlu desc
+								 LIMIT 5",
 								 "%".$terms."%",
 								 "%".$terms."%",
 								 "%".$terms."%");
@@ -1774,16 +1775,18 @@
 	function top_search_box(){
 		add_actions('header_elements','top_search_box_js');
 		$box="<div class=\"top_search_wrapper\">
-				<form>
+				
 					<div class=\"clearfix\">
 						<div class=\"input_search_wrapper\">
 							<input type=\"text\" name=\"top_search\" value=\"Search\" class=\"search_top_text\" />
 						</div>
 						<div class=\"button_search_wrapper\">
-							<input type=\"submit\" value=\" \" class=\"top_search_button\" />
+							<input type=\"submit\" value=\" \" class=\"top_search_button\" id=\"top_search_button\" />
 						</div>
 					</div>
-				</form>
+					
+					
+				
 			</div>
 			<div id=\"top_search_result_wrapper\" style=\"display:none;\" >
 				<div class=\"top_search_result_wrapper\">
@@ -1804,6 +1807,8 @@
 		
 		$box="<script type=\"text/javascript\">
 				var mouse_on_search=false;
+				var activeSel = 0;
+				var selected_pro='';
 				
 				$(document).ready(function(){
 					$('input[name=top_search]').focus(function(){
@@ -1813,30 +1818,80 @@
 					$('input[name=top_search]').blur(function(){
 						if($(this).val()=='')
 							$('input[name=top_search]').val('Search');
-							
-							
 					});
 					
-					$('input[name=top_search]').keyup(function(){
-						$('#top_search_result_wrapper').show();
-						$('#more_result_link').hide();
-						$('#top_search_loader').show();
-						
+					$('#top_search_button').click(function(){
 						if($('input[name=top_search]').val()!='Search'){
-							 $('#more_result_link').attr('href','?state=friends&tab=search&s='+$('input[name=top_search]').val());
+							location='?state=friends&tab=search&s='+$('input[name=top_search]').val();
 						}
-						$.post('../lumonata-functions/friends.php','top_search=true&s='+$('input[name=top_search]').val(),function(data){
-							 $('#top_search_result').html(data);
-							 $('#top_search_loader').hide();
-							 $('#more_result_link').show();
-							
-						});
 					});
 					
+					$('input[name=top_search]').keydown(function(event){
+						if(event.which!='38' && event.which!='40'){
+							$('#top_search_result_wrapper').show();
+							$('#more_result_link').hide();
+							$('#top_search_loader').show();
+							
+							if($('input[name=top_search]').val()!='Search'){
+								 $('#more_result_link').attr('href','?state=friends&tab=search&s='+$('input[name=top_search]').val());
+							}
+							$.post('../lumonata-functions/friends.php','top_search=true&s='+$('input[name=top_search]').val(),function(data){
+								 $('#top_search_result').html(data);
+								 $('#top_search_loader').hide();
+								 $('#more_result_link').show();
+								
+							});
+						}
+						
+						if(event.which=='13'){
+							if(selected_pro!='')
+								location=selected_pro;
+						}
+						
+					});
+					
+					$('input[name=top_search]').keyup(function(event){
+							var nItem = jQuery('.top_search_result').length;
+							
+							if(event.which=='38'){
+								//alert('up');
+								jQuery('.top_search_result').removeClass('active');
+								if(activeSel==0){
+									jQuery('.top_search_result:last').addClass('active');
+									activeSel = nItem;
+									//$('input[name=selected_index]').val(nItem);
+								}else{
+									activeSel -= 1;
+									if(activeSel==0){ 
+											activeSel=nItem;
+											//$('input[name=selected_index]').val(nItem); 
+									}
+									jQuery('.top_search_result:eq('+(activeSel-1)+')').addClass('active');
+									$('input[name=selected_index]').val(activeSel-1);
+								}
+								selected_pro=jQuery('.top_search_result.active a').attr('href');
+								
+							}else if(event.which=='40'){
+								jQuery('.top_search_result').removeClass('active');
+								if(activeSel==0){
+									jQuery('.top_search_result:first').addClass('active');
+									activeSel = 1;
+								}else{
+									activeSel += 1;
+									if(activeSel>nItem){ activeSel=1; }
+									jQuery('.top_search_result:eq('+(activeSel-1)+')').addClass('active');
+								}
+								selected_pro=jQuery('.top_search_result.active a').attr('href');
+
+							}
+					
+					});
+
 					
 										
                     $('#top_search_result_wrapper').mouseover(function(){ 
                            mouse_on_search=true;
+                           
                     }).mouseleave(function(){ 
                            mouse_on_search=false;
                     });
@@ -1847,6 +1902,8 @@
 						}
 					});
 					
+					
+					
 				});
 			 </script>";
 		
@@ -1856,8 +1913,9 @@
 		
 		$result="<div class=\"search_result_header\">People</div>";
 		foreach($friends['id'] as $key=>$value){
+			$key_1=$key+1;
 			$result.="
-						<div class=\"top_search_result clearfix\">
+						<div class=\"top_search_result clearfix\" id=\"top_search_result_".$key."\">
 							<div class=\"top_search_avatar\">
 								<a href=\"".get_state_url('my-profile')."&id=".$friends['id'][$key]."\">
 									<img src=\"".$friends['avatar'][$key]."\" title=\"".$friends['name'][$key]."\" alt=\"".$friends['name'][$key]."\" />
@@ -1869,7 +1927,18 @@
 								</a>
 							</div>
 							
-						</div>";
+						</div>
+						<script type=\"text/javascript\">
+							$(function(){
+								$('#top_search_result_".$key."').mouseover(function(){
+									$('.top_search_result').removeClass('active');
+									$(this).addClass('active');
+									activeSel=".$key_1.";
+									selected_pro=$('#top_search_result_".$key." a').attr('href');
+								});
+							});
+						</script>
+						";
 		}
 		
 		

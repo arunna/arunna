@@ -4,7 +4,6 @@
 @import "dashboard.css";
 @import "tabs.css";
 @import "form.css";
-@import "colorbox.css";
 @import "alert.css";
 @import "comments.css";
 @import "menus.css";
@@ -150,7 +149,8 @@ th{
 	cursor: pointer;
 	color: #EF451E;
 }
-.top_search_result:hover{
+
+.top_search_result.active{
 	background:#EF835C;
 	color: #FFF; 
 }
