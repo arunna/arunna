@@ -134,6 +134,9 @@
             $this->add_privileges('editor','friends','update');
             $this->add_privileges('editor','friends','delete');
             
+             //Notifications
+            $this->add_privileges('editor','notifications','preview');
+            
             /***********Privilege for Author***********/
             //Status
             $this->add_privileges('author','status','preview');
