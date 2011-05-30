@@ -148,6 +148,7 @@ th{
 	height: auto;
 	cursor: pointer;
 	color: #EF451E;
+	border-bottom:1px solid #F0F0F0;
 }
 
 .top_search_result.active{
@@ -192,6 +193,13 @@ th{
 
 /*End of Search Box*/
 
+/*Notification*/
+.notif_wrap{
+	width:345px;
+	height:380;
+	overflow:auto;
+}
+/*END Notifications*/
 .topnav{
 	width:500px;
 	height: 47px;

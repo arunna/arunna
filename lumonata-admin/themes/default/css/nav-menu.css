@@ -49,7 +49,11 @@
 	padding:0 !important;
 	margin:5px 0 2px 0;
 }
-
+.lumonata_menu ul li.notifications{
+	background:url(../images/ico-comment.png) no-repeat left top;	
+	padding:0 !important;
+	margin:5px 0 2px 0;
+}
 .lumonata_menu ul li.articles{
 	background:url(../images/ico-article.png) no-repeat left top;	
 }
