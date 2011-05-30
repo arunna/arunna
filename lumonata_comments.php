@@ -8,9 +8,18 @@ require_once('lumonata-functions/user.php');
 require_once('lumonata-functions/kses.php');
 require_once('lumonata-functions/rewrite.php');
 require_once('lumonata-functions/mail.php');
+require_once("lumonata-functions/notifications.php");
 require_once('lumonata-functions/articles.php');
 require_once('lumonata-classes/post.php');
 require_once('lumonata-functions/comments.php');
+
+if(isset($_POST['lad'])){
+	if(!defined("LUMONATA_ADMIN"))
+		define("LUMONATA_ADMIN", $_POST['lad']);
+}else{
+	if(!defined("LUMONATA_ADMIN"))
+		define("LUMONATA_ADMIN", false);
+}
 
 /*SET TIMEZONE*/
 set_timezone(get_meta_data('time_zone'));

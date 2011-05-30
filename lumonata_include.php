@@ -19,6 +19,7 @@
 	require_once(ROOT_PATH."/lumonata_settings.php");
 	require_once(ROOT_PATH."/lumonata-functions/settings.php");
 	require_once(ROOT_PATH."/lumonata-functions/mail.php");
+	require_once(ROOT_PATH."/lumonata-functions/notifications.php");
 	require_once(ROOT_PATH."/lumonata-functions/rewrite.php");
 	require_once(ROOT_PATH.'/lumonata-functions/upload.php');
 	require_once(ROOT_PATH."/lumonata-content/languages/".is_language('en').".php");
