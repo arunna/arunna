@@ -4,6 +4,7 @@
 	class admin_menu{
 		function admin_menu(){
 			$this->main_menu=array('dashboard'=>'Dashboard',
+						'notifications' => 'Notifications',
 						'applications' => 'Applications',
 						'articles' => 'Articles',
 						'pages' => 'Pages',
@@ -52,6 +53,7 @@
 		}
 		function get_admin_menu(){
 			$menu="<ul>";
+			
 			foreach($this->main_menu as $key=>$val){
 				if($key=='applications'){
 					$sub=$this->get_apps_menu();
@@ -115,9 +117,9 @@
 					if(isset($friend_req['id']))
 					$count_friends_req=count($friend_req['id']);
 					if($count_friends_req>0){
-						$noti_comment_count="<span class=\"count_updates\" id=\"comments_updates\">".$count_friends_req."</span>";
+						$noti_comment_count="<span class=\"count_updates\" id=\"friends_updates\">".$count_friends_req."</span>";
 						$noti_comment_count.="<script type=\"text/javascript\">
-													$('#comments_updates').click(function(){
+													$('#friends_updates').click(function(){
 														location=$('#friends').attr('href');
 													})
 											  </script>";
@@ -127,11 +129,43 @@
 						
 				}
 				
+				if($key=='notifications'){
+					$count_notif=count_notifications($_COOKIE['user_id']);
+					
+					if($count_notif>0){
+						$noti_comment_count="<span class=\"count_updates\" id=\"notification_updates\">".$count_notif."</span>";
+						$noti_comment_count.="<script type=\"text/javascript\">
+													$(function(){
+														$('#notification_updates').click(function(){
+															$('#notification_updates').colorbox({ href:$('#notifications').attr('href') });
+														});
+													});
+											  </script>";
+						
+					}
+					
+					$menu.="<script type=\"text/javascript\">
+								$(function(){
+									$('#notifications').click(function(){
+										$('#notifications').colorbox();
+									});
+								});
+						  </script>";	
+				}
+				
 				if(is_preview()){
 					$theme=$_GET['theme'];
 					if(is_grant_app($key)){
-						if($key=="comments")
-							$menu.="<li class=\"".$class_name."\"><div class=\"theanav\"><div class=\"theanav_l\"><a href=\"?state=$key&preview=true&theme=$theme\" id=\"$key\">".$val."</a></div><div class=\"theanav_r\" >".$noti_comment_count."</div><br clear=\"left\" /></div>$sub</li>";
+						if($key=="comments" || $key=="friends" || $key=="notifications")
+							$menu.="<li class=\"".$class_name."\">
+										<div class=\"theanav\">
+											<div class=\"theanav_l\">
+												<a href=\"?state=$key&preview=true&theme=$theme\" id=\"$key\">".$val."</a>
+											</div>
+											<div class=\"theanav_r\" >".$noti_comment_count."</div>
+											<br clear=\"left\" />
+										</div>$sub
+									</li>";
 						else 
 							$menu.="<li class=\"".$class_name."\"><a href=\"?state=$key&preview=true&theme=$theme\" id=\"$key\">".$val." ".$noti_comment_count."</a>$sub</li>";
 					}
@@ -148,6 +182,17 @@
 										</div>
 										$sub
 									</li>";
+						elseif($key=="notifications")
+							$menu.="<li class=\"".$class_name."\">
+										<div class=\"theanav\">
+											<div class=\"theanav_l\">
+												<a href=\"../lumonata-functions/notifications.php?notify=show\" id=\"$key\">".$val."</a>
+											</div>
+											<div class=\"theanav_r\">".$noti_comment_count."</div>
+											<br clear=\"left\" />
+										</div>
+										$sub
+									</li>";						
 						else 
 							$menu.="<li class=\"".$class_name."\"><a href=\"?state=$key\" id=\"$key\">".$val." ".$noti_comment_count."</a>$sub</li>";
 					}

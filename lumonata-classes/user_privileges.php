@@ -78,6 +78,10 @@
             $this->add_privileges('administrator','friends','insert');
             $this->add_privileges('administrator','friends','update');
             $this->add_privileges('administrator','friends','delete');
+            
+            //Notifications
+            $this->add_privileges('administrator','notifications','preview');
+            
            
             
             /***********Privilege for Editor***********/
@@ -167,6 +171,9 @@
             $this->add_privileges('author','friends','update');
             $this->add_privileges('author','friends','delete');
             
+            //Notifications
+            $this->add_privileges('author','notifications','preview');
+            
             /***********Privilege for Contributor***********/
             //Status
             $this->add_privileges('contributor','status','preview');
@@ -204,6 +211,9 @@
             $this->add_privileges('contributor','friends','update');
             $this->add_privileges('contributor','friends','delete');
             
+            //Notifications
+            $this->add_privileges('contributor','notifications','preview');
+            
            /***********Privilege for Standard User***********/
             //Status
             $this->add_privileges('standard','status','preview');
@@ -218,6 +228,9 @@
             $this->add_privileges('standard','friends','insert');
             $this->add_privileges('standard','friends','update');
             $this->add_privileges('standard','friends','delete');
+            
+             //Notifications
+            $this->add_privileges('standard','notifications','preview');
             
             
         }
