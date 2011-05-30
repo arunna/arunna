@@ -11,8 +11,12 @@
 		if(is_user_logged()){
 	    	require_once('../lumonata_settings.php');
 	    	require_once('settings.php');
+	    	
 	    	if(!defined("SITE_URL"))
 	    		define("SITE_URL",get_meta_data("site_url"));
+	    		
+	    	/*SET TIMEZONE*/
+			set_timezone(get_meta_data('time_zone'));
 	    		
 			if($_GET['notify']=="show"){
 				echo get_unread_notifications();
@@ -68,14 +72,19 @@
 		$query=$db->prepare_query("SELECT * 
 								   FROM lumonata_notifications 
 								   WHERE laffected_user=%d and lstatus='unread'
-								   GROUP BY laction_name, luser_id
+								   GROUP BY lpost_id,laction_name
 								   ORDER BY laction_date DESC
 								   ",$_COOKIE['user_id']);
+		//echo $query;
 		
 		$result=$db->do_query($query);
 		$notif="<div class=\"notif_wrap\">";
 		$key=0;
 		$notif="<div class=\"search_result_header\">Notifications</div>";
+		
+		if($db->num_rows($result)<1)
+		$notif.="<p>No new notification</p>";
+		
 		while($data=$db->fetch_array($result) ){
 			
 			$notifperpsot=get_notify_per_act_post($data['lpost_id'],$data['laction_name']);
@@ -89,8 +98,14 @@
 				$user2=fetch_user($notifperpsot[1]['luser_id']);
 				$name2=$user2['ldisplay_name'];
 				
-				$other=count($notifperpsot)-2;
-				$other=$other." other people ";
+				$user3=fetch_user($notifperpsot[2]['luser_id']);
+				$name3=$user3['ldisplay_name'];
+				
+				$cnt_other=count($notifperpsot)-2;
+				if($cnt_other>1)
+					$other=$cnt_other." other people ";
+				else 
+					$other="<strong>".ucwords($name3)."</strong>";
 				
 				$name="<strong>".ucwords($name1)."</strong>, <strong>".ucwords($name2)."</strong> and ".$other;
 				
@@ -115,7 +130,7 @@
 					$action_des="commented on your post";
 				}else{
 					$writer=fetch_user($data['lpost_owner']);
-					$action_des="also commented on ".ucwords($writer['ldisplay_name'])."' post";
+					$action_des="also commented on <strong>".ucwords($writer['ldisplay_name'])."'s</strong> post";
 				}
 			}elseif($data['laction_name']=="like"){
 				$post_id=$data['lpost_id'];
@@ -128,14 +143,15 @@
 				$post=fetch_artciles_by_id($comment['larticle_id']);
 				$post_id=$comment['larticle_id'];
 				
-				if($comment['luser_id']==$data['laffected_user'] && $post['lpost_by']=$data['lpost_owner']){
+				
+				if($comment['luser_id']==$data['laffected_user'] && $_COOKIE['user_id']==$data['lpost_owner']){
 					$action_des="like your comment on your post";
-				}elseif($comment['luser_id']==$data['laffected_user'] && $post['lpost_by']!=$data['lpost_owner']){
+				}elseif($comment['luser_id']==$data['laffected_user'] && $_COOKIE['user_id']!=$data['lpost_owner']){
 					$writer=fetch_user($post['lpost_by']);
-					$action_des="like your comment on ".ucwords($writer['ldisplay_name'])."' post";
-				}elseif($comment['luser_id']!=$data['laffected_user'] && $post['lpost_by']==$data['lpost_owner']){
+					$action_des="like your comment on <strong>".ucwords($writer['ldisplay_name'])."'s </strong> post";
+				}elseif($comment['luser_id']!=$data['laffected_user'] && $_COOKIE['user_id']==$data['lpost_owner']){
 					$writer=fetch_user($comment['luser_id']);
-					$action_des="like ".ucwords($writer['ldisplay_name'])."'s comment on your post";
+					$action_des="like <strong>".ucwords($writer['ldisplay_name'])."'s</strong> comment on your post";
 				}
 			}
 			
@@ -153,7 +169,10 @@
 								</a>
 							</div>
 							<div class=\"top_search_name\">
-								<a href=\"".permalink($post_id)."\">".$name." ".$action_des."</a>
+								<a href=\"".permalink($post_id)."\">".$name." ".$action_des." <br />
+									<span style=\"color:#CCC;\">".nicetime($data['laction_date'],date("Y-m-d H:i:s"))."</span>
+								</a>
+								
 							</div>
 							
 						</div>
@@ -168,9 +187,10 @@
 						</script>
 						";
 			$key++;
+			mark_as_read($data['lpost_id']);
 		}
 		$notif.="<div class=\"more_search_result\">
-					<a href=\"?state=notifications\" id=\"more_result_link\"><strong>See more results</strong></a>
+					<a href=\"?state=notifications\" id=\"more_result_link\"><strong>View all notifications</strong></a>
 				</div>";
 		$notif.="<div class=\"notif_wrap\">";
 		return $notif;
@@ -181,12 +201,22 @@
 		$query=$db->prepare_query("SELECT * 
 								   FROM lumonata_notifications 
 								   WHERE lpost_id=%d AND laction_name=%s AND luser_id<>%d
-								   GROUP BY luser_id",$post_id,$action_name,$_COOKIE['user_id']);
+								   GROUP BY luser_id
+								   ORDER BY lnotification_id DESC
+								   ",$post_id,$action_name,$_COOKIE['user_id']);
 		
 		$result=$db->do_query($query);
 		while($data=$db->fetch_array($result)){
 			$notif[]=$data;
 		}
 		return $notif;
+	}
+	function mark_as_read($post_id){
+		global $db;
+		$query=$db->prepare_query("UPDATE lumonata_notifications
+									SET lstatus='read'
+									WHERE lpost_id=%d and laffected_user=%d",$post_id,$_COOKIE['user_id']);
+		
+		return $db->do_query($query);
 	}
 ?>

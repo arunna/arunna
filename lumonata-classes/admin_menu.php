@@ -138,16 +138,20 @@
 													$(function(){
 														$('#notification_updates').click(function(){
 															$('#notification_updates').colorbox({ href:$('#notifications').attr('href') });
+															$('#notification_updates').hide();
 														});
 													});
 											  </script>";
 						
+					}else{
+						$noti_comment_count="<span class=\"count_updates\" id=\"notification_updates\" style=\"display:none;\">".$count_notif."</span>";
 					}
 					
 					$menu.="<script type=\"text/javascript\">
 								$(function(){
 									$('#notifications').click(function(){
 										$('#notifications').colorbox();
+										$('#notification_updates').hide();
 									});
 								});
 						  </script>";	
