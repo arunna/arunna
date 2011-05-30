@@ -368,3 +368,21 @@ CREATE TABLE IF NOT EXISTS `lumonata_users` (
 
 INSERT INTO `lumonata_users` (`luser_id`, `lusername`, `ldisplay_name`, `lpassword`, `lemail`, `lregistration_date`, `luser_type`, `lactivation_key`, `lavatar`, `lsex`, `lbirthday`, `lstatus`, `ldlu`) VALUES
 (1, 'admin', 'Raden Yudistira', 'fcea920f7412b5da7be0cf42b8c93759', 'request@arunna.com', '0000-00-00 00:00:00', 'administrator', '', 'admin-1.jpg|admin-2.jpg|admin-3.jpg', 1, '2011-03-19', 1, '2011-03-18 21:57:25');
+
+
+--
+-- Table structure for table `lumonata_notifications`
+--
+
+CREATE TABLE IF NOT EXISTS `lumonata_notifications` (
+  `lnotification_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `lpost_id` bigint(20) NOT NULL,
+  `lpost_owner` bigint(20) NOT NULL,
+  `luser_id` bigint(20) NOT NULL,
+  `laffected_user` bigint(20) NOT NULL,
+  `laction_name` varchar(50) NOT NULL,
+  `laction_date` date NOT NULL,
+  `lstatus` varchar(10) NOT NULL,
+  `lshare_to` bigint(20) NOT NULL,
+  PRIMARY KEY (`lnotification_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
