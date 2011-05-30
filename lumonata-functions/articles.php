@@ -2148,6 +2148,15 @@
             
         
     }
+    function fetch_artciles_by_id($article_id){
+    	global $db;
+    	$sql=$db->prepare_query("SELECT * FROM lumonata_articles 
+    							WHERE larticle_id=%d",$article_id);
+    	
+    	$r=$db->do_query($sql);
+    	return $db->fetch_array($r);
+    	
+    }
     function fetch_artciles($args='',$fetch=true){
         global $db;
         $var_name['title']='';

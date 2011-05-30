@@ -283,7 +283,7 @@
     }
     function get_who_likes($post_id,$post_type){
     	global $db;
-    	
+    	$users=array();
     	$query=$db->prepare_query("SELECT luser_id 
     	                    FROM lumonata_comments
     	                    WHERE larticle_id=%d AND lcomment_type=%s",$post_id,$post_type);
@@ -452,9 +452,11 @@
         return $likeit;
     }
     function hit_like($comment_id){
+    	$lad=LUMONATA_ADMIN;
+    	
     	$likeit="<script type=\"text/javascript\">
         			 $('#like_comment_".$comment_id."').click(function(){
-        			 		$.post('http://".site_url()."/lumonata_comments.php','comment_type=like_comment&article_id=".$comment_id."&parent_id=0&lad=".LUMONATA_ADMIN."',function(data){
+        			 		$.post('http://".site_url()."/lumonata_comments.php','comment_type=like_comment&article_id=".$comment_id."&parent_id=0&lad=".$lad."',function(data){
                                     $('#people_like_comment_".$comment_id."').html(data);
                                     $('#unlike_comment_".$comment_id."').show();
                                     $('#like_comment_".$comment_id."').hide();
@@ -463,7 +465,7 @@
                              
                              $('#unlike_comment_".$comment_id."').click(function(){
                              
-        			 		$.post('http://".site_url()."/lumonata_comments.php','comment_type=unlike_comment&article_id=".$comment_id."&parent_id=0&lad=".LUMONATA_ADMIN."',function(data){
+        			 		$.post('http://".site_url()."/lumonata_comments.php','comment_type=unlike_comment&article_id=".$comment_id."&parent_id=0&lad=".$lad."',function(data){
                                     $('#people_like_comment_".$comment_id."').html(data);
                                     $('#unlike_comment_".$comment_id."').hide();
                                     $('#like_comment_".$comment_id."').show();
@@ -526,7 +528,7 @@
                             }
                             
                             if(thecomment!=''){
-                                $.post('http://".site_url()."/lumonata_comments.php','comment_type=comment&name='+thename+'&email='+encodeURIComponent(theemail)+'&website='+encodeURIComponent(thewebsite)+'&comment='+encodeURIComponent(thecomment)+'&article_id=".$post_id."&parent_id=0',function(data){
+                                $.post('http://".site_url()."/lumonata_comments.php','comment_type=comment&name='+thename+'&email='+encodeURIComponent(theemail)+'&website='+encodeURIComponent(thewebsite)+'&comment='+encodeURIComponent(thecomment)+'&article_id=".$post_id."&parent_id=0&lad=".LUMONATA_ADMIN."',function(data){
                                     $('#alert_".$post_id."').html(data);
                                 });
 
@@ -613,7 +615,7 @@
                             $('#send_comment_".$post_id."').attr('disabled',true);
                             $('#commentarea_".$post_id."').attr('disabled',true);	
                             
-                            $.post('http://".site_url()."/lumonata_comments.php','comment_type=comment&comment='+encodeURIComponent(thecomment)+'&article_id=".$post_id."&parent_id=0',function(data){
+                            $.post('http://".site_url()."/lumonata_comments.php','comment_type=comment&comment='+encodeURIComponent(thecomment)+'&article_id=".$post_id."&parent_id=0&lad=".LUMONATA_ADMIN."',function(data){
                             	var count_child=$('.comment_wrapper_".$post_id."').size();
                             	if(count_child==0){
                             		$(\".comment_box_".$post_id."\").html('');
@@ -646,7 +648,9 @@
     }
     function insert_comment($parent_id,$article_id,$comment,$name='',$email='',$url='',$comment_type='comment'){
         global $db,$allowedtags,$allowedtitletags,$thepost;
-
+		
+        $article=fetch_artciles_by_id($article_id);
+        
         $name=kses(rem_slashes($name),$allowedtitletags);
         $email=kses(rem_slashes($email),$allowedtitletags);
         $url=kses(rem_slashes($url),$allowedtitletags);
@@ -676,6 +680,7 @@
             //send notification to writer if the commentator is not the writer
         	if(alert_on_comment() && $writer_email!=$email && $comment_type=='comment'){
            		send_comment_notification($name." commented on your post", $comment, $name, $writer_email,permalink($article_id)."#comment_box_".$article_id);
+           		save_notification($article_id,$writer['luser_id'], $user_id, $writer['luser_id'], 'comment', $article['lshare_to']);
         	}
         	
         	
@@ -713,12 +718,14 @@
 		            $commentator_result=get_commentator_email($article_id, $writer_email,$email,$commentTypeIn);
 		            while($theemail=$db->fetch_array($commentator_result)){
 		            	$writer_name=($name==$writer_name)?$call_name:$writer_name;
-		            	send_comment_notification($name." also commented on ".$writer_name." post", $comment, $name, $theemail['lemail'],permalink($article_id)."#comment_box_".$article_id);	
+		            	send_comment_notification($name." also commented on ".$writer_name." post", $comment, $name, $theemail['lemail'],permalink($article_id)."#comment_box_".$article_id);
+		            	save_notification($article_id,$writer['luser_id'], $user_id, $theemail['luser_id'], 'comment', $article['lshare_to']);	
 		            }
 	        	}
 	        	
         	}elseif($comment_type=='like'){
         		send_like_notification($name." like your post", $writer_email,permalink($article_id)."#comment_box_".$article_id);
+        		save_notification($article_id,$writer['luser_id'], $user_id, $writer['luser_id'], 'like', $article['lshare_to']);
         	}elseif($comment_type=='like_comment'){
         		//Comment data that liked 
         		$theComment=fetch_comment($article_id);
@@ -738,11 +745,14 @@
 		        if($theComment['luser_id']!=$_COOKIE['user_id']){
 			        if($prev_commentator_email==$writer_email){
 			        	send_like_notification($name." like your comment on your post", $writer_email,permalink($theComment['larticle_id'])."#comment_box_".$theComment['larticle_id']);
+			        	save_notification($article_id,$writer['luser_id'], $user_id, $writer['luser_id'], 'like_comment', $article['lshare_to']);
 			        }else{
 			        	if(trim($name)!=$writer_name){
 			        		send_like_notification($name." like ".$prev_commentator_name."'s comment on your post", $writer_email,permalink($theComment['larticle_id'])."#comment_box_".$theComment['larticle_id']);
+			        		save_notification($article_id,$writer['luser_id'], $user_id, $writer['luser_id'], 'like_comment', $article['lshare_to']);
 			        	}
 			        	send_like_notification($name." like your comment on ".$writer_name."'s post", $prev_commentator_email,permalink($theComment['larticle_id'])."#comment_box_".$theComment['larticle_id']);
+			        	save_notification($article_id,$writer['luser_id'], $user_id, $theComment['luser_id'], 'like_comment', $article['lshare_to']);
 			        } 
 		        }
 		        	
@@ -955,7 +965,7 @@
     	global $db;
     	
 
-    	$query=$db->prepare_query("SELECT distinct(a.lemail)
+    	$query=$db->prepare_query("SELECT distinct(a.lemail),a.luser_id
     								FROM lumonata_users a,lumonata_comments b
     								WHERE a.luser_id=b.luser_id 
     								AND b.larticle_id=%d 
