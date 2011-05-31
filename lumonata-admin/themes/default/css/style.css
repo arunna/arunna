@@ -134,13 +134,13 @@ th{
 	z-index: 1;
 	width: 356px;
 	height:auto;
-	max-height:360px;
+	max-height:410px;
 	border:1px solid #D03414;
 }
 .top_search_result_wrapper{
 	width: 356px;
 	height:auto;
-	max-height:330px;
+	max-height:380px;
 	overflow: hidden;
 }
 .top_search_result{
@@ -157,7 +157,7 @@ th{
 }
 .top_search_avatar{
 	width:50px;
-	height: 50px;
+	height: 60px;
 	overflow: hidden;
 	float: left;
 	margin: 5px;
@@ -167,7 +167,7 @@ th{
 }
 .top_search_name{
 	width:250px;
-	height: 50px;
+	height: 60px;
 	overflow: hidden;
 	float:left;
 	margin: 5px;
@@ -198,6 +198,29 @@ th{
 	width:345px;
 	height:380;
 	overflow:auto;
+}
+.notifications_list{
+	padding: 5px;
+	width: 785px;
+	height: 37px;
+	border-bottom:1px solid #F0F0F0;
+
+}
+.notifications_list a{
+	text-decoration: none;
+	color: #EF835C;
+}
+.notifications_avatar{
+	width: 32px;
+	height: 32px;
+	float:left;
+	
+}
+.notifications_name{
+	width: 743px;
+	height: 32px;
+	float:left;
+	margin: 0 0 0 10px;
 }
 /*END Notifications*/
 .topnav{

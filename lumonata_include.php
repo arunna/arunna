@@ -19,13 +19,13 @@
 	require_once(ROOT_PATH."/lumonata_settings.php");
 	require_once(ROOT_PATH."/lumonata-functions/settings.php");
 	require_once(ROOT_PATH."/lumonata-functions/mail.php");
-	require_once(ROOT_PATH."/lumonata-functions/notifications.php");
 	require_once(ROOT_PATH."/lumonata-functions/rewrite.php");
 	require_once(ROOT_PATH.'/lumonata-functions/upload.php');
 	require_once(ROOT_PATH."/lumonata-content/languages/".is_language('en').".php");
 	require_once(ROOT_PATH."/lumonata-classes/post.php");
 	require_once(ROOT_PATH."/lumonata-functions/articles.php");
 	require_once(ROOT_PATH."/lumonata-classes/actions.php");
+	require_once(ROOT_PATH."/lumonata-functions/notifications.php");
 	require_once(ROOT_PATH."/lumonata-functions/taxonomy.php");
 	require_once(ROOT_PATH."/lumonata-functions/plugins.php");
 	require_once(ROOT_PATH."/lumonata-functions/comments.php");

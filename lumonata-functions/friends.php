@@ -397,11 +397,17 @@
 				require_once('../lumonata_settings.php');
 	    		require_once('settings.php');
 	    		require_once('mail.php');
+	    		
 	    		if(!defined('SITE_URL'))
 				define('SITE_URL',get_meta_data('site_url'));
 				
+				set_timezone(get_meta_data('time_zone'));
+				
+				require_once('notifications.php');
+				
 				if(colek_mail($_POST['coleked_id'],$_POST['person_who_colek_id'])){
-					echo "OK";
+					$notify=save_notification($_POST['person_who_colek_id'], $_POST['person_who_colek_id'], $_POST['person_who_colek_id'], $_POST['coleked_id'], 'colek', 0);
+					if($notify)echo "OK";
 				}else{
 					echo "<div>Something went wrong. Please try again later</div>";
 				}
@@ -1775,18 +1781,14 @@
 	function top_search_box(){
 		add_actions('header_elements','top_search_box_js');
 		$box="<div class=\"top_search_wrapper\">
-				
-					<div class=\"clearfix\">
-						<div class=\"input_search_wrapper\">
-							<input type=\"text\" name=\"top_search\" value=\"Search\" class=\"search_top_text\" />
-						</div>
-						<div class=\"button_search_wrapper\">
-							<input type=\"submit\" value=\" \" class=\"top_search_button\" id=\"top_search_button\" />
-						</div>
+				<div class=\"clearfix\">
+					<div class=\"input_search_wrapper\">
+						<input type=\"text\" name=\"s\" value=\"Search\" class=\"search_top_text\" />
 					</div>
-					
-					
-				
+					<div class=\"button_search_wrapper\">
+						<input type=\"button\" value=\" \" class=\"top_search_button\" id=\"top_search_button\" />
+					</div>
+				</div>
 			</div>
 			<div id=\"top_search_result_wrapper\" style=\"display:none;\" >
 				<div class=\"top_search_result_wrapper\">
@@ -1811,25 +1813,25 @@
 				var selected_pro='';
 				
 				$(document).ready(function(){
-					$('input[name=top_search]').focus(function(){
-						$('input[name=top_search]').val('');
+					$('input[name=s]').focus(function(){
+						$('input[name=s]').val('');
 					});
 					
-					$('input[name=top_search]').blur(function(){
+					$('input[name=s]').blur(function(){
 						if($(this).val()=='')
-							$('input[name=top_search]').val('Search');
+							$('input[name=s]').val('Search');
 					});
 					
 					$('#top_search_button').click(function(){
-						if($('input[name=top_search]').val()!='Search'){
-							location='?state=friends&tab=search&s='+$('input[name=top_search]').val();
+						if($('input[name=s]').val()!='Search'){
+							location='?state=friends&tab=search&s='+$('input[name=s]').val();
 						}
 					});
 					
-					$('input[name=top_search]').keydown(function(event){
+					$('input[name=s]').keydown(function(event){
 					});
 					
-					$('input[name=top_search]').keyup(function(event){
+					$('input[name=s]').keyup(function(event){
 							var nItem = jQuery('.top_search_result').length;
 							
 							if(event.which=='38'){
@@ -1869,10 +1871,10 @@
 								$('#more_result_link').hide();
 								$('#top_search_loader').show();
 								
-								if($('input[name=top_search]').val()!='Search'){
-									 $('#more_result_link').attr('href','?state=friends&tab=search&s='+$('input[name=top_search]').val());
+								if($('input[name=s]').val()!='Search'){
+									 $('#more_result_link').attr('href','?state=friends&tab=search&s='+$('input[name=s]').val());
 								}
-								$.post('../lumonata-functions/friends.php','top_search=true&s='+$('input[name=top_search]').val(),function(data){
+								$.post('../lumonata-functions/friends.php','top_search=true&s='+$('input[name=s]').val(),function(data){
 									 $('#top_search_result').html(data);
 									 $('#top_search_loader').hide();
 									 $('#more_result_link').show();
@@ -1888,7 +1890,10 @@
 					});
 
 					
-										
+					$('#top_search_button').click(function(){
+						location=$('#more_result_link').attr('href');
+					});	
+									
                     $('#top_search_result_wrapper').mouseover(function(){ 
                            mouse_on_search=true;
                            
