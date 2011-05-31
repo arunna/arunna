@@ -1284,7 +1284,7 @@
 			$query=$db->prepare_query("SELECT a.lfriendship_id,a.lfriend_id,a.lstatus
 										FROM lumonata_friendship a, lumonata_users b
 										WHERE a.luser_id=%d AND (a.lstatus='connected' OR a.lstatus='unfollow') AND a.lfriend_id=b.luser_id
-										ORDER BY b.ldlu DESC 
+										ORDER BY RAND(), b.ldlu DESC 
 										LIMIT %d,%d",$user_id,$limit,$viewed);
 		else 
 			$query=$db->prepare_query("SELECT a.lfriendship_id,a.lfriend_id,a.lstatus
@@ -1294,7 +1294,7 @@
 											   a.luser_id=%d AND 
 											   (a.lstatus='connected' OR a.lstatus='unfollow') AND 
 											   a.lfriend_id=c.luser_id
-										ORDER BY c.ldlu DESC 
+										ORDER BY RAND(), c.ldlu DESC 
 										LIMIT %d,%d",$bylist,$user_id,$limit,$viewed);
 
 		
