@@ -189,6 +189,7 @@
         		$comment.="<script type=\"text/javascript\">
         						$(function(){
         							$('.peoplelike').fancybox();
+        							
         						});
         			        </script>";
         }else{
@@ -203,7 +204,7 @@
 	        					$('#view_all_comments_".$post_id."').click(function(){
 	        						$('#loading_comments_".$post_id."').show();
 	        						
-	        						$.post('http://".site_url()."/lumonata_comments.php','view_all=all&post_id=".$post_id."&avatar_thmb=".$avatar_thmb."&limit=".$nn."&nn=".$nn."&start_row=0',function(data){
+	        						$.post('http://".site_url()."/lumonata_comments.php','view_all=all&post_id=".$post_id."&avatar_thmb=".$avatar_thmb."&limit=".$nn."&nn=".$nn."&start_row=0&lad=".LUMONATA_ADMIN."',function(data){
                                    	 	$('#comments_list_area_".$post_id."').html(data);
                                    	 	$('#loading_comments_".$post_id."').hide();
                                     });
@@ -214,8 +215,11 @@
         	$comment.="<script type=\"text/javascript\">
         						$(function(){
         							$('.peoplelike').colorbox();
+        							
         						});
         			        </script>";
+        	
+        	
         }
         if($nn>$limit || $dc['lcount_like']>0){
         	
@@ -231,7 +235,7 @@
 	                    </div>";
         }
 
-      //  $comment.="<img src=\"".get_admin_url()."/includes/media/loader.gif\" class=\"comment_loading\" style=\"display:none;\" />";
+     
         
         $comment.="<div id=\"comments_list_area_".$post_id."\">".fetch_comments_list($limit,$nn,$start_row,$avatar_thmb,$post_id)."</div>";
         
@@ -368,7 +372,20 @@
                 $commentator_url_img= "<a href=\"".$data['lcomentator_url']."\" rel=\"nofollow\"><img src=\"".get_avatar($data['luser_id'],$avatar_thmb)."\" alt=\"".$data['lcomentator_name']."\" title=\"".$data['lcomentator_name']."\" border=\"0\"  /></a>";
             }
             
-
+    		if(!LUMONATA_ADMIN){
+            	$comment.="<script type=\"text/javascript\">
+        						$(function(){
+        							$('.peoplelikecomment').fancybox();
+        						});
+        			        </script>";
+            }else{       
+            	$comment.="<script type=\"text/javascript\">
+	        				$(function(){
+	        					$('.peoplelikecomment').colorbox();
+	        				});
+        			   </script>";
+            }
+            
             //like comments
 	        $likeit=get_like_button($data['lcomment_id'],$post_id);
         	$liked_comment=get_liked_comment($data['lcomment_like'],$data['lcomment_id']);
@@ -386,6 +403,8 @@
                     <div><span class=\"comment_date\">".nicetime($data['lcomment_date'],date("Y-m-d H:i:s"))."</span> $likeit  <span id=\"people_like_comment_".$data['lcomment_id']."\">$liked_comment</span> $manageit </div>
                 </div>
             </div>";
+
+            
             $i++;
            
             
@@ -398,7 +417,7 @@
     		$people_like=json_encode($people_who_like);
     		$people_like=base64_encode($people_like);
     		$liked_comment="";
-        	$liked_comment.=" - <a href=\"http://".site_url()."/lumonata-functions/comments.php?people_like=".$people_like."\" class=\"commentview peoplelike\">".$liked." people like this</a>";
+        	$liked_comment.=" - <a href=\"http://".site_url()."/lumonata-functions/comments.php?people_like=".$people_like."\" class=\"commentview peoplelikecomment\">".$liked." people like this</a>";
         	
         }else{
         	$liked_comment="";
