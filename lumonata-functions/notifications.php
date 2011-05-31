@@ -71,11 +71,11 @@
 		
 		$query=$db->prepare_query("SELECT * 
 								   FROM lumonata_notifications 
-								   WHERE laffected_user=%d and lstatus='unread'
+								   WHERE laffected_user=%d 
 								   GROUP BY lpost_id,laction_name
 								   ORDER BY laction_date DESC
 								   ",$_COOKIE['user_id']);
-		//echo $query;
+		
 		
 		$result=$db->do_query($query);
 		$notif="<div class=\"notif_wrap\">";
