@@ -1430,9 +1430,9 @@
             }
             if(!empty($rule)){
                 $where.=" AND b.lrule='".$db->_real_escape($rule)."' AND a.lrule_id=b.lrule_id";  
-                $sql=$db->prepare_query("DELETE lumonata_rule_relationship a FROM lumonata_rule_relationship a, lumonata_rules b $where ");
+                $sql=$db->prepare_query("DELETE a FROM lumonata_rule_relationship AS a, lumonata_rules AS b $where ");
             }else{
-                $sql=$db->prepare_query("DELETE lumonata_rule_relationship a FROM lumonata_rule_relationship a $where ");
+                $sql=$db->prepare_query("DELETE a FROM lumonata_rule_relationship AS a $where ");
             }
             return $db->do_query($sql);
                
