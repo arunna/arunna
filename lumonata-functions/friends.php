@@ -862,7 +862,7 @@
 			
 			foreach ($myfriends['id'] as $key=>$val){
 				$friends_html.="<div style='width:50px:height:50px;overflow:hidden;margin:3px 3px;float:left'>
-									<a href=\"".get_state_url('my-profile')."&id=".$myfriends['id'][$key]."\" rel=\"friends\" title=\"".$myfriends['name'][$key]."\">
+									<a href=\"".user_url($myfriends['id'][$key])."\" rel=\"friends\" title=\"".$myfriends['name'][$key]."\">
 										<img src='".$myfriends['avatar'][$key]."' border='0' />
 									</a>
 								</div>";
@@ -1708,11 +1708,11 @@
 				if($friend_of_friend==false){
 					$html.='<div class="friends_item clearfix" id="friends_item_'.$key.'">
 						    	<div class="friends_avatar">
-						    		<a href="'.get_state_url('my-profile').'&id='.$friends['id'][$key].'">
+						    		<a href="'.user_url($friends['id'][$key]).'">
 						    			<img src="'.$friends['avatar'][$key].'" title="'.$friends['name'][$key].'" alt="'.$friends['name'][$key].'" />
 						    		</a>
 						    	</div>
-						    	<div class="friends_name"><p><a href="'.get_state_url('my-profile').'&id='.$friends['id'][$key].'">'.$friends['name'][$key].'</a> '.$flist.'</p></div>
+						    	<div class="friends_name"><p><a href="'.user_url($friends['id'][$key]).'">'.$friends['name'][$key].'</a> '.$flist.'</p></div>
 						    	<div class="edit_friends_list"><p style="display: none;" id="edit_list_'.$key.'"><a href="../lumonata-functions/friends.php?editlist=true&id='.$friends['fid'][$key].'&friend_id='.$friends['id'][$key].'&redirect='.urlencode(cur_pageURL()).'&key=#colorbox_'.$key.'" id="colorbox_'.$key.'" >Edit Lists</a></p></div>
 						    	<div class="follow_unfollow">'.$follow_label.'</div>';
 								
@@ -1763,11 +1763,11 @@
 					
 					$html.='<div class="friends_item clearfix" id="friends_item_'.$key.'">
 						    	<div class="friends_avatar">
-						    		<a href="'.get_state_url('my-profile').'&id='.$friends['id'][$key].'">
+						    		<a href="'.user_url($friends['id'][$key]).'">
 						    			<img src="'.$friends['avatar'][$key].'" title="'.$friends['name'][$key].'" alt="'.$friends['name'][$key].'" />
 						    		</a>
 						    	</div>
-						    	<div class="friends_name_fof"><p><a href="'.get_state_url('my-profile').'&id='.$friends['id'][$key].'">'.$friends['name'][$key].'</a> '.$flist.'</p></div>
+						    	<div class="friends_name_fof"><p><a href="'.user_url($friends['id'][$key]).'">'.$friends['name'][$key].'</a> '.$flist.'</p></div>
 						    	<div class="fof_add_friend">'.$follow_label.'</div>';
 								
 								
@@ -1922,12 +1922,12 @@
 			$result.="
 						<div class=\"top_search_result clearfix\" id=\"top_search_result_".$key."\">
 							<div class=\"top_search_avatar\">
-								<a href=\"".get_state_url('my-profile')."&id=".$friends['id'][$key]."\">
+								<a href=\"".user_url($friends['id'][$key])."\">
 									<img src=\"".$friends['avatar'][$key]."\" title=\"".$friends['name'][$key]."\" alt=\"".$friends['name'][$key]."\" />
 								</a>
 							</div>
 							<div class=\"top_search_name\">
-								<a href=\"".get_state_url('my-profile')."&id=".$friends['id'][$key]."\">
+								<a href=\"".user_url($friends['id'][$key])."\">
 									<strong>".$friends['name'][$key]."</strong>
 								</a>
 							</div>
@@ -2074,11 +2074,11 @@
 			foreach ($friends['id'] as $key=>$value){
 				$html.='<div class="friends_item clearfix"  id="friends_item_'.$key.'">
 					    	<div class="friends_avatar">
-					    		<a href="'.get_state_url('my-profile').'&id='.$friends['id'][$key].'">
+					    		<a href="'.user_url($friends['id'][$key]).'">
 					    			<img src="'.$friends['avatar'][$key].'" title="'.$friends['name'][$key].'" alt="'.$friends['name'][$key].'" />
 					    		</a>
 					    	</div>
-					    	<div class="friends_name_request"><p><a href="'.get_state_url('my-profile').'&id='.$friends['id'][$key].'">'.$friends['name'][$key].'</a></p></div>
+					    	<div class="friends_name_request"><p><a href="'.user_url($friends['id'][$key]).'">'.$friends['name'][$key].'</a></p></div>
 					    	<div class="edit_friends_list_request">
 						    	<p id="edit_list_'.$key.'">
 							    	<a  href="../lumonata-functions/friends.php?add_friend=true&type=confirm&friendship_id='.$friends['fid'][$key].'&friend_id='.$friends['id'][$key].'&redirect='.urlencode(cur_pageURL()).'&key=#confirm_'.$key.'" id="confirm_'.$key.'" >

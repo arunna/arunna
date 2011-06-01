@@ -166,10 +166,10 @@
         		
         		if($count_like_1 > 1){
         			$liked="";
-        			$liked.="- <a href=\"".get_state_url('my-profile').'&id='.$who_like[0]['luser_id']."\" class=\"commentview\">".$who_like_name_1."</a> and <a href=\"http://".site_url()."/lumonata-functions/comments.php?people_like=".$people_like."\" class=\"commentview peoplelike\" >".$count_like_1." other </a> people like this";
+        			$liked.="- <a href=\"".user_url($who_like[0]['luser_id'])."\" class=\"commentview\">".$who_like_name_1."</a> and <a href=\"http://".site_url()."/lumonata-functions/comments.php?people_like=".$people_like."\" class=\"commentview peoplelike\" >".$count_like_1." other </a> people like this";
         			
         		}else{ 
-        			$liked="- <a href=\"".get_state_url('my-profile').'&id='.$who_like[0]['luser_id']."\" class=\"commentview\">".$who_like_name_1."</a> and <a href=\"".get_state_url('my-profile').'&id='.$who_like[1]['luser_id']."\" class=\"commentview\">".$who_like_name_2."</a> like this";
+        			$liked="- <a href=\"".user_url($who_like[0]['luser_id'])."\" class=\"commentview\">".$who_like_name_1."</a> and <a href=\"".user_url($who_like[1]['luser_id'])."\" class=\"commentview\">".$who_like_name_2."</a> like this";
         		}
         	}else{
         		if($who_like[0]['luser_id']==$_COOKIE['user_id']){
@@ -177,7 +177,7 @@
         		}else{
         			$who_like_name_1=$who_like[0]['ldisplay_name'];
         		}
-        		$liked="- <a href=\"".get_state_url('my-profile').'&id='.$who_like[0]['luser_id']."\" class=\"commentview\">".$who_like_name_1."</a> like this";
+        		$liked="- <a href=\"".user_url($who_like[0]['luser_id'])."\" class=\"commentview\">".$who_like_name_1."</a> like this";
         	}
         }else{
         	$liked="";
@@ -306,12 +306,12 @@
 			$return.="<div class=\"clearfix\" style=\"width:185px;height:60px;border:1px solid #ccc;margin:5px 5px;cursor: pointer;float:left;\" >";
 					$return.="<div class=\"clearfix\" >";
 						$return.="<div style=\"width:50px;height:50px;overflow:hidden;margin:5px 5px;float:left;\">";
-							$return.="<a href=\"".get_state_url('my-profile').'&id='.$people[$key]['luser_id']."\">";
+							$return.="<a href=\"".user_url($people[$key]['luser_id'])."\">";
 							$return.="<img src=\"".get_avatar($people[$key]['luser_id'],2)."\" />";
 							$return.="</a>";
 						$return.="</div>";
 						$return.="<div style=\"width:110px;height:50px;overflow:hidden;margin:5px 5px;float:left;font-weight:bold;\">";
-							$return.="<a href=\"".get_state_url('my-profile').'&id='.$people[$key]['luser_id']."\" style=\"display:block;text-decoration:none;height:inherit;\">";
+							$return.="<a href=\"".user_url($people[$key]['luser_id'])."\" style=\"display:block;text-decoration:none;height:inherit;\">";
 								$return.=$people[$key]['ldisplay_name'];
 							$return.="</a>";
 						$return.="</div>";

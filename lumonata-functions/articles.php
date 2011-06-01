@@ -853,8 +853,8 @@
                 $list.="<div class=\"list_item clearfix\" id=\"theitem_".$d['larticle_id']."\">
                                 <input type=\"checkbox\" name=\"select[]\" class=\"title_checkbox select\" value=\"".$d['larticle_id']."\" />
                                 <div class=\"pages_title\" >".$d['larticle_title']."$status</div>
-                                <div class=\"avatar\"><img src=\"".get_avatar($user_fetched['luser_id'], 3)."\" /></div>
-                                <div class=\"list_author\">".$user_fetched['ldisplay_name']."</div>
+                                <div class=\"avatar\"><a href=\"".user_url($user_fetched['luser_id'])."\"><img src=\"".get_avatar($user_fetched['luser_id'], 3)."\" /></a></div>
+                                <div class=\"list_author\"><a href=\"".user_url($user_fetched['luser_id'])."\">".$user_fetched['ldisplay_name']."</a></div>
                                 <div class=\"list_comments\" style=\"text-align:center;\">".number_format($d['lcomment_count'])."</div>
                                 <div class=\"list_date\">".date(get_date_format(),strtotime($d['lpost_date']))."</div>
                                 <!-- div class=\"list_order\" --><input type=\"hidden\" value=\"$i\" id=\"order_".$d['larticle_id']."\" class=\"small_textbox\" name=\"order[".$i."]\"><!-- /div -->
@@ -912,8 +912,8 @@
                 $list.="<div class=\"list_item clearfix\" id=\"theitem_".$d['larticle_id']."\">
                                 <input type=\"checkbox\" name=\"select[]\" class=\"title_checkbox select\" value=\"".$d['larticle_id']."\" />
                                 <div class=\"article_title\" >".$d['larticle_title']."$status </div>
-                                <div class=\"avatar\"><img src=\"".get_avatar($user_fetched['luser_id'], 3)."\" /></div>
-                                <div class=\"list_author\">".$user_fetched['ldisplay_name']."</div>
+                                <div class=\"avatar\"><a href=\"".user_url($user_fetched['luser_id'])."\"><img src=\"".get_avatar($user_fetched['luser_id'], 3)."\" /></a></div>
+                                <div class=\"list_author\"><a href=\"".user_url($user_fetched['luser_id'])."\">".$user_fetched['ldisplay_name']."</a></div>
                                 <div class=\"list_comments\" style=\"text-align:center;\">".number_format($d['lcomment_count'])."</div>
                                 <div class=\"list_date\">".date(get_date_format(),strtotime($d['lpost_date']))."</div>
                                 <!-- div class=\"list_order\" --><input type=\"hidden\" value=\"$i\" id=\"order_".$d['larticle_id']."\" class=\"small_textbox\" name=\"order[".$i."]\"><!-- /div -->

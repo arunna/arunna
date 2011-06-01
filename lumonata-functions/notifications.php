@@ -212,6 +212,7 @@
 	
 	function get_notify_per_act_post($post_id,$action_name){
 		global $db;
+		$notif=array();
 		$query=$db->prepare_query("SELECT a.*,b.ldisplay_name 
 								   FROM lumonata_notifications a, lumonata_users b 
 								   WHERE a.lpost_id=%d 
@@ -221,6 +222,7 @@
 								   GROUP BY a.luser_id
 								   ORDER BY a.lnotification_id DESC
 								   ",$post_id,$action_name,$_COOKIE['user_id']);
+		
 		
 		$result=$db->do_query($query);
 		while($data=$db->fetch_array($result)){
@@ -285,10 +287,10 @@
 					$notifperpost_enc=base64_encode($notifperpost_enc);
 					$other="<a href=\"../lumonata-functions/comments.php?people_like=".$notifperpost_enc."\" class=\"peoplelike\">".$cnt_other." other people</a> ";
 				}else{ 
-					$other="<a href=\"?state=my-profile&id=".$user3['luser_id']."\">".ucwords($name3)."</a>";
+					$other="<a href=\"".user_url($user3['luser_id'])."\">".ucwords($name3)."</a>";
 				}
 				
-				$name="<a href=\"?state=my-profile&id=".$user['luser_id']."\">".ucwords($name1)."</a>, <a href=\"?state=my-profile&id=".$user2['luser_id']."\">".ucwords($name2)."</a> and ".$other;
+				$name="<a href=\"".user_url($user['luser_id'])."\">".ucwords($name1)."</a>, <a href=\"".user_url($user2['luser_id'])."\">".ucwords($name2)."</a> and ".$other;
 				
 			}elseif(count($notifperpost)==2){
 				$user=fetch_user($notifperpost[0]['luser_id']);
@@ -297,12 +299,12 @@
 				$user2=fetch_user($notifperpost[1]['luser_id']);
 				$name2=$user2['ldisplay_name'];
 				
-				$name="<a href=\"?state=my-profile&id=".$user['luser_id']."\">".ucwords($name1)."</a> and <a href=\"?state=my-profile&id=".$user2['luser_id']."\">".ucwords($name2)."</a>";
+				$name="<a href=\"".user_url($user['luser_id'])."\">".ucwords($name1)."</a> and <a href=\"".user_url($user2['luser_id'])."\">".ucwords($name2)."</a>";
 				
 			}else{
 				$user=fetch_user($notifperpost[0]['luser_id']);
 				$name1=$user['ldisplay_name'];
-				$name="<a href=\"?state=my-profile&id=".$user['luser_id']."\">".ucwords($name1)."</a>";
+				$name="<a href=\"".user_url($user['luser_id'])."\">".ucwords($name1)."</a>";
 			} 
 			
 			
@@ -313,7 +315,7 @@
 					$action_des="commented on your <a href=\"".$permalink."\">post</a>";
 				}else{
 					$writer=fetch_user($data['lpost_owner']);
-					$action_des="also commented on <a href=\"?state=my-profile&id=".$writer['luser_id']."\">".ucwords($writer['ldisplay_name'])."</a>'s <a href=\"".$permalink."\">post</a>";
+					$action_des="also commented on <a href=\"".user_url($writer['luser_id'])."\">".ucwords($writer['ldisplay_name'])."</a>'s <a href=\"".$permalink."\">post</a>";
 				}
 			}elseif($data['laction_name']=="like"){
 				$post_id=$data['lpost_id'];
@@ -332,14 +334,14 @@
 					$action_des="like your comment on your <a href=\"".$permalink."\">post</a>";
 				}elseif($comment['luser_id']==$data['laffected_user'] && $_COOKIE['user_id']!=$data['lpost_owner']){
 					$writer=fetch_user($post['lpost_by']);
-					$action_des="like your comment on <a href=\"?state=my-profile&id=".$writer['luser_id']."\">".ucwords($writer['ldisplay_name'])." </a>'s <a href=\"".$permalink."\">post</a>";
+					$action_des="like your comment on <a href=\"".user_url($writer['luser_id'])."\">".ucwords($writer['ldisplay_name'])." </a>'s <a href=\"".$permalink."\">post</a>";
 				}elseif($comment['luser_id']!=$data['laffected_user'] && $_COOKIE['user_id']==$data['lpost_owner']){
 					$writer=fetch_user($comment['luser_id']);
-					$action_des="like <a href=\"?state=my-profile&id=".$writer['luser_id']."\">".ucwords($writer['ldisplay_name'])."</a>'s comment on your <a href=\"".$permalink."\">post</a>";
+					$action_des="like <a href=\"".user_url($writer['luser_id'])."\">".ucwords($writer['ldisplay_name'])."</a>'s comment on your <a href=\"".$permalink."\">post</a>";
 				}
 			}elseif($data['laction_name']=="colek"){
 				$action_des="has colek you";
-				$permalink="?state=my-profile&id=".$data['luser_id'];
+				$permalink=user_url($data['luser_id']);
 			}
 			
 			

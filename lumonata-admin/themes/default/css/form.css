@@ -655,8 +655,9 @@ button[type]{
 	width:130px;
 	padding:2px;
 	float:left;
-	
-	
+}
+.list_author a{
+	text-decoration: none;
 }
 .list_comments{
 	width:90px;
