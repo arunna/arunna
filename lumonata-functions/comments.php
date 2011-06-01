@@ -743,8 +743,10 @@
 	        	}
 	        	
         	}elseif($comment_type=='like'){
-        		send_like_notification($name." like your post", $writer_email,permalink($article_id)."#comment_box_".$article_id);
-        		save_notification($article_id,$writer['luser_id'], $user_id, $writer['luser_id'], 'like', $article['lshare_to']);
+        		if($writer['luser_id']!=$user_id){
+        			send_like_notification($name." like your post", $writer_email,permalink($article_id)."#comment_box_".$article_id);
+        			save_notification($article_id,$writer['luser_id'], $user_id, $writer['luser_id'], 'like', $article['lshare_to']);
+        		}
         	}elseif($comment_type=='like_comment'){
         		//Comment data that liked 
         		$theComment=fetch_comment($article_id);
