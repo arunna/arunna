@@ -23,7 +23,7 @@
 			}
 		}
 		
-	}else{
+	}elseif(!isset($_POST['coleked_id'])){
 		add_actions('notifications','all_notifications');
 	}
 	function save_notification($post_id,$post_owner,$user_id,$effected_id,$action_name,$share_to){
