@@ -233,10 +233,12 @@
 					setcookie('user_type', $d['luser_type'], false,'/');
 					setcookie('user_name', $d['ldisplay_name'], false,'/');
 				}
-				if(is_redirect())
-					header("location:".$_GET['redirect']);
-				else
+				if(is_redirect()){
+					
+					header("location:".base64_decode($_GET['redirect']));
+				}else{
 					header("location:".get_admin_url()."/?state=dashboard");
+				}
 			}else{
 				return "<div class=\"alert_red\">Wrong Username or Password.</div>";
 			}

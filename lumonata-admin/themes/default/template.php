@@ -15,8 +15,9 @@
 				$http='https://';
 			else 
 				$http='http://';
-				
-			if($http.site_url().'/lumonata-admin/'!=cur_pageURL())
+
+			
+			if($http.site_url().'/lumonata-admin/'!=cur_pageURL() && !isset($_GET['redirect']))
 			header('location:'.$http.site_url().'/lumonata-admin/');
 			
 			get_login_form();
@@ -30,7 +31,8 @@
 			/*Return Forget Password Form*/
 			get_forget_password_form();
 		}else{
-			header("location:".get_admin_url()."/?state=login&redirect=".urlencode(cur_pageURL()));
+			$return_url=get_admin_url()."/?state=login&redirect=".base64_encode(cur_pageURL());
+			header("location:".$return_url);
 		}
 	}else{
 		
