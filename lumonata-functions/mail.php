@@ -325,7 +325,7 @@
 		$message="Hi ".$coleked_user['ldisplay_name'].",\n\n";
 		$message.=$person_who_colek['ldisplay_name']." is Colek you on ".trim(web_name())."\n\n";
 		$message.="To view ".$person_who_colek['ldisplay_name']." profile click the link bellow:\n";
-		$message.=get_admin_url()."/?state=my-profile&tab=profile&id=".$person_who_colek_id." \n\n";
+		$message.=user_url($person_who_colek_id)." \n\n";
 		
 		$message.="Thanks\n";
 		$message.=trim(web_name())." Team";
