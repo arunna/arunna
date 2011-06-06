@@ -314,7 +314,11 @@ CREATE TABLE IF NOT EXISTS `lumonata_rules` (
 --
 
 INSERT INTO `lumonata_rules` (`lrule_id`, `lparent`, `lname`, `lsef`, `ldescription`, `lrule`, `lgroup`, `lcount`, `lorder`) VALUES
-(1, 0, 'Uncategorized', 'uncategorized', '', 'categories', 'default', 1, 107);
+(1, 0, 'Uncategorized', 'uncategorized', '', 'categories', 'default', 1, 107),
+(2, 0, 'Designer', 'designer', '', 'categories', 'global_settings', 0, 6, 'arunna'),
+(3, 0, 'Entepreneurs', 'entepreneurs', '', 'categories', 'global_settings', 1, 5, 'arunna'),
+(4, 0, 'Photographer', 'photographer', '', 'categories', 'global_settings', 0, 4, 'arunna'),
+(5, 0, 'Programmer', 'programmer', '', 'categories', 'global_settings', 1, 3, 'arunna');
 
 -- --------------------------------------------------------
 
