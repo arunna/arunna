@@ -15,7 +15,7 @@
 	 * @return string
 	 *      
 	 */
-    function get_admin_rule($rule,$group,$thetitle,$tabs){
+    function get_admin_rule($rule,$group,$thetitle,$tabs,$subsite='arunna'){
         
         //Publish or Save Draft Actions
         if(is_contributor() || is_author())
@@ -54,7 +54,7 @@
                 else
                     $parent=$_POST['parent'][0];
                     
-                if(insert_rules($parent,$_POST['name'][0],$_POST['description'][0],$rule,$group)){
+                if(insert_rules($parent,$_POST['name'][0],$_POST['description'][0],$rule,$group,false,$subsite)){
                     $rule_id=mysql_insert_id();
                     
                     if(is_admin_application())
@@ -71,7 +71,7 @@
                 $_POST['parent'][0]=0;
                 
                 //Update the article
-                update_rules($_POST['rule_id'][0],$_POST['parent'][0],$_POST['name'][0],$_POST['description'][0],$rule,$group);
+                update_rules($_POST['rule_id'][0],$_POST['parent'][0],$_POST['name'][0],$_POST['description'][0],$rule,$group,$subsite);
                 
                 
             }elseif(is_edit_all()){
@@ -82,7 +82,7 @@
                     if($rule=='tags')
                     $_POST['parent'][$index]=0;
                     
-                    update_rules($_POST['rule_id'][$index],$_POST['parent'][$index],$_POST['name'][$index],$_POST['description'][$index],$rule,$group);
+                    update_rules($_POST['rule_id'][$index],$_POST['parent'][$index],$_POST['name'][$index],$_POST['description'][$index],$rule,$group,$subsite);
                 }
                 
                 
@@ -97,10 +97,10 @@
             
         if(count_rules($count_cond)==0 && !isset($_GET['prc'])){
             if($rule=="tags"){
-                if($_GET['state']!='articles')
-                    header("location:".get_application_url($group)."&tab=tags&prc=add_new");
-                else    
-                    header("location:".get_state_url($group)."&tab=tags&prc=add_new");
+                 if(isset($_GET['state']) && $_GET['state']=='applications')
+					header("location:".get_application_url($group)."&tab=tags&prc=add_new");                  
+                 else    
+                	header("location:".get_state_url($group)."&tab=tags&prc=add_new");
                     
             }elseif($rule=="categories"){
                 if(count_rules('rule='.$rule."&group=default")==0)
@@ -427,16 +427,16 @@
         
                 
         if(is_search()){
-                if($rule=='tags')
-                    $sql=$db->prepare_query("select * from lumonata_rules where lrule=%s and (lname like %s or ldescription like %s)",$rule,"%".$_POST['s']."%","%".$_POST['s']."%");
-                else
+                //if($rule=='tags')
+                //    $sql=$db->prepare_query("select * from lumonata_rules where lrule=%s and (lname like %s or ldescription like %s)",$rule,"%".$_POST['s']."%","%".$_POST['s']."%");
+                //else
                     $sql=$db->prepare_query("select * from lumonata_rules where lrule=%s and (lname like %s or ldescription like %s) and lgroup=%s",$rule,"%".$_POST['s']."%","%".$_POST['s']."%",$type);
                 $num_rows=count_rows($sql);
         }else{
-                if($rule=='tags')
-                    $where=$db->prepare_query("WHERE lrule=%s",$rule);
-                else
-                    $where=$db->prepare_query("WHERE lrule=%s AND lgroup=%s",$rule,$type);
+                //if($rule=='tags')
+                //    $where=$db->prepare_query("WHERE lrule=%s AND lgroup=%s",$rule);
+                //else
+                   	$where=$db->prepare_query("WHERE lrule=%s AND lgroup=%s",$rule,$type);
                     
                 $num_rows=count_rows("select * from lumonata_rules $where ");
         }
@@ -450,9 +450,9 @@
         
         $limit=($page-1)*$viewed;
         if(is_search()){
-            if($rule=='tags')
-                $sql=$db->prepare_query("select * from lumonata_rules where lrule=%s and (lname like %s or ldescription like %s) limit %d, %d",$rule,"%".$_POST['s']."%","%".$_POST['s']."%",$limit,$viewed);
-            else
+            //if($rule=='tags')
+            //    $sql=$db->prepare_query("select * from lumonata_rules where lrule=%s and (lname like %s or ldescription like %s) limit %d, %d",$rule,"%".$_POST['s']."%","%".$_POST['s']."%",$limit,$viewed);
+            //else
                 $sql=$db->prepare_query("select * from lumonata_rules where lrule=%s and (lname like %s or ldescription like %s) and lgroup=%s limit %d, %d",$rule,"%".$_POST['s']."%","%".$_POST['s']."%",$type,$limit,$viewed);
         }else{
                 if(isset($_POST['data_order'])){
@@ -1076,7 +1076,7 @@
 	 *                 But if it is other that 'tags' it will return the new inserted ID  
 	 *      
 	 */
-    function insert_rules($parent,$name,$description,$rule,$group,$insert_default=false){
+    function insert_rules($parent,$name,$description,$rule,$group,$insert_default=false,$subsite='arunna'){
         global $db;
         $parent=rem_slashes($parent);
         $name=rem_slashes($name);
@@ -1084,6 +1084,7 @@
         $description=rem_slashes($description);
         $rule=rem_slashes($rule);
         $group=rem_slashes($group);
+        $subsite=rem_slashes($subsite);
         
         //count rule by sef and group
         $count_rule=count_rules("sef=".$sef."&group=".$group);
@@ -1108,27 +1109,31 @@
                                                             lsef,
                                                             ldescription,
                                                             lrule,
-                                                            lgroup)
-                                VALUES(%d,%d,%s,%s,%s,%s,%s)",1,
+                                                            lgroup,
+                                                            lsubsite)
+                                VALUES(%d,%d,%s,%s,%s,%s,%s,%s)",1,
                                                             $parent,
                                                             $name,
                                                             $sef,
                                                             $description,
                                                             $rule,
-                                                            $group);
+                                                            $group,
+                                                            $subsite);
         }else{
             $sql=$db->prepare_query("INSERT INTO lumonata_rules(lparent,
                                                                 lname,
                                                                 lsef,
                                                                 ldescription,
                                                                 lrule,
-                                                                lgroup)
-                                    VALUES(%d,%s,%s,%s,%s,%s)",$parent,
+                                                                lgroup,
+                                                                lsubsite)
+                                    VALUES(%d,%s,%s,%s,%s,%s,%s)",$parent,
                                                                 $name,
                                                                 $sef,
                                                                 $description,
                                                                 $rule,
-                                                                $group);
+                                                                $group,
+                                                                $subsite);
         }
         if(reset_order_id("lumonata_rules"))
            if($db->do_query($sql))
@@ -1156,7 +1161,7 @@
 	 *         But if it is other that 'tags' it will return TRUE if the edit process success and false if fail  
 	 *      
 	 */
-    function update_rules($rule_id,$parent,$name,$description,$rule,$group){
+    function update_rules($rule_id,$parent,$name,$description,$rule,$group,$subsite='arunna'){
         global $db;
         $parent=rem_slashes($parent);
         $name=rem_slashes($name);
@@ -1164,6 +1169,7 @@
         $description=rem_slashes($description);
         $rule=rem_slashes($rule);
         $group=rem_slashes($group);
+        $subsite=rem_slashes($subsite);
         
         //count rule by sef and group
         $count_rule=count_rules("sef=".$sef."&group=".$group);
@@ -1187,7 +1193,8 @@
                                      lsef=%s,
                                      ldescription=%s,
                                      lrule=%s,
-                                     lgroup=%s
+                                     lgroup=%s,
+                                     lsubsite=%s
                                 WHERE lrule_id=%d",
                                     $parent,
                                     $name,
@@ -1195,6 +1202,7 @@
                                     $description,
                                     $rule,
                                     $group,
+                                    $subsite,
                                     $rule_id
                                 );
         return $db->do_query($sql);
@@ -1404,7 +1412,7 @@
 	 * @return boolean  
 	 *      
 	 */
-    function delete_rules_relationship($args='',$rule=''){
+    function delete_rules_relationship($args='',$rule='',$group=''){
         global $db;
         $var_name['app_id']='';
         $var_name['rule_id']='';
@@ -1428,8 +1436,14 @@
                 }
                 $i++;
             }
-            if(!empty($rule)){
+            if(!empty($rule) && empty($group)){
                 $where.=" AND b.lrule='".$db->_real_escape($rule)."' AND a.lrule_id=b.lrule_id";  
+                $sql=$db->prepare_query("DELETE a FROM lumonata_rule_relationship AS a, lumonata_rules AS b $where ");
+            }elseif(!empty($group) && empty($rule)){
+            	$where.=" AND b.lgroup='".$db->_real_escape($group)."' AND a.lrule_id=b.lrule_id";  
+                $sql=$db->prepare_query("DELETE a FROM lumonata_rule_relationship AS a, lumonata_rules AS b $where ");
+            }elseif(!empty($group) && !empty($rule)){
+            	$where.=" AND b.lgroup='".$db->_real_escape($group)."' AND b.lrule='".$db->_real_escape($rule)."' AND a.lrule_id=b.lrule_id";  
                 $sql=$db->prepare_query("DELETE a FROM lumonata_rule_relationship AS a, lumonata_rules AS b $where ");
             }else{
                 $sql=$db->prepare_query("DELETE a FROM lumonata_rule_relationship AS a $where ");
@@ -1440,6 +1454,35 @@
         }
         
     }
+    
+    function fetch_rulerel_by_group_type($app_id,$group="",$rule="",$return_array=false){
+    	global $db;
+    	
+    	if(!empty($rule) && empty($group)){
+    		$where=" AND a.lrule='".$db->_real_escape($rule)."'"; 
+    	}elseif(empty($rule) && !empty($group)){
+    		$where=" AND a.lgroup='".$db->_real_escape($group)."'";
+    	}elseif(!empty($rule) && !empty($group)){
+    		$where=" AND a.lgroup='".$db->_real_escape($group)."' AND lrule='".$db->_real_escape($rule)."'";
+    	}
+    	$query=$db->prepare_query("SELECT a.* 
+    							FROM lumonata_rules a, lumonata_rule_relationship b 
+    							WHERE a.lrule_id=b.lrule_id
+    							AND b.lapp_id=%d $where",$app_id);
+    	
+    	if($return_array){
+    		$return=array();
+    		$result=$db->do_query($query);
+    		while($data=$db->fetch_array($result)){
+    			$return[]=$data['lrule_id'];
+    			
+    		}
+    		return $return;	
+    	}else{
+    		return $result=$db->do_query($query);
+    	}
+    }
+    
     /**
 	 * To fetch the rule relationship and there are two $args that you can use: app_id and rule_id
 	 *   
@@ -1662,5 +1705,27 @@
           
             
         }
+    }
+    
+    function get_expertise_categories(){
+    	global $db;
+    	$query=$db->prepare_query("SELECT * FROM lumonata_rules 
+    								WHERE lrule='categories' 
+    								AND lgroup='global_settings'
+    								AND lsubsite='arunna'
+    								ORDER BY lname");
+    	return $result=$db->do_query($query);
+    	 
+    }
+    
+    function get_expertise_tags(){
+    	global $db;
+    	$query=$db->prepare_query("SELECT * FROM lumonata_rules 
+    								WHERE lrule='tags' 
+    								AND lgroup='global_settings'
+    								AND lsubsite='arunna'
+    								ORDER BY lname");
+    	return $result=$db->do_query($query);
+    	
     }
 ?>

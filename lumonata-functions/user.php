@@ -1279,6 +1279,7 @@
 	 * @return string The HTML design of edit profile  
 	 */
 	function edit_profile(){
+		global $db;
 		$tabs=array('my-updates'=>'My Updates','my-profile'=>'My Profile','profile-picture'=>'Profile Picture','eduwork'=>'Education & Work');
 		$alert='';
         if(isset($_GET['tab']))
@@ -1309,6 +1310,9 @@
 		if(is_save_changes()){
 			
 			$validation_rs=is_valid_user_input($_POST['username'][0],$_POST['first_name'][0],$_POST['last_name'][0],$_POST['password'][0],$_POST['re_password'][0],$_POST['email'][0],$_POST['sex'][0],$_POST['website'][0]);
+			if(!isset($_POST['expertise'][0]))
+			$validation_rs="<div class=\"alert_red_form\">Choose the category that represent your self!</div>";
+			
 			if($validation_rs=="OK"){
 				
 				$thebirthday="000-00-00";	
@@ -1324,9 +1328,33 @@
 					edit_additional_field($_COOKIE['user_id'],'last_name',$_POST['last_name'][0],'user');
 					edit_additional_field($_COOKIE['user_id'],'website',$_POST['website'][0],'user');
 					edit_additional_field($_COOKIE['user_id'],'bio',$_POST['bio'][0],'user');
-					
-					
+					edit_additional_field($_COOKIE['user_id'],'one_liner',$_POST['one_liner'][0],'user');
+					edit_additional_field($_COOKIE['user_id'],'location',$_POST['location'][0],'user');
+
 					$alert="<div class=\"alert_green_form\">Your profile has succesfully updated.</div>";
+				}
+				
+				//Expertise Category
+				delete_rules_relationship("app_id=".$_COOKIE['user_id'],'categories','global_settings');
+				foreach($_POST['expertise'][0] as $key=>$value){
+					insert_rules_relationship($_COOKIE['user_id'], $value);
+				}
+				
+				//Tags
+				delete_rules_relationship("app_id=".$_COOKIE['user_id'],'tags','profile');
+				if(isset($_POST['tagit'][0])){
+					foreach($_POST['tagit'][0] as $key=>$value){
+						$rule_id=insert_rules(0, $value, '', 'tags', 'profile');
+						insert_rules_relationship($_COOKIE['user_id'], $rule_id);
+					}
+				}
+			   	//Skills
+			   	delete_rules_relationship("app_id=".$_COOKIE['user_id'],'skills','profile');
+				if(isset($_POST['skillit'][0])){
+					foreach($_POST['skillit'][0] as $key=>$value){
+						$rule_id=insert_rules(0, $value, '', 'skills', 'profile');
+						insert_rules_relationship($_COOKIE['user_id'], $rule_id);
+					}
 				}
 			}else{
 				$alert=$validation_rs;
@@ -1338,6 +1366,8 @@
 			add_variable('bio',$_POST['bio'][0]);
 			add_variable('email',$_POST['email'][0]);
 			add_variable('website',$_POST['website'][0]);
+			add_variable('one_liner',$_POST['one_liner'][0]);
+			add_variable('location',$_POST['location'][0]);
 			
 						
 			//find user display name
@@ -1368,12 +1398,19 @@
 			$birthyear=(isset($_POST['birthyear'][0]))?$_POST['birthyear'][0]:"";
 			get_date_picker("admin_tail",$birthday,$birthmonth,$birthyear,true,0);
 			
+			
+			
+			
+			
 		}else{
 			$d=fetch_user($_COOKIE['user_id']);
 			add_variable('username',$d['lusername']);
 			add_variable('first_name',get_additional_field($_COOKIE['user_id'],'first_name','user'));
 			add_variable('last_name',get_additional_field($_COOKIE['user_id'],'last_name','user'));
 			add_variable('bio',get_additional_field($_COOKIE['user_id'],'bio','user'));
+			add_variable('one_liner',get_additional_field($_COOKIE['user_id'],'one_liner','user'));
+			add_variable('location',get_additional_field($_COOKIE['user_id'],'location','user'));
+			
 			add_variable('email',$d['lemail']);
 			$website=get_additional_field($_COOKIE['user_id'],'website','user');
 			if(empty($website))
@@ -1414,7 +1451,78 @@
 			$birthmonth=(!empty($d['lbirthday']))?date("n",strtotime($d['lbirthday'])):"";
 			$birthyear=(!empty($d['lbirthday']))?date("Y",strtotime($d['lbirthday'])):"";
 			get_date_picker("admin_tail",$birthday,$birthmonth,$birthyear,true,0);
+			
 		}
+		
+		
+		//Expertise Category
+		$expert=get_expertise_categories();
+		$my_expert=fetch_rule_relationship("app_id=".$_COOKIE['user_id']);
+		
+		$exprt="";
+		while($the_expert=$db->fetch_array($expert)){
+			
+			if(in_array($the_expert['lrule_id'], $my_expert)){
+				$exprt.="<div class=\"expertise_item\" id=\"expertise_item_".$the_expert['lrule_id']."\" style=\"background-color:#FFCC66;\">".$the_expert['lname']."</div>";
+				$exprt.="<div style=\"display:none;\"><input type=\"checkbox\" name=\"expertise[0][]\" id=\"expertise_checked_".$the_expert['lrule_id']."\" value=\"".$the_expert['lrule_id']."\" checked=\"checked\" />".$the_expert['lname']."</div>";
+			}else{ 
+				$exprt.="<div class=\"expertise_item\" id=\"expertise_item_".$the_expert['lrule_id']."\">".$the_expert['lname']."</div>";
+				$exprt.="<div style=\"display:none;\"><input type=\"checkbox\" name=\"expertise[0][]\" id=\"expertise_checked_".$the_expert['lrule_id']."\" value=\"".$the_expert['lrule_id']."\"  />".$the_expert['lname']."</div>";
+			}
+			
+			$exprt.="<script type=\"text/javascript\">
+							$(function(){
+									$('#expertise_item_".$the_expert['lrule_id']."').click(function(){
+										if($('#expertise_checked_".$the_expert['lrule_id']."').attr('checked')){
+											$('#expertise_checked_".$the_expert['lrule_id']."').removeAttr('checked');
+											$('#expertise_item_".$the_expert['lrule_id']."').css('background-color','#FFF');
+										}else{
+											$('#expertise_checked_".$the_expert['lrule_id']."').attr('checked','checked');
+											$('#expertise_item_".$the_expert['lrule_id']."').css('background-color','#FFCC66');
+										}
+									});
+							  });
+						  </script>";
+				
+		}
+			
+		add_variable('expertise_categories',$exprt);
+		
+		//Expertise Tags
+		$exprt_tags_result=fetch_rulerel_by_group_type($_COOKIE['user_id'],"profile","tags");
+		$thetag="";
+		
+		$i=1;
+		while($tags=$db->fetch_array($exprt_tags_result)){
+				$thetag.="<div class=\"expert_tag_list tag_index_0 clearfix\" id=\"the_tag_list_0_".$i."\">";
+				$thetag.="<div class=\"expert_tag_name\" style=\"width:auto;font-size:12px;\">".trim($tags['lname'])."</div>";
+				$thetag.="<div class=\"expert_tag_action\">";
+				$thetag.="<a href=\"javascript:;\" id=\"remove_tag_".$i."\" onclick=\"$('#the_tag_list_0_".$i."').animate({'background-color':'#FF6666' },500);$('#the_tag_list_0_".$i."').remove();\">X</a>";
+				$thetag.="</div>";
+				$thetag.="<input type=\"hidden\" name=\"tagit[0][]\" value=\"".trim($tags['lname'])."\" />";
+				$thetag.="</div>";
+			
+			$i++;
+		}
+		add_variable('thetags',$thetag);
+		
+		//Expertise Skills
+		$exprt_skill_result=fetch_rulerel_by_group_type($_COOKIE['user_id'],"profile","skills");
+		$theskill="";
+		
+		$i=1;
+		while($skills=$db->fetch_array($exprt_skill_result)){
+				$theskill.="<div class=\"expert_tag_list skill_index_0 clearfix\" id=\"the_skill_list_0_".$i."\">";
+				$theskill.="<div class=\"expert_tag_name\" style=\"width:auto;font-size:12px;\">".trim($skills['lname'])."</div>";
+				$theskill.="<div class=\"expert_tag_action\">";
+				$theskill.="<a href=\"javascript:;\" id=\"remove_skill_".$i."\" onclick=\"$('#the_skill_list_0_".$i."').animate({'background-color':'#FF6666' },500);$('#the_skill_list_0_".$i."').remove();\">X</a>";
+				$theskill.="</div>";
+				$theskill.="<input type=\"hidden\" name=\"skillit[0][]\" value=\"".trim($skills['lname'])."\" />";
+				$theskill.="</div>";
+			
+			$i++;
+		}
+		add_variable('theskills',$theskill);
 		
 		add_variable('prc','Edit Profile');
 		

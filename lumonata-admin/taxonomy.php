@@ -17,7 +17,7 @@
 	    header("location:".get_admin_url()."/?state=login");
     }elseif(isset($_POST['insert_rules'])){
 	 
-		if(insert_rules($_POST['parent'],$_POST['name'],$_POST['description'],$_POST['rule'],$_POST['group'])){
+		if(insert_rules($_POST['parent'],$_POST['name'],$_POST['description'],$_POST['rule'],$_POST['group'],false)){
 		   if(!empty($_POST['selected'])) {
 			$selected=json_decode(rem_slashes($_POST['selected']));
 			$merge_selected=array_merge($selected,array(mysql_insert_id()));

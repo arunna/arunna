@@ -10,7 +10,6 @@
 .profile_img a{
 	color:#ef451e;
 	text-decoration: none;
-	
 }
 #profile_right{
 	width:226px !important;
@@ -28,6 +27,46 @@
 	color:#333;
 	border-top: 1px solid #ccc;
 	padding:3px;
+}
+.profile_line{
+	border-bottom: 1px solid #F0F0F0;
+	padding-bottom: 10px;
+}
+
+.expertise_item{
+	padding:10px;
+	float:left;
+	border:1px solid #CCC;
+	margin: 5px 5px 5px 0;
+	font-size: 13px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.expert_tag_list{
+	margin:3px;
+	padding:5px;
+	border:1px solid #bbbbbb;
+	width:auto;
+	height:20px;
+	float:left;
+}
+.expert_tag_name{
+	float:left;
+	width:auto;
+	height:20px;
+	padding-right: 3px;
+}
+.expert_tag_action{
+	float:left;
+	width:10px;
+	height:auto;
+	border-left:1px solid #ccc;
+	text-align:center;
+}
+.expert_tag_action a{
+	display:block;
+	text-decoration:none;
 }
 
 .work{

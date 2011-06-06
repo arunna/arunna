@@ -44,7 +44,13 @@
 	}
 	function get_global_settings(){
 		//set tabs
-		$tabs=array('general'=>'General','reading'=>'Reading','writing'=>'Writing','comments'=>'Comments','notifications'=>'Notifications');
+		$tabs=array('general'=>'General',
+					'reading'=>'Reading',
+					'writing'=>'Writing',
+					'comments'=>'Comments',
+					'notifications'=>'Notifications',
+					'categories'=>'Expertise Categories',
+				    'tags'=>'Expertise Tags');
 		
 		//set template
 		set_template(TEMPLATE_PATH."/global.html",'global');
@@ -327,7 +333,7 @@
 			
 			parse_template('commentsSettings','commentsBlock');
 			return return_template('global'); 
-		}elseif($the_tab=='notifications'){ //Comments
+		}elseif($the_tab=='notifications'){ 
 			//set the page Title
 			add_actions('section_title','Notifications - Settings');
 			
@@ -366,6 +372,14 @@
 			
 			parse_template('notificationSettings','notificationBlock');
 			return return_template('global'); 
+		}elseif($the_tab=='categories'){ 
+			//set the page Title
+			 add_actions('section_title','Expertise Categories - Settings');
+			 return get_admin_rule('categories','global_settings',"Expertise|Expertise",$tabs);
+		}elseif($the_tab=='tags'){ 
+			//set the page Title
+			 add_actions('section_title','Expertise Tags - Settings');
+			 return get_admin_rule('tags','global_settings',"Expertise|Expertise",$tabs);
 		}
 		
 		
@@ -507,6 +521,7 @@
 	
 	
 	function get_admin_user(){
+		global $db;
 		$tabs=array('my-updates'=>'My Updates','my-profile'=>'My Profile','profile-picture'=>'Profile Picture','eduwork'=>'Education & Work');
 		$alert='';
 		
@@ -569,6 +584,10 @@
 			}elseif(is_edit()){
 				
 				$validation_rs=is_valid_user_input($_POST['username'][0],$_POST['first_name'][0],$_POST['last_name'][0],$_POST['password'][0],$_POST['re_password'][0],$_POST['email'][0],$_POST['sex'][0],$_POST['website'][0]);
+				
+				if(!isset($_POST['expertise'][0]))
+				$validation_rs="<div class=\"alert_red_form\">Choose the category that represent your self!</div>";
+				
 				if($validation_rs=="OK"){	
 					
 					if(!empty($_POST['birthday'][0]) && !empty($_POST['birthmonth'][0]) && !empty($_POST['birthyear'][0])){
@@ -580,7 +599,10 @@
 						edit_additional_field($_GET['id'],'first_name',$_POST['first_name'][0],'user');
 						edit_additional_field($_GET['id'],'last_name',$_POST['last_name'][0],'user');
 						edit_additional_field($_GET['id'],'website',$_POST['website'][0],'user');
-						
+						edit_additional_field($_GET['id'],'bio',$_POST['bio'][0],'user');
+						edit_additional_field($_GET['id'],'one_liner',$_POST['one_liner'][0],'user');
+						edit_additional_field($_GET['id'],'location',$_POST['location'][0],'user');
+					
 						//add additional field for invitation limit if the value is not exist
 				        $invite_limit=get_additional_field($_GET['id'], "invite_limit", "user");
 				        if(empty($invite_limit)){
@@ -593,6 +615,30 @@
 						if(isset($_POST['send'][0])){
 							$token=md5($_POST['username'][0].$_POST['email'][0])."#";
 							send_register_notification($_POST['username'][0], $_POST['email'][0], $_POST['password'][0], $token);
+						}
+						
+						//Expertise Category
+
+						delete_rules_relationship("app_id=".$_GET['id'],'categories','global_settings');
+						foreach($_POST['expertise'][0] as $key=>$value){
+							insert_rules_relationship($_GET['id'], $value);
+						}
+						
+						//Tags
+						delete_rules_relationship("app_id=".$_GET['id'],'tags','profile');
+						if(isset($_POST['tagit'][0])){
+							foreach($_POST['tagit'][0] as $key=>$value){
+								$rule_id=insert_rules(0, $value, '', 'tags', 'profile');
+								insert_rules_relationship($_GET['id'], $rule_id);
+							}
+						}
+					   	//Skills
+					   	delete_rules_relationship("app_id=".$_GET['id'],'skills','profile');
+						if(isset($_POST['skillit'][0])){
+							foreach($_POST['skillit'][0] as $key=>$value){
+								$rule_id=insert_rules(0, $value, '', 'skills', 'profile');
+								insert_rules_relationship($_GET['id'], $rule_id);
+							}
 						}
 						
 						header("location:".get_state_url('users'));
@@ -614,10 +660,14 @@
 							edit_additional_field($val,'first_name',$_POST['first_name'][$key],'user');
 							edit_additional_field($val,'last_name',$_POST['last_name'][$key],'user');
 							edit_additional_field($val,'website',$_POST['website'][$key],'user');
-							
+							edit_additional_field($val,'bio',$_POST['bio'][0],'user');
+							edit_additional_field($val,'one_liner',$_POST['one_liner'][0],'user');
+							edit_additional_field($val,'location',$_POST['location'][0],'user');
+						
 							//add additional field for invitation limit if the value is not exist
     				        $invite_limit=get_additional_field($val, "invite_limit", "user");
-    				        if(empty($invite_limit)){
+    				        
+    				        if($invite_limit==NULL){
     				            $invite_limit=get_meta_data("invitation_limit");
     				            if(is_administrator($val))
 				                    $invite_limit=-1;
@@ -631,6 +681,29 @@
 						if(isset($_POST['send'][$key])){
 							$token=md5($_POST['username'][$key].$_POST['email'][$key])."#";
 							send_register_notification($_POST['username'][$key], $_POST['email'][$key], $_POST['password'][$key], $token);
+						}
+						
+						//Expertise Category
+						delete_rules_relationship("app_id=".$val,'categories','global_settings');
+						foreach($_POST['expertise'][$key] as $keyex=>$value){
+							insert_rules_relationship($val, $value);
+						}
+						
+						//Tags
+						delete_rules_relationship("app_id=".$val,'tags','profile');
+						if(isset($_POST['tagit'][$key])){
+							foreach($_POST['tagit'][$key] as $keytag=>$value){
+								$rule_id=insert_rules(0, $value, '', 'tags', 'profile');
+								insert_rules_relationship($val, $rule_id);
+							}
+						}
+					   	//Skills
+					   	delete_rules_relationship("app_id=".$val,'skills','profile');
+						if(isset($_POST['skillit'][$key])){
+							foreach($_POST['skillit'][$key] as $keyskill=>$value){
+								$rule_id=insert_rules(0, $value, '', 'skills', 'profile');
+								insert_rules_relationship($val, $rule_id);
+							}
 						}
 					}else{
 						$alert=$validation_rs;
@@ -752,6 +825,8 @@
 				add_variable('last_name',$_POST['last_name'][0]);
 				add_variable('email',$_POST['email'][0]);
 				add_variable('website',$_POST['website'][0]);
+				add_variable('one_liner',$_POST['one_liner'][0]);
+				add_variable('location',$_POST['location'][0]);
 				
 				//find the user type
 				$user_tpye="<p><label>User Type:</label></p><select name=\"user_type[0]\">";
@@ -830,6 +905,8 @@
 					$website=get_additional_field($_GET['id'],'website','user');
 					
 				add_variable('website',$website);
+				add_variable('one_liner',get_additional_field($_GET['id'],'one_liner','user'));
+				add_variable('location',get_additional_field($_GET['id'],'location','user'));
 				
 				//find the user type
 				$user_tpye="<p><label>User Type:</label></p><select name=\"user_type[0]\">";
@@ -893,6 +970,77 @@
 				$the_status.="</select>";
 				add_variable('user_status',$the_status);
 			}
+			
+			//Expertise Category
+			$expert=get_expertise_categories();
+			
+			$my_expert=fetch_rulerel_by_group_type($_GET['id'],'global_settings','categories',true);
+			
+			$exprt="";
+			while($the_expert=$db->fetch_array($expert)){
+				
+				if(in_array($the_expert['lrule_id'], $my_expert)){
+					$exprt.="<div class=\"expertise_item\" id=\"expertise_item_".$the_expert['lrule_id']."\" style=\"background-color:#FFCC66;\">".$the_expert['lname']."</div>";
+					$exprt.="<div style=\"display:none;\"><input type=\"checkbox\" name=\"expertise[0][]\" id=\"expertise_checked_".$the_expert['lrule_id']."\" value=\"".$the_expert['lrule_id']."\" checked=\"checked\" />".$the_expert['lname']."</div>";
+				}else{ 
+					$exprt.="<div class=\"expertise_item\" id=\"expertise_item_".$the_expert['lrule_id']."\">".$the_expert['lname']."</div>";
+					$exprt.="<div style=\"display:none;\"><input type=\"checkbox\" name=\"expertise[0][]\" id=\"expertise_checked_".$the_expert['lrule_id']."\" value=\"".$the_expert['lrule_id']."\"  />".$the_expert['lname']."</div>";
+				}
+				
+				$exprt.="<script type=\"text/javascript\">
+								$(function(){
+										$('#expertise_item_".$the_expert['lrule_id']."').click(function(){
+											if($('#expertise_checked_".$the_expert['lrule_id']."').attr('checked')){
+												$('#expertise_checked_".$the_expert['lrule_id']."').removeAttr('checked');
+												$('#expertise_item_".$the_expert['lrule_id']."').css('background-color','#FFF');
+											}else{
+												$('#expertise_checked_".$the_expert['lrule_id']."').attr('checked','checked');
+												$('#expertise_item_".$the_expert['lrule_id']."').css('background-color','#FFCC66');
+											}
+										});
+								  });
+							  </script>";
+					
+			}
+				
+			add_variable('expertise_categories',$exprt);
+			
+			//Expertise Tags
+			$exprt_tags_result=fetch_rulerel_by_group_type($_GET['id'],"profile","tags");
+			$thetag="";
+			
+			$i=1;
+			while($tags=$db->fetch_array($exprt_tags_result)){
+					$thetag.="<div class=\"expert_tag_list tag_index_0 clearfix\" id=\"the_tag_list_0_".$i."\">";
+					$thetag.="<div class=\"expert_tag_name\" style=\"width:auto;font-size:12px;\">".trim($tags['lname'])."</div>";
+					$thetag.="<div class=\"expert_tag_action\">";
+					$thetag.="<a href=\"javascript:;\" id=\"remove_tag_".$i."\" onclick=\"$('#the_tag_list_0_".$i."').animate({'background-color':'#FF6666' },500);$('#the_tag_list_0_".$i."').remove();\">X</a>";
+					$thetag.="</div>";
+					$thetag.="<input type=\"hidden\" name=\"tagit[0][]\" value=\"".trim($tags['lname'])."\" />";
+					$thetag.="</div>";
+				
+				$i++;
+			}
+			add_variable('thetags',$thetag);
+			
+			//Expertise Skills
+			$exprt_skill_result=fetch_rulerel_by_group_type($_GET['id'],"profile","skills");
+			$theskill="";
+			
+			$i=1;
+			while($skills=$db->fetch_array($exprt_skill_result)){
+					$theskill.="<div class=\"expert_tag_list skill_index_0 clearfix\" id=\"the_skill_list_0_".$i."\">";
+					$theskill.="<div class=\"expert_tag_name\" style=\"width:auto;font-size:12px;\">".trim($skills['lname'])."</div>";
+					$theskill.="<div class=\"expert_tag_action\">";
+					$theskill.="<a href=\"javascript:;\" id=\"remove_skill_".$i."\" onclick=\"$('#the_skill_list_0_".$i."').animate({'background-color':'#FF6666' },500);$('#the_skill_list_0_".$i."').remove();\">X</a>";
+					$theskill.="</div>";
+					$theskill.="<input type=\"hidden\" name=\"skillit[0][]\" value=\"".trim($skills['lname'])."\" />";
+					$theskill.="</div>";
+				
+				$i++;
+			}
+			add_variable('theskills',$theskill);
+				
 			add_variable('prc','Edit User');
 			
 			add_variable('tabs',$the_tabs);
@@ -932,6 +1080,8 @@
 					add_variable('last_name',$_POST['last_name'][$key]);
 					add_variable('email',$_POST['email'][$key]);
 					add_variable('website',$_POST['website'][$key]);
+					add_variable('one_liner',$_POST['one_liner'][$key]);
+					add_variable('location',$_POST['location'][$key]);
 					
 					//find the user type
 					$user_tpye="<p><label>User Type:</label></p><select name=\"user_type[$key]\">";
@@ -1011,6 +1161,8 @@
 						$website=get_additional_field($val,'website','user');
 						
 					add_variable('website',$website);
+					add_variable('one_liner',get_additional_field($val,'one_liner','user'));
+					add_variable('location',get_additional_field($val,'location','user'));
 					
 					//find the user type
 					$user_tpye="<p><label>User Type:</label></p><select name=\"user_type[$key]\">";
@@ -1072,6 +1224,76 @@
 					$the_status.="</select>";
 					add_variable('user_status',$the_status);
 				}
+				
+				//Expertise Category
+				$expert=get_expertise_categories();
+				$my_expert=fetch_rulerel_by_group_type($val,'global_settings','categories',true);
+				
+				$exprt="";
+				while($the_expert=$db->fetch_array($expert)){
+					
+					if(in_array($the_expert['lrule_id'], $my_expert)){
+						$exprt.="<div class=\"expertise_item\" id=\"expertise_item_".$key."_".$the_expert['lrule_id']."\" style=\"background-color:#FFCC66;\">".$the_expert['lname']."</div>";
+						$exprt.="<div style=\"display:none;\"><input type=\"checkbox\" name=\"expertise[".$key."][]\" id=\"expertise_checked_".$key."_".$the_expert['lrule_id']."\" value=\"".$the_expert['lrule_id']."\" checked=\"checked\" />".$the_expert['lname']."</div>";
+					}else{ 
+						$exprt.="<div class=\"expertise_item\" id=\"expertise_item_".$key."_".$the_expert['lrule_id']."\">".$the_expert['lname']."</div>";
+						$exprt.="<div style=\"display:none;\"><input type=\"checkbox\" name=\"expertise[".$key."][]\" id=\"expertise_checked_".$key."_".$the_expert['lrule_id']."\" value=\"".$the_expert['lrule_id']."\"  />".$the_expert['lname']."</div>";
+					}
+					
+					$exprt.="<script type=\"text/javascript\">
+									$(function(){
+											$('#expertise_item_".$key."_".$the_expert['lrule_id']."').click(function(){
+												if($('#expertise_checked_".$key."_".$the_expert['lrule_id']."').attr('checked')){
+													$('#expertise_checked_".$key."_".$the_expert['lrule_id']."').removeAttr('checked');
+													$('#expertise_item_".$key."_".$the_expert['lrule_id']."').css('background-color','#FFF');
+												}else{
+													$('#expertise_checked_".$key."_".$the_expert['lrule_id']."').attr('checked','checked');
+													$('#expertise_item_".$key."_".$the_expert['lrule_id']."').css('background-color','#FFCC66');
+												}
+											});
+									  });
+								  </script>";
+						
+				}
+					
+				add_variable('expertise_categories',$exprt);
+				
+				//Expertise Tags
+				$exprt_tags_result=fetch_rulerel_by_group_type($val,"profile","tags");
+				$thetag="";
+				
+				$i=1;
+				while($tags=$db->fetch_array($exprt_tags_result)){
+						$thetag.="<div class=\"expert_tag_list tag_index_".$key." clearfix\" id=\"the_tag_list_".$key."_".$i."\">";
+						$thetag.="<div class=\"expert_tag_name\" style=\"width:auto;font-size:12px;\">".trim($tags['lname'])."</div>";
+						$thetag.="<div class=\"expert_tag_action\">";
+						$thetag.="<a href=\"javascript:;\" id=\"remove_tag_".$i."\" onclick=\"$('#the_tag_list_".$key."_".$i."').animate({'background-color':'#FF6666' },500);$('#the_tag_list_".$key."_".$i."').remove();\">X</a>";
+						$thetag.="</div>";
+						$thetag.="<input type=\"hidden\" name=\"tagit[".$key."][]\" value=\"".trim($tags['lname'])."\" />";
+						$thetag.="</div>";
+					
+					$i++;
+				}
+				add_variable('thetags',$thetag);
+				
+				//Expertise Skills
+				$exprt_skill_result=fetch_rulerel_by_group_type($val,"profile","skills");
+				$theskill="";
+				
+				$i=1;
+				while($skills=$db->fetch_array($exprt_skill_result)){
+						$theskill.="<div class=\"expert_tag_list skill_index_".$key." clearfix\" id=\"the_skill_list_".$key."_".$i."\">";
+						$theskill.="<div class=\"expert_tag_name\" style=\"width:auto;font-size:12px;\">".trim($skills['lname'])."</div>";
+						$theskill.="<div class=\"expert_tag_action\">";
+						$theskill.="<a href=\"javascript:;\" id=\"remove_skill_".$i."\" onclick=\"$('#the_skill_list_".$key."_".$i."').animate({'background-color':'#FF6666' },500);$('#the_skill_list_".$key."_".$i."').remove();\">X</a>";
+						$theskill.="</div>";
+						$theskill.="<input type=\"hidden\" name=\"skillit[".$key."][]\" value=\"".trim($skills['lname'])."\" />";
+						$theskill.="</div>";
+					
+					$i++;
+				}
+				add_variable('theskills',$theskill);
+				
 				add_variable('i',$key);
 				add_variable('userid',$val);
 				add_variable('user_type',$user_tpye);

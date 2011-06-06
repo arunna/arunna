@@ -286,7 +286,7 @@
                         //insert the tags into rules and rules_relationship table
                         if(isset($_POST['tags'][0])){
                             foreach($_POST['tags'][0] as $val){
-                                $rule_id=insert_rules(0,$val,'','tags',$type);
+                                $rule_id=insert_rules(0,$val,'','tags',$type,false);
                                 insert_rules_relationship($post_id,$rule_id);
                             }
                         }

@@ -88,32 +88,203 @@
             </div>
         </div>
         <!-- BEGIN loopUser -->
+        
+	        <script type="text/javascript">
+			$(function(){
+				var tag_change=false;
+				$('input[name=tags[{i}]]').click(function(){
+					$(this).val('');
+					$(this).css('color','#333');
+					tag_change=false;
+				});
+				$('input[name=tags[{i}]]').blur(function(){
+					if($(this).val()==''){
+						$(this).css('color','#CCC');
+						$(this).val('Graphic Designer, Blogger, Director');
+						tag_change=false;
+					}else{
+						tag_change=true;
+					}
+				});
+				
+				$('input[name=skills[{i}]]').click(function(){
+					$(this).val('');
+					$(this).css('color','#333');
+				});
+				
+				$('input[name=skills[{i}]]').blur(function(){
+					if($(this).val()==''){
+						$(this).css('color','#CCC');
+						$(this).val('Cooking, JQuery, Fireworks');
+					}else{
+						tag_change=true;
+					}
+				});
+				
+				$('input[name=tags[{i}]]').change(function(){
+					if($(this).val()!=''){
+						tag_change=true;
+					}	
+				});
+				
+				
+				$('input[name=add_tag[{i}]]').click(function(){
+					if(tag_change==true){
+					   	var input_tags=$("input[name=tags[{i}]]").val();
+					   	var taglabel=input_tags.split(",");
+					   
+				      	$(this).attr("disabled","disabled");
+				      	$(this).val("Adding...");
+					      
+					    for(i=0;i<taglabel.length;i++){
+							var count_child=$(".tag_index_{i}").size();
+							
+							var thetag="<div class=\"expert_tag_list tag_index_{i} clearfix\" id=\"the_tag_list_{i}_"+count_child+"\">";
+								thetag+="<div class=\"expert_tag_name\" style=\"width:auto;font-size:12px;\">"+$.trim(taglabel[i])+"</div>";
+								thetag+="<div class=\"expert_tag_action\">";
+								thetag+="<a href=\"javascript:;\" id=\"remove_tag_"+count_child+"\" onclick=\"$('#the_tag_list_{i}_"+count_child+"').animate({'background-color':'#FF6666' },500);$('#the_tag_list_{i}_"+count_child+"').remove();\">X</a>";
+								thetag+="</div>";
+								thetag+="<input type=\"hidden\" name=\"tagit[{i}][]\" value=\""+$.trim(taglabel[i])+"\" />";
+							thetag+="</div>";
+							 
+							if(count_child==0){
+							    $("#tag_list_{i}").html('');
+							    $("#tag_list_{i}").append(thetag);
+							}else{
+							   $(".tag_index_{i}:first").before(thetag);
+							}
+					    }
+					      
+				      $(this).val("Add");
+				      $(this).removeAttr('disabled');
+				      $('input[name=tags[{i}]]').css('color','#CCC');
+					  $('input[name=tags[{i}]]').val('Graphic Designer, Blogger, Director');
+					  tag_change=false;
+					}
+					   
+				});
+				
+				$('input[name=add_skill[{i}]]').click(function(){
+					if(tag_change==true){
+					   	var input_tags=$("input[name=skills[{i}]]").val();
+					   	var taglabel=input_tags.split(",");
+					   
+				      	$(this).attr("disabled","disabled");
+				      	$(this).val("Adding...");
+					      
+					    for(i=0;i<taglabel.length;i++){
+							var count_child=$(".skill_index_{i}").size();
+							var thetag="<div class=\"expert_tag_list skill_index_{i} clearfix\" id=\"the_skill_list_{i}_"+count_child+"\">";
+							thetag+="<div class=\"expert_tag_name\" style=\"width:auto;font-size:12px;\">"+$.trim(taglabel[i])+"</div>";
+							thetag+="<div class=\"expert_tag_action\">";
+							thetag+="<a href=\"javascript:;\" id=\"remove_skill_"+count_child+"\" onclick=\"$('#the_skill_list_{i}_"+count_child+"').animate({'background-color':'#FF6666' },500);$('#the_skill_list_{i}_"+count_child+"').remove();\">X</a>";
+							thetag+="</div>";
+							thetag+="<input type=\"hidden\" name=\"skillit[{i}][]\" value=\""+$.trim(taglabel[i])+"\" />";
+							thetag+="</div>";
+							 
+							if(count_child==0){
+							    $("#skill_list_{i}").html('');
+							    $("#skill_list_{i}").append(thetag);
+							}else{
+							   $(".skill_index_{i}:first").before(thetag);
+							}
+					    }
+					      
+				      $(this).val("Add");
+				      $(this).removeAttr('disabled');
+				      
+				      $('input[name=skills[{i}]]').css('color','#CCC');
+					  $('input[name=skills[{i}]]').val('Cooking, JQuery, Fireworks');
+					  tag_change=false;
+					}
+				   
+				});
+			});
+		</script>
+        
         <div class="list_edit">
         <fieldset>
            <h2>Personal Details</h2>
-           
-                <p><label>Username (required):</label></p>
-                 <input type="text" name="username[{i}]" value="{username}" class="medium_textbox"  readonly="readonly" id="username_{i}" /> Your username cannot be changed
-                 <input type="hidden" name="select[{i}]" value="{userid}" class="medium_textbox" readonly="readonly" />
-                <p><label>First name:</label></p>
-                 <input type="text" name="first_name[{i}]" value="{first_name}" class="medium_textbox" />
-           
-                <p><label>Last name:</label></p>
-                 <input type="text" name="last_name[{i}]" value="{last_name}" class="medium_textbox" />
-           
-                <p><label>Display name:</label></p>
-                {display_name}
-                
-                <p><label>Gender (required):</label> </p>
-                {sex}
-				
-				 <p><label>Birthday:</label> </p>
-                 {birthday}&nbsp;{birthmonth}&nbsp;{birthyear}&nbsp;
+           		<div class="profile_line">
+	                 <p><label>Username (required):</label></p>
+	                 <input type="text" name="username[{i}]" value="{username}" class="medium_textbox"  readonly="readonly" id="username_{i}" /> Your username cannot be changed
+	                 <input type="hidden" name="select[{i}]" value="{userid}" class="medium_textbox" readonly="readonly" />
+                 </div>
                  
-                 <p><label>Short Bio:</label></p>
-                 <textarea name="bio[{i}]" class="textarea" style="width:70%;height:150px;" >{bio}</textarea>
+                <div class="profile_line">
+                	<p><label>First name:</label></p>
+                 	<input type="text" name="first_name[{i}]" value="{first_name}" class="medium_textbox" />
+           		</div>
+           		
+           		<div class="profile_line">
+                	<p><label>Last name:</label></p>
+                	<input type="text" name="last_name[{i}]" value="{last_name}" class="medium_textbox" />
+           		</div>
+           		<div class="profile_line">
+                	<p><label>Display name:</label></p>
+                	{display_name}
+                </div>
+                <div class="profile_line">
+	                 <p><label>One Liner:</label></p>
+	                 <input type="text" name="one_liner[{i}]" value="{one_liner}" class="medium_textbox" /> <br />
+	                 <strong>Tell us who you are in 60 characters or less.</strong> <br />
+					 e.g. Co Founder of Arunna on a mission to connecting the clouds.
+                </div>
+                <div class="profile_line">
+	                 <p><label>Your Location:</label></p>
+	                 <input type="text" name="location[{i}]" value="{location}" class="medium_textbox" /> <br />
+                </div>
+                <div class="profile_line">
+                	<p><label>Gender (required):</label> </p>
+                	{sex}
+				</div>
+				<div class="profile_line">
+					<p><label>Birthday:</label> </p>
+                 	{birthday}&nbsp;{birthmonth}&nbsp;{birthyear}&nbsp;
+                 </div>
+                 
+                 <div>
+                 	<p><label>Short Bio:</label></p>
+                 	<textarea name="bio[{i}]" class="textarea" style="width:70%;height:150px;" >{bio}</textarea>
+                 </div>
         </fieldset>
-        
+        <fieldset>
+        	 <h2>Represent Who You Are From Your Perspective</h2>
+        	  <div class="profile_line">
+                 <p><label>I am a:</label></p>
+                 <div class="clearfix">
+                 	{expertise_categories}
+                 </div>
+                 Choose which category that fit with you
+				 
+              </div>
+              <div class="profile_line clearfix">
+              	 <div style="width:400px;float:left;">
+	                 <p><label>Tags:</label></p>
+	                 <input type="text" name="tags[{i}]" value="Graphic Designer, Blogger, Director" class="medium_textbox" style="width:300px;color:#CCC;" />
+	                 <input type="button" name="add_tag[{i}]" value="Add" class="button" /> 
+	                 <br />
+	                 <strong>Tags represent who you are</strong><br />
+					 e.g. Graphic Designer, Blogger, Director
+				 </div>
+				 <div id="tag_list_{i}" style="width:320px;height:200px;left;padding:10px;overflow:auto;border-left:1px solid #CCC;">
+				 	{thetags}
+				 </div>
+              </div>
+              <div class="profile_line clearfix">
+              	 <div style="width:400px;float:left;">
+	                 <p><label>Skills:</label></p>
+	                 <input type="text" name="skills[{i}]" value="Cooking, JQuery, Fireworks" class="medium_textbox" style="width:300px;color:#CCC;" />
+	                 <input type="button" name="add_skill[{i}]" value="Add" class="button" />  
+	                 <br />
+	                 <strong>Skill represent what you're good at</strong><br />
+					 e.g. Cooking, JQuery, Fireworks
+				 </div>
+				 <div id="skill_list_{i}" style="width:320px;height:200px;left;padding:10px;overflow:auto;border-left:1px solid #CCC;">
+				 	{theskills}
+				 </div>
+              </div>
+        </fieldset>
         <fieldset>
             <h2>Contact Details</h2>
            
@@ -144,6 +315,7 @@
        
         </div>
         <!-- END loopUser -->
+        
         <div class="button_wrapper clearfix">
             <div class="button_left">
                 <ul class="button_navigation">
