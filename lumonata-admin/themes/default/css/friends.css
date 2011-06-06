@@ -33,7 +33,7 @@
 .friends_item{
 	width: 98%;
 	border: 1px solid #ccc;
-	height: 70px;
+	height: auto;
 	margin: 5px 0 5px 5px;
 }
 .friends_list_item{
@@ -55,16 +55,16 @@
 .friends_name{
 	float: left;
 	width:300px;
-	height: 50px;
-	margin: 10px;
-	display: table-cell;
+	height: auto;
+	margin: 0 10px 0 10px;
+	
 	
 }
 .friends_name_fof{
 	float: left;
 	width: 400px;
-	height: 50px;
-	margin: 10px;
+	height: auto;
+	margin: 0 10px 0 10px;
 	
 }
 
@@ -72,8 +72,8 @@
 .friends_name_request{
 	float: left;
 	width:300px;
-	height: 50px;
-	margin: 10px;
+	height: auto;
+	margin: 0 10px 0 10px;
 	
 	
 }
@@ -84,9 +84,8 @@
 
 .friends_name p, .friends_name_request p,.friends_name_fof p{
 	font-weight:bold;
-	vertical-align: middle;	
-	position:relative;
-	top: 10%;
+	
+	top:0px;
 	
 }
 .follow_unfollow{
@@ -98,10 +97,10 @@
 }
 
 .fof_add_friend{
-	width: 100px;
+	width: 113px;
 	float: left;
 	height: 50px;
-	margin: 10px;
+	margin: 10px 3px;
 }
 
 
@@ -266,7 +265,7 @@ a.button_add_friend{
 	text-decoration: none;
 	font-weight:bold;
 	font-size:12px;
-	padding: 5px;
+	padding: 5px 2px;
 	
 }
 a.button_add_friend_user{

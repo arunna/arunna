@@ -600,6 +600,7 @@
 						$return.="</div>";
 						$return.="<div class=\"fl_name\">";
 						$return.=$friends['name'][$i];
+						$return.="<br /><span style='color:#333;font-size:9px;'>".get_additional_field($friends['friend_id'][$i], "one_liner", "user")."</span>";
 						$return.=$selected;
 						$return.="</div>";
 					$return.="</div>";
@@ -1663,6 +1664,7 @@
 	}
 	
 	function friends_list_array($friends=array(),$friend_of_friend=false,$search_all_user=false){
+		global $db;
 		$html='';
 		$followjs='';
 		if(count($friends)<1)
@@ -1673,6 +1675,10 @@
 				$flist=the_fs_list($friends['fid'][$key]);
 				else 
 				$flist='';
+				
+				//Expertise Tags
+				$thetag=get_user_tags($friends['id'][$key]);
+				
 				
 				$follow_label='';
 				
@@ -1712,7 +1718,13 @@
 						    			<img src="'.$friends['avatar'][$key].'" title="'.$friends['name'][$key].'" alt="'.$friends['name'][$key].'" />
 						    		</a>
 						    	</div>
-						    	<div class="friends_name"><p><a href="'.user_url($friends['id'][$key]).'">'.$friends['name'][$key].'</a> '.$flist.'</p></div>
+						    	<div class="friends_name">
+						    		<p>
+						    			<a href="'.user_url($friends['id'][$key]).'">'.$friends['name'][$key].'</a> '.$flist.'
+						    			<br /><span style="color:#CCC;">'.get_additional_field($friends['id'][$key], "one_liner", "user").'</span>
+						    		</p>
+						    		<div>'.$thetag.'</div>
+						    	</div>
 						    	<div class="edit_friends_list"><p style="display: none;" id="edit_list_'.$key.'"><a href="../lumonata-functions/friends.php?editlist=true&id='.$friends['fid'][$key].'&friend_id='.$friends['id'][$key].'&redirect='.urlencode(cur_pageURL()).'&key=#colorbox_'.$key.'" id="colorbox_'.$key.'" >Edit Lists</a></p></div>
 						    	<div class="follow_unfollow">'.$follow_label.'</div>';
 								
@@ -1767,7 +1779,12 @@
 						    			<img src="'.$friends['avatar'][$key].'" title="'.$friends['name'][$key].'" alt="'.$friends['name'][$key].'" />
 						    		</a>
 						    	</div>
-						    	<div class="friends_name_fof"><p><a href="'.user_url($friends['id'][$key]).'">'.$friends['name'][$key].'</a> '.$flist.'</p></div>
+						    	<div class="friends_name_fof clearfix">
+						    		<p><a href="'.user_url($friends['id'][$key]).'">'.$friends['name'][$key].'</a> '.$flist.'
+						    		<br /><span style="color:#CCC;">'.get_additional_field($friends['id'][$key], "one_liner", "user").'</span>
+						    		</p>
+						    		<div>'.$thetag.'</div>
+						    	</div>
 						    	<div class="fof_add_friend">'.$follow_label.'</div>';
 								
 								
@@ -2072,13 +2089,21 @@
 			
 		}else{		
 			foreach ($friends['id'] as $key=>$value){
+				$user_tags=get_user_tags($friends['id'][$key]);
+				
 				$html.='<div class="friends_item clearfix"  id="friends_item_'.$key.'">
 					    	<div class="friends_avatar">
 					    		<a href="'.user_url($friends['id'][$key]).'">
 					    			<img src="'.$friends['avatar'][$key].'" title="'.$friends['name'][$key].'" alt="'.$friends['name'][$key].'" />
 					    		</a>
 					    	</div>
-					    	<div class="friends_name_request"><p><a href="'.user_url($friends['id'][$key]).'">'.$friends['name'][$key].'</a></p></div>
+					    	<div class="friends_name_request">
+					    		<p>
+					    			<a href="'.user_url($friends['id'][$key]).'">'.$friends['name'][$key].'</a> 
+					    			<br /><span style="color:#CCC;">'.get_additional_field($friends['id'][$key], "one_liner", "user").'</span>
+					    		</p>
+					    		<div>'.$user_tags.'</div>
+					    	</div>
 					    	<div class="edit_friends_list_request">
 						    	<p id="edit_list_'.$key.'">
 							    	<a  href="../lumonata-functions/friends.php?add_friend=true&type=confirm&friendship_id='.$friends['fid'][$key].'&friend_id='.$friends['id'][$key].'&redirect='.urlencode(cur_pageURL()).'&key=#confirm_'.$key.'" id="confirm_'.$key.'" >

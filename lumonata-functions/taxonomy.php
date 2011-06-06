@@ -978,6 +978,7 @@
         $sql=$db->prepare_query("SELECT a.lname, a.lrule_id
                             FROM lumonata_rules a
                             WHERE a.lrule=%s 
+                            AND a.lgroup NOT IN ('global_settings', 'profile')
                             ORDER BY a.lcount DESC
                             LIMIT 15",
                             'tags');

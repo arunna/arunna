@@ -660,9 +660,9 @@
 							edit_additional_field($val,'first_name',$_POST['first_name'][$key],'user');
 							edit_additional_field($val,'last_name',$_POST['last_name'][$key],'user');
 							edit_additional_field($val,'website',$_POST['website'][$key],'user');
-							edit_additional_field($val,'bio',$_POST['bio'][0],'user');
-							edit_additional_field($val,'one_liner',$_POST['one_liner'][0],'user');
-							edit_additional_field($val,'location',$_POST['location'][0],'user');
+							edit_additional_field($val,'bio',$_POST['bio'][$key],'user');
+							edit_additional_field($val,'one_liner',$_POST['one_liner'][$key],'user');
+							edit_additional_field($val,'location',$_POST['location'][$key],'user');
 						
 							//add additional field for invitation limit if the value is not exist
     				        $invite_limit=get_additional_field($val, "invite_limit", "user");

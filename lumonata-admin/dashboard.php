@@ -628,6 +628,7 @@
 				$return.="<div class=\"the_feeds_content\" id=\"the_feeds_".$data['larticle_id']."\">";
 					$return.="<div class=\"the_author\">";
 						$return.="<a href=\"".user_url($data['lpost_by'])."\">$name</a> ".$flist;
+						$return.="<br /><span style='color:#CCC;'>".get_additional_field($data['lpost_by'], "one_liner", "user")."</span>";
 					$return.="</div>";
 					
 					if(is_administrator($data['lpost_by'])){
