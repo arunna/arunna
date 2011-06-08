@@ -36,9 +36,14 @@ function meta_data(){
         $mdes="";
         
         if(is_edit() || is_edit_all()){
-            $mtitle=get_additional_field($post_id,'meta_title',$_GET['state']);
-            $mkey=get_additional_field($post_id,'meta_keywords',$_GET['state']);
-            $mdes=get_additional_field($post_id,'meta_description',$_GET['state']);
+			//echo $_GET['state'];
+			
+			if($_GET['state']=='applications') $metaKey = $_GET['sub'];
+			else $metaKey = $_GET['state'];
+				
+            $mtitle=get_additional_field($post_id,'meta_title',$metaKey);
+            $mkey=get_additional_field($post_id,'meta_keywords',$metaKey);
+            $mdes=get_additional_field($post_id,'meta_description',$metaKey);
             
             return "<p>Title:<br />
                     <input type=\"text\" class=\"textbox\" name=\"additional_fields[meta_title][$i]\" value=\"$mtitle\"  />
