@@ -1,13 +1,13 @@
-#dashboard_left{
+#dashboard_left, #people_left{
 	width:550px;
 	min-width:300px !important;
 	min-width:500px;
 	height:auto;
 	margin-left:0px;
 	float:left;
-	
 }
-#dashboard_right{
+
+#dashboard_right, #people_right{
 	width:226px !important;
 	width:200px;
 	min-width:200px !important;
@@ -19,6 +19,7 @@
 	
 	
 }
+
 #dashboard_left .home_plug1{
 	width:100%;
 	min-width:400px !important;

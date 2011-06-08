@@ -2468,8 +2468,13 @@
 		
 		$i=1;
 		while($tags=$db->fetch_array($exprt_tags_result)){
-				$thetag.="<div class=\"expert_tag_list tag_index_0 clearfix\" >";
-					$thetag.="<a href=\"\" class=\"expert_tag_name\" style=\"width:auto;font-size:12px;display:block;color:#333;\">".trim($tags['lname'])."</a>";
+				$thetag.="<div class=\"people_tag_list_wrapper clearfix\">";
+					$thetag.="<div class=\"people_tag_list clearfix\" >";
+						$thetag.="<a href=\"".get_state_url('people')."&tag=".$tags['lsef']."\" class=\"expert_tag_name\" style=\"width:auto;font-size:12px;display:block;color:#333;\">".trim($tags['lname'])."</a>";
+					$thetag.="</div>";
+					$thetag.="<div class=\"numof_tag_list clearfix\" >
+								<a href=\"".get_state_url('people')."&tag=".$tags['lsef']."\" class=\"expert_tag_name\" style=\"width:auto;font-size:12px;display:block;color:#333;\">".$tags['lcount']."</a>
+							  </div>";
 				$thetag.="</div>";
 			
 			$i++;

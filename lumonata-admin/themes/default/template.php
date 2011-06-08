@@ -116,8 +116,14 @@
 		/*get the content area*/
 		add_variable('content_area',$thecontent);
 		
+		//setting up connection menu
+		add_variable('connection_menu',get_admin_menu('connection_menu'));
+		
 		//setting up navigation menu
 		add_variable('navmenu',get_admin_menu());
+		
+		//setting up settings menu
+		add_variable('settings_menu',get_admin_menu('settings_menu'));
 		
 		/*Add Top Search*/
 		add_variable('top_search_box',top_search_box());

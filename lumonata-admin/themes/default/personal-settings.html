@@ -1,0 +1,36 @@
+<!-- BEGIN notificationSettings -->
+<h1>Personal Settings</h1>
+<ul class="tabs">
+   {tab}
+</ul>
+<div class="tab_container">
+    <div id="comments" class="tab_content">
+	{alert}
+	<form name="comments" action="" method="post">
+	    <div class="button_wrapper clearfix">
+	       <ul class="button_navigation">
+		   <li>{save_changes_botton}</li>
+	       </ul>
+	    </div>
+	    <fieldset>
+			<h2>Notifications Settings</h2>
+			<p><strong>Send a notification email when someone:</strong></p>
+			<p><input type="checkbox"  name="alert_on_comment" {alert_on_comment} /><label>Comment on your post</label></p>
+			<p><input type="checkbox"  name="alert_on_comment_reply" {alert_on_comment_reply} /><label>Reply your comment</label></p>
+			<p><input type="checkbox"  name="alert_on_liked_post" {alert_on_liked_post} /><label>Comment on a post you like</label></p>
+			<p><input type="checkbox"  name="alert_on_liked_comment" {alert_on_liked_comment} /><label>Reply on a comment you like</label></p>
+			<p><input type="checkbox"  name="alert_on_like_your_post" {alert_on_like_your_post} /><label>Like your post</label></p>
+			<p><input type="checkbox"  name="friend_like_friend_comment_onpost" {friend_like_friend_comment_onpost} /><label>Like friend comment on your post</label></p>
+			<p><input type="checkbox"  name="friend_like_your_comment_friendpost" {friend_like_your_comment_friendpost} /><label>Like your comment on friend post</label></p>
+	    </fieldset>
+	    
+	    <input type="hidden" name="update_notifications_settings" value="true" />
+	    <div class="button_wrapper clearfix">
+	       <ul class="button_navigation">
+		   <li>{save_changes_botton}</li>
+	       </ul>
+	    </div>
+	</form>
+    </div>
+</div>
+<!-- END notificationSettings -->

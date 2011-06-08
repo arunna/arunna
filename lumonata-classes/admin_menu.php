@@ -3,25 +3,37 @@
 	
 	class admin_menu{
 		function admin_menu(){
-			$this->main_menu=array('dashboard'=>'Dashboard',
-						'notifications' => 'Notifications',
-						'applications' => 'Applications',
+			$this->main_menu=array(
 						'articles' => 'Articles',
 						'pages' => 'Pages',
-						'friends'=>'Friends',
+						'applications' => 'Applications',
 						'users'=>'Users',
 						'my-profile'=>'Profile',
 						'comments' => 'Comments',
-						'plugins' => 'Plugins',
-						'themes' => 'Themes',
-						'global_settings' => 'Settings',
-						'menus'=>'Menus');
+						
+						);
 			
 			$this->plugins_menu=array('installed'=>'Installed',
 						  'active'=>'Active',
 						  'inactive'=>'Inactive');
 			
 			$this->apps_menu=array();
+			
+			$this->settings_menu=array(
+					'personal-settings' => 'Personal Settings',
+					'plugins' => 'Plugins',
+					'themes' => 'Themes',
+					'global_settings' => 'Settings',
+					'menus'=>'Menus'
+			);
+			
+			$this->connection_menu=array(
+					'dashboard'=>'Dashboard',
+					'notifications' => 'Notifications',
+					'friends'=>'Connections',
+		            'people'=>'People',
+			);
+			
 		}
 		
 		function add_main_menu($menu){
@@ -51,14 +63,29 @@
 			
 			$this->apps_menu=array_merge($this->apps_menu,$menu);
 		}
-		function get_admin_menu(){
+		function get_admin_menu($type='main_menu'){
+			switch ($type){
+				case "main_menu":
+					$themenu=$this->main_menu;
+					break;
+				case "connection_menu":
+					$themenu=$this->connection_menu;
+					break;
+				case "settings_menu":
+					$themenu=$this->settings_menu;
+					break;
+				
+			}
+			
 			$menu="<ul>";
 			
-			foreach($this->main_menu as $key=>$val){
+			foreach($themenu as $key=>$val){
 				if($key=='applications'){
 					$sub=$this->get_apps_menu();
 				}elseif($key=='plugins'){
 					$sub=$this->get_plugins_menu();
+				}elseif($key=='people'){
+					$sub=$this->get_people_categories();
 				}else{
 					
 					if(isset($this->submenu[$key]) && is_array($this->submenu[$key])){
@@ -196,7 +223,9 @@
 											<br clear=\"left\" />
 										</div>
 										$sub
-									</li>";						
+									</li>";
+						elseif($key=="applications" || $key=="plugins")
+							$menu.="<li class=\"".$class_name."\"><a href=\"#\" id=\"$key\">".$val." ".$noti_comment_count."</a>$sub</li>";					
 						else 
 							$menu.="<li class=\"".$class_name."\"><a href=\"?state=$key\" id=\"$key\">".$val." ".$noti_comment_count."</a>$sub</li>";
 					}
@@ -269,30 +298,51 @@
 			
 			return $menu;
 		}
-	    }
 	    
-	   
 	    
-	    function add_main_menu($menu){
-			global $admin_menu;
-			$admin_menu->add_main_menu($menu);
-	    }
-	    function add_sub_menu($parent,$submenu){
-			global $admin_menu;
-			$admin_menu->add_sub_menu($parent,$submenu);
-	    }
-	    function add_apps_menu($menu){
-			global $admin_menu;
-			$admin_menu->add_apps_menu($menu);
-	    }
-	    function add_plugins_menu($menu){
-			global $admin_menu;
-			$admin_menu->add_plugins_menu($menu);
-	    }
-	    function get_admin_menu(){
-			global $admin_menu;
-			return $admin_menu->get_admin_menu();
-	    }
+		function get_people_categories(){
+			global $db;
+		   	if($_GET['state']=='people')
+				$display="";
+			else
+				$display="style='display:none;'";
+				
+			$menu="<ul id=\"people_list\" $display>";
+				$expert=get_expertise_categories();
+				while ($themenu=$db->fetch_array($expert)){
+					if(is_preview()){
+						$theme=$_GET['theme'];
+						$menu.="<li><a href=\"?state=people&cat=".$themenu['lsef']."&preview=true&theme=$theme\">".$themenu['lname']."</a></li>";
+					}else{
+						$menu.="<li><a href=\"?state=people&cat=".$themenu['lsef']."\">".$themenu['lname']."</a></li>";
+					}
+				}
+			$menu.="</ul>";
+			
+			return $menu;
+		}
+	}
+    
+	function add_main_menu($menu){
+		global $admin_menu;
+		$admin_menu->add_main_menu($menu);
+    }
+    function add_sub_menu($parent,$submenu){
+		global $admin_menu;
+		$admin_menu->add_sub_menu($parent,$submenu);
+    }
+    function add_apps_menu($menu){
+		global $admin_menu;
+		$admin_menu->add_apps_menu($menu);
+    }
+    function add_plugins_menu($menu){
+		global $admin_menu;
+		$admin_menu->add_plugins_menu($menu);
+    }
+    function get_admin_menu($type='main_menu'){
+		global $admin_menu;
+		return $admin_menu->get_admin_menu($type);
+    }
 		
 	
 ?>

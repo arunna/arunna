@@ -697,8 +697,10 @@
             $url=kses(rem_slashes($url),$allowedtitletags);
             
             //send notification to writer if the commentator is not the writer
-        	if(alert_on_comment() && $writer_email!=$email && $comment_type=='comment'){
-           		send_comment_notification($name." commented on your post", $comment, $name, $writer_email,permalink($article_id)."#comment_box_".$article_id);
+        	if($writer_email!=$email && $comment_type=='comment'){
+        		if(is_user_alert_on_comment($writer['luser_id']))
+           			send_comment_notification($name." commented on your post", $comment, $name, $writer_email,permalink($article_id)."#comment_box_".$article_id);
+           		
            		save_notification($article_id,$writer['luser_id'], $user_id, $writer['luser_id'], 'comment', $article['lshare_to']);
         	}
         	
@@ -737,15 +739,33 @@
 		            $commentator_result=get_commentator_email($article_id, $writer_email,$email,$commentTypeIn);
 		            while($theemail=$db->fetch_array($commentator_result)){
 		            	$writer_name=($name==$writer_name)?$call_name:$writer_name;
-		            	send_comment_notification($name." also commented on ".$writer_name." post", $comment, $name, $theemail['lemail'],permalink($article_id)."#comment_box_".$article_id);
+		            	
+		            	//check email notifications setting for each user when comment reply
+		            	if($theemail['lcomment_type']=='comment' && is_user_alert_on_comment_reply($theemail['luser_id'])==1)
+		            		send_comment_notification($name." also commented on ".$writer_name." post", $comment, $name, $theemail['lemail'],permalink($article_id)."#comment_box_".$article_id);
+
+		            	//check email notifications setting for each user when like post
+		            	if($theemail['lcomment_type']=='like' && is_user_alert_on_liked_post($theemail['luser_id'])==1)
+		            		send_comment_notification($name." also commented on ".$writer_name." post", $comment, $name, $theemail['lemail'],permalink($article_id)."#comment_box_".$article_id);
+
+		            	//check email notifications setting for each user when like comment
+		            	if($theemail['lcomment_type']=='like_comment' && is_user_alert_on_liked_comment($theemail['luser_id'])==1)
+		            		send_comment_notification($name." also commented on ".$writer_name." post", $comment, $name, $theemail['lemail'],permalink($article_id)."#comment_box_".$article_id);	
+		            	
 		            	save_notification($article_id,$writer['luser_id'], $user_id, $theemail['luser_id'], 'comment', $article['lshare_to']);	
 		            }
 	        	}
 	        	
         	}elseif($comment_type=='like'){
         		if($writer['luser_id']!=$user_id){
-        			send_like_notification($name." like your post", $writer_email,permalink($article_id)."#comment_box_".$article_id);
+        			
+        			if(is_user_alert_on_like_post($writer['luser_id'])==1){
+        				
+        				send_like_notification($name." like your post", $writer_email,permalink($article_id)."#comment_box_".$article_id);
+        			}
+        			
         			save_notification($article_id,$writer['luser_id'], $user_id, $writer['luser_id'], 'like', $article['lshare_to']);
+        			
         		}
         	}elseif($comment_type=='like_comment'){
         		//Comment data that liked 
@@ -765,14 +785,21 @@
 		        //send to writer
 		        if($theComment['luser_id']!=$_COOKIE['user_id']){
 			        if($prev_commentator_email==$writer_email){
-			        	send_like_notification($name." like your comment on your post", $writer_email,permalink($theComment['larticle_id'])."#comment_box_".$theComment['larticle_id']);
+			        	if(is_user_alert_on_friendLikeCommentPost($writer['luser_id'])==1)
+			        		send_like_notification($name." like your comment on your post", $writer_email,permalink($theComment['larticle_id'])."#comment_box_".$theComment['larticle_id']);
+			        	
 			        	save_notification($article_id,$writer['luser_id'], $user_id, $writer['luser_id'], 'like_comment', $article['lshare_to']);
 			        }else{
 			        	if(trim($name)!=$writer_name){
-			        		send_like_notification($name." like ".$prev_commentator_name."'s comment on your post", $writer_email,permalink($theComment['larticle_id'])."#comment_box_".$theComment['larticle_id']);
+			        		if(is_user_alert_on_friendLikeCommentPost($writer['luser_id'])==1)
+			        			send_like_notification($name." like ".$prev_commentator_name."'s comment on your post", $writer_email,permalink($theComment['larticle_id'])."#comment_box_".$theComment['larticle_id']);
+			        			
 			        		save_notification($article_id,$writer['luser_id'], $user_id, $writer['luser_id'], 'like_comment', $article['lshare_to']);
 			        	}
-			        	send_like_notification($name." like your comment on ".$writer_name."'s post", $prev_commentator_email,permalink($theComment['larticle_id'])."#comment_box_".$theComment['larticle_id']);
+			        	
+			        	if(is_user_alert_on_friendLikeYourCommentFriendPost($writer['luser_id'])==1)
+			        		send_like_notification($name." like your comment on ".$writer_name."'s post", $prev_commentator_email,permalink($theComment['larticle_id'])."#comment_box_".$theComment['larticle_id']);
+			        	
 			        	save_notification($article_id,$writer['luser_id'], $user_id, $theComment['luser_id'], 'like_comment', $article['lshare_to']);
 			        } 
 		        }
@@ -986,7 +1013,7 @@
     	global $db;
     	
 
-    	$query=$db->prepare_query("SELECT distinct(a.lemail),a.luser_id
+    	$query=$db->prepare_query("SELECT distinct(a.lemail),a.luser_id,b.lcomment_type
     								FROM lumonata_users a,lumonata_comments b
     								WHERE a.luser_id=b.luser_id 
     								AND b.larticle_id=%d 

@@ -82,6 +82,14 @@
             //Notifications
             $this->add_privileges('administrator','notifications','preview');
             
+            //People
+            $this->add_privileges('administrator','people','preview');
+            
+            //Personal Settings
+            $this->add_privileges('administrator','personal-settings','insert');
+            $this->add_privileges('administrator','personal-settings','update');
+            
+            
            
             
             /***********Privilege for Editor***********/
@@ -137,6 +145,14 @@
              //Notifications
             $this->add_privileges('editor','notifications','preview');
             
+            //People
+            $this->add_privileges('editor','people','preview');
+            
+            //Personal Settings
+            $this->add_privileges('editor','personal-settings','insert');
+            $this->add_privileges('editor','personal-settings','update');
+            
+            
             /***********Privilege for Author***********/
             //Status
             $this->add_privileges('author','status','preview');
@@ -176,6 +192,13 @@
             
             //Notifications
             $this->add_privileges('author','notifications','preview');
+            
+            //People
+            $this->add_privileges('author','people','preview');
+            
+            //Personal Settings
+            $this->add_privileges('author','personal-settings','insert');
+            $this->add_privileges('author','personal-settings','update');
             
             /***********Privilege for Contributor***********/
             //Status
@@ -217,6 +240,14 @@
             //Notifications
             $this->add_privileges('contributor','notifications','preview');
             
+            //People
+            $this->add_privileges('contributor','people','preview');
+            
+            //Personal Settings
+            $this->add_privileges('contributor','personal-settings','insert');
+            $this->add_privileges('contributor','personal-settings','update');
+            
+            
            /***********Privilege for Standard User***********/
             //Status
             $this->add_privileges('standard','status','preview');
@@ -234,6 +265,13 @@
             
              //Notifications
             $this->add_privileges('standard','notifications','preview');
+            
+            //People
+            $this->add_privileges('standard','people','preview');
+            
+            //Personal Settings
+            $this->add_privileges('standard','personal-settings','insert');
+            $this->add_privileges('standard','personal-settings','update');
             
             
         }

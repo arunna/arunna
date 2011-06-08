@@ -1714,7 +1714,7 @@
     								WHERE lrule='categories' 
     								AND lgroup='global_settings'
     								AND lsubsite='arunna'
-    								ORDER BY lname");
+    								ORDER BY lorder");
     	return $result=$db->do_query($query);
     	 
     }
