@@ -294,6 +294,7 @@ INSERT INTO `lumonata_meta_data` (`lmeta_id`, `lmeta_name`, `lmeta_value`, `lapp
 -- Table structure for table `lumonata_rules`
 --
 
+DROP TABLE IF EXISTS `lumonata_rules`;
 CREATE TABLE IF NOT EXISTS `lumonata_rules` (
   `lrule_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `lparent` bigint(20) NOT NULL,
@@ -304,21 +305,24 @@ CREATE TABLE IF NOT EXISTS `lumonata_rules` (
   `lgroup` varchar(200) CHARACTER SET utf8 NOT NULL,
   `lcount` bigint(20) NOT NULL DEFAULT '0',
   `lorder` bigint(20) NOT NULL DEFAULT '1',
+  `lsubsite` varchar(100) COLLATE latin1_general_ci NOT NULL DEFAULT 'arunna',
   PRIMARY KEY (`lrule_id`),
   KEY `rules_name` (`lname`),
   KEY `sef` (`lsef`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `lumonata_rules`
 --
 
-INSERT INTO `lumonata_rules` (`lrule_id`, `lparent`, `lname`, `lsef`, `ldescription`, `lrule`, `lgroup`, `lcount`, `lorder`) VALUES
-(1, 0, 'Uncategorized', 'uncategorized', '', 'categories', 'default', 1, 107),
+INSERT INTO `lumonata_rules` (`lrule_id`, `lparent`, `lname`, `lsef`, `ldescription`, `lrule`, `lgroup`, `lcount`, `lorder`, `lsubsite`) VALUES
+(1, 0, 'Uncategorized', 'uncategorized', '', 'categories', 'default', 1, 113, 'arunna'),
 (2, 0, 'Designer', 'designer', '', 'categories', 'global_settings', 0, 6, 'arunna'),
 (3, 0, 'Entepreneurs', 'entepreneurs', '', 'categories', 'global_settings', 1, 5, 'arunna'),
 (4, 0, 'Photographer', 'photographer', '', 'categories', 'global_settings', 0, 4, 'arunna'),
-(5, 0, 'Programmer', 'programmer', '', 'categories', 'global_settings', 1, 3, 'arunna');
+(5, 0, 'Programmer', 'programmer', '', 'categories', 'global_settings', 1, 3, 'arunna'),
+(6, 0, 'CEO', 'ceo', '', 'tags', 'profile', 1, 2, 'arunna'),
+(7, 0, 'Cooking', 'cooking', '', 'skills', 'profile', 1, 1, 'arunna');
 
 -- --------------------------------------------------------
 
