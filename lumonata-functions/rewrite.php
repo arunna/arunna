@@ -42,12 +42,12 @@
 	 $url = trim($url, '/');
 	return $url;
     }
-    function post_to_id(){
+    function post_to_id($app_name='articles'){
 		global $db;
 		
 		$uri=get_uri();
 		
-		if(is_details() || is_article_comments_feed()){
+		if(is_details($app_name) || is_article_comments_feed()){
 		    if(!is_permalink()){
 		    	$the_uri=explode("&",$uri);
 				$the_uri=explode("=",$the_uri[1]);
