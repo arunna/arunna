@@ -1564,6 +1564,8 @@
 		$website=get_additional_field($user_id,'website','user');
 		$first_name=get_additional_field($user_id,'first_name','user');
 		$last_name=get_additional_field($user_id,'last_name','user');
+		$one_liner=get_additional_field($user_id,'one_liner','user');
+		$location=get_additional_field($user_id,'location','user');
 		$bio=get_additional_field($user_id,'bio','user');
 		
 		$html="<h2>Basic Information</h2>";
@@ -1591,6 +1593,30 @@
 					$html.="</td>";
 				$html.="</tr>";
 			}
+			
+			//One Liner
+			if(!empty($one_liner)){
+				$html.="<tr>";
+					$html.="<td style='padding:5px 10px;border-bottom:1px solid #f0f0f0;width:100px;' align='right'>";
+						$html.="<strong>One Liner</strong>";
+					$html.="</td>";
+					$html.="<td style='padding:5px 10px;border-bottom:1px solid #f0f0f0;'>";
+						$html.=$one_liner;
+					$html.="</td>";
+				$html.="</tr>";
+			}
+			
+			//Location
+			if(!empty($location)){
+				$html.="<tr>";
+					$html.="<td style='padding:5px 10px;border-bottom:1px solid #f0f0f0;width:100px;' align='right'>";
+						$html.="<strong>Location</strong>";
+					$html.="</td>";
+					$html.="<td style='padding:5px 10px;border-bottom:1px solid #f0f0f0;'>";
+						$html.=$location;
+					$html.="</td>";
+				$html.="</tr>";
+			}
 			//Sex
 			if(!empty($user['lsex'])){
 				$html.="<tr>";
@@ -1606,7 +1632,7 @@
 			if(!empty($bio)){
 				$html.="<tr>";
 					$html.="<td style='padding:5px 10px;border-bottom:1px solid #f0f0f0;width:100px;' align='right'>";
-						$html.="<strong>Bio</strong>";
+						$html.="<strong>Short Bio</strong>";
 					$html.="</td>";
 					$html.="<td style='padding:5px 10px;border-bottom:1px solid #f0f0f0;'>";
 						$html.=$bio;
