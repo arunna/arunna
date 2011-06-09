@@ -328,7 +328,7 @@
 			}
 			
 			echo "<div class='alert_green'>Saving process has been sent succesfully.</div>
-				  <script type='text/javascript'>
+					<script type='text/javascript'>
 				  		setTimeout(function(){
 				  			$('".$_POST['key']."').colorbox.close();
                          	
@@ -338,7 +338,8 @@
 				  			window.location='".$_POST['refresh']."'
                     	}, 3000);
                     	
-				  </script>";
+				  	</script>
+				  ";
 
 		}
 		
@@ -824,20 +825,20 @@
 	function friend_thumb_list($user_id){
 		if(is_dashboard()){
 			if(!isset($_GET['tab'])){
-	   			$myfriends=myfriends($user_id, 0, 12);
+	   			$myfriends=myfriends($user_id, 0, 11,0,true);
 	   			$flist_name=array();
 	   			$list_id=0;
 	   			$friend_cnt=count_all_friend($user_id);
 			}else{
 				$list_id=base64_decode($_GET['tab']); 
-	   			$myfriends=myfriends($user_id, 0, 12,$list_id);
+	   			$myfriends=myfriends($user_id, 0, 11,$list_id,true);
 	   			$flist_name=flist_name(base64_decode($_GET['tab']));
 	   			$friend_cnt=count_all_friend($user_id,$list_id);
 			}
 		}else{
 			$friend_cnt=count_all_friend($user_id);
 			$flist_name=array();
-			$myfriends=myfriends($user_id, 0, 12);
+			$myfriends=myfriends($user_id, 0, 11,0,true);
 		}
    				
 		$friends_html='';
@@ -876,9 +877,9 @@
 										$('#invite_friend_fl').colorbox();
 									});
 								</script>	
-								<div style='width:50px:height:50px;overflow:hidden;margin:5px 5px;float:left'>
+								<div style='width:50px:height:50px;overflow:hidden;margin:4px 4px;float:left'>
 									<a href=\"../lumonata-functions/friends.php?manage_list=invite&amp;list_name=".$fl_label."&list_id=".$list_id."\" id=\"invite_friend_fl\" rel=\"friends\" title=\"Add friends ".$fl_label_to."\">
-										<img src='".get_theme_img()."/add-more-friend.png' border='1' />
+										<img src='".get_theme_img()."/add-more-friend.png' border='0' />
 									</a>
 								</div>
 								";
@@ -1285,14 +1286,20 @@
 			
 		return $num=$db->num_rows($db->do_query($query));
 	}
-	function myfriends($user_id,$limit,$viewed,$bylist=0){
+	function myfriends($user_id,$limit,$viewed,$bylist=0,$random=false){
 		global $db;
 		$friends=array();
+		
+		if($random)
+			$random_order="RAND(),";
+		else 
+			$random_order="";
+			
 		if(empty($bylist))
 			$query=$db->prepare_query("SELECT a.lfriendship_id,a.lfriend_id,a.lstatus
 										FROM lumonata_friendship a, lumonata_users b
 										WHERE a.luser_id=%d AND (a.lstatus='connected' OR a.lstatus='unfollow') AND a.lfriend_id=b.luser_id
-										ORDER BY RAND(), b.ldlu DESC 
+										ORDER BY  $random_order b.ldlu DESC 
 										LIMIT %d,%d",$user_id,$limit,$viewed);
 		else 
 			$query=$db->prepare_query("SELECT a.lfriendship_id,a.lfriend_id,a.lstatus
@@ -1302,7 +1309,7 @@
 											   a.luser_id=%d AND 
 											   (a.lstatus='connected' OR a.lstatus='unfollow') AND 
 											   a.lfriend_id=c.luser_id
-										ORDER BY RAND(), c.ldlu DESC 
+										ORDER BY  $random_order c.ldlu DESC 
 										LIMIT %d,%d",$bylist,$user_id,$limit,$viewed);
 
 		
@@ -2168,7 +2175,7 @@
 	}
 	function dashboard_invite_friends(){
 		$available_services=get_available_services();
-		$html="<div style='margin-bottom:10px;'>";
+		$html="<div style='margin-bottom:0px;'>";
 			$html.="<h2>Invite Your Friends</h2>";
 			$html.="<p>Get connected with your friends and invite them to join. Find your friends in your Gmail, Yahoo and Hotmail account.</p>";
 			$enc_available_services=base64_encode(json_encode($available_services));
@@ -2329,7 +2336,7 @@
 										   VALUES (%d,%d,%s)",$user_id,$friend_id,$status);
 				
 				$sf=search_friendship($user_id,$friend_id);
-				if(count($sf['friend_id']) < 1)
+				if(!isset($sf['friend_id']))
 				return $r=$db->do_query($query);
 			
 		}

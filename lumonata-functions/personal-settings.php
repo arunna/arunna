@@ -3,13 +3,13 @@
 	function personal_settings(){
 		//set tabs
 		$tabs=array('notifications'=>'Notifications',
-					'themes'=>'Themes',
 					'privacy'=>'Privacy');
 		
 		//set template
 		set_template(TEMPLATE_PATH."/personal-settings.html",'personal_settings');
 		
 		add_block('notificationSettings','notificationBlock','personal_settings');
+		add_block('privacySettings','privacyBlock','personal_settings');
 		
 		$tabb='';
 		if(empty($_GET['tab']))
@@ -108,8 +108,70 @@
 			add_variable('friend_like_your_comment_friendpost',$friendLikeYourCommentFriendPost);
 			
 			parse_template('notificationSettings','notificationBlock');
-			return return_template('personal_settings');
-		} 	
+			
+		}elseif($the_tab=='privacy'){
+			add_actions('section_title','Privacy - Personal Settings');
+			$select="";
+			
+			if(is_save_changes($_GET['state']))
+				if(update_privacy_settings())
+					add_variable('alert',"<div class=\"alert_green_form\">".UPDATE_SUCCESS."</div>");
+				else
+					add_variable('alert',"<div class=\"alert_red_form\">".UPDATE_FAILED."</div>");
+
+					
+			$temp=status_privacy($_COOKIE['user_id']);
+			
+			if($temp=='public' || $temp==NULL){
+				$select="<select name=\"status_privacy\">
+						 	<option value=\"public\" selected=\"selected\">Public</option>
+						 	<option value=\"friend\">Friend Only</option>
+						 </select>";
+				
+			}elseif($temp=='friend'){
+				$select="<select name=\"status_privacy\">
+						 	<option value=\"public\">Public</option>
+						 	<option value=\"friend\"  selected=\"selected\">Friend Only</option>
+						 </select>";
+			}	
+			add_variable('status_privacy',$select);
+			
+			$temp=gallery_privacy($_COOKIE['user_id']);
+			if($temp=='public' || $temp==NULL){
+				$select="<select name=\"gallery_privacy\">
+						 	<option value=\"public\" selected=\"selected\">Public</option>
+						 	<option value=\"friend\">Friend Only</option>
+						 </select>";
+				
+			}elseif($temp=='friend'){
+				$select="<select name=\"gallery_privacy\">
+						 	<option value=\"public\">Public</option>
+						 	<option value=\"friend\"  selected=\"selected\">Friend Only</option>
+						 </select>";
+			}
+				
+			add_variable('gallery_privacy',$select);
+			
+			$temp=article_privacy($_COOKIE['user_id']);
+			if($temp=='public' || $temp==NULL){
+				$select="<select name=\"article_privacy\">
+						 	<option value=\"public\" selected=\"selected\">Public</option>
+						 	<option value=\"friend\">Friend Only</option>
+						 </select>";
+				
+			}elseif($temp=='friend'){
+				$select="<select name=\"article_privacy\">
+						 	<option value=\"public\">Public</option>
+						 	<option value=\"friend\"  selected=\"selected\">Friend Only</option>
+						 </select>";
+			}	
+			add_variable('article_privacy',$select);
+					
+			parse_template('privacySettings','privacyBlock');
+			
+		} 
+
+		return return_template('personal_settings');
 	}
 	
 	function is_user_alert_on_comment($user_id){
@@ -193,5 +255,30 @@
 		
 		if($update)return true;
 		else return false;
+	}
+	
+	function update_privacy_settings(){
+		foreach($_POST as $key=>$val){
+			if($key!='save_changes')
+			$update=update_meta_data($key,$val,"personal_settings",$_COOKIE['user_id']);
+		}
+		
+		if($update)return true;
+		else return false;
+	}
+	
+	function status_privacy($user_id){
+		$return = get_meta_data("status_privacy","personal_settings",$user_id);
+		return ($return==NULL)?'public':$return;
+	}
+	
+	function gallery_privacy($user_id){
+		$return = get_meta_data("gallery_privacy","personal_settings",$user_id);
+		return ($return==NULL)?'public':$return;
+	}
+	
+	function article_privacy($user_id){
+		$return = get_meta_data("article_privacy","personal_settings",$user_id);
+		return ($return==NULL)?'public':$return;
 	}
 ?>
