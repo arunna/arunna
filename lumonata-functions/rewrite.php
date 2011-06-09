@@ -201,6 +201,7 @@
 		}
     }
     function get_appname(){
+    	global $db;
     	$uri=get_uri();
 		
 		if(is_details()){
@@ -222,7 +223,21 @@
 		    $the_uri=explode("/",$uri);
 		    return $the_uri[0];
 		}elseif(is_page()){
-			return "pages";
+			if(!is_permalink()){
+				$the_uri=explode("=",$uri);
+				if($the_uri[0]=="page_id")
+					return "pages";
+			}else{
+				
+				$query=$db->prepare_query("SELECT * FROM lumonata_articles WHERE lsef=%s",$uri);
+				$result=$db->do_query($query);
+				$data=$db->fetch_array($result);
+				if($data['larticle_type']=="pages")
+					return "pages";
+				else 
+					return $uri; 
+			}
+			
 		}
     }
     function get_feed_section(){

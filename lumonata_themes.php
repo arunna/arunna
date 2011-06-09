@@ -69,7 +69,10 @@
 		}elseif(is_page("page_name=login")){
 			$thecontent=signup_user();
 		}elseif(is_page()){
-			$thecontent=article_detail();
+			if(get_appname()=="pages")
+				$thecontent=article_detail();
+			else 
+				$thecontent=run_actions(get_appname()."_page");
 		}else{
 		
 			$thecontent=run_actions("thecontent");
