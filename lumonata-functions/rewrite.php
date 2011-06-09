@@ -32,9 +32,10 @@
 		// Chop off /path/to/blog
 		
 		$home_path = parse_url($site_url);
-		$home_path = $home_path['path'];
-		if(!empty($home_path['path']))
+		if(!empty($home_path['path'])){
+			$home_path = $home_path['path'];
 			$url = str_replace($home_path, '', $url);
+		}
 		
 	}
 	// Trim leading and lagging slashes

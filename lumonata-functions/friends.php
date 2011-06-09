@@ -328,7 +328,7 @@
 			}
 			
 			echo "<div class='alert_green'>Saving process has been sent succesfully.</div>
-				  <script type='text/javascript'>
+					<script type='text/javascript'>
 				  		setTimeout(function(){
 				  			$('".$_POST['key']."').colorbox.close();
                          	
@@ -338,7 +338,8 @@
 				  			window.location='".$_POST['refresh']."'
                     	}, 3000);
                     	
-				  </script>";
+				  	</script>
+				  ";
 
 		}
 		
@@ -571,6 +572,7 @@
 		
 		if(!defined('SITE_URL'))
 		define('SITE_URL',get_meta_data('site_url'));
+		
 		$rdirect=get_state_url('friends');		
 		$return="<form method=\"post\" action=\"../lumonata-functions/friends.php?manage_list=add_friend&amp;list_id=".$_GET['list_id']."&amp;redirect=".$rdirect."\">";
 		$return.="<div style='font-weight:bold;background:#ccc;padding:5px;width:410px;font-size:14px;'>Add Friends to List</div>";
@@ -823,20 +825,20 @@
 	function friend_thumb_list($user_id){
 		if(is_dashboard()){
 			if(!isset($_GET['tab'])){
-	   			$myfriends=myfriends($user_id, 0, 12);
+	   			$myfriends=myfriends($user_id, 0, 11,0,true);
 	   			$flist_name=array();
 	   			$list_id=0;
 	   			$friend_cnt=count_all_friend($user_id);
 			}else{
 				$list_id=base64_decode($_GET['tab']); 
-	   			$myfriends=myfriends($user_id, 0, 12,$list_id);
+	   			$myfriends=myfriends($user_id, 0, 11,$list_id,true);
 	   			$flist_name=flist_name(base64_decode($_GET['tab']));
 	   			$friend_cnt=count_all_friend($user_id,$list_id);
 			}
 		}else{
 			$friend_cnt=count_all_friend($user_id);
 			$flist_name=array();
-			$myfriends=myfriends($user_id, 0, 12);
+			$myfriends=myfriends($user_id, 0, 11,0,true);
 		}
    				
 		$friends_html='';
@@ -875,9 +877,9 @@
 										$('#invite_friend_fl').colorbox();
 									});
 								</script>	
-								<div style='width:50px:height:50px;overflow:hidden;margin:5px 5px;float:left'>
+								<div style='width:50px:height:50px;overflow:hidden;margin:4px 4px;float:left'>
 									<a href=\"../lumonata-functions/friends.php?manage_list=invite&amp;list_name=".$fl_label."&list_id=".$list_id."\" id=\"invite_friend_fl\" rel=\"friends\" title=\"Add friends ".$fl_label_to."\">
-										<img src='".get_theme_img()."/add-more-friend.png' border='1' />
+										<img src='".get_theme_img()."/add-more-friend.png' border='0' />
 									</a>
 								</div>
 								";
@@ -935,13 +937,13 @@
 		
 		if($is_friend_request){
 			if($request_type=='add'){
-				$title_label="Sending ".$friend['ldisplay_name']." a friend request.";
+				$title_label="Sending ".$friend['ldisplay_name']." a connection request.";
 				$action_label="Send Request";
 			}elseif($request_type=='confirm'){
-				$title_label="Confirm ".$friend['ldisplay_name']." as a friend.";
+				$title_label="Confirm ".$friend['ldisplay_name']." to your connection.";
 				$action_label="Confirm Request";
 			}elseif($request_type=='confirm_nofollow'){
-				$title_label="Confirm ".$friend['ldisplay_name']." as a friend &amp; Unfollow.";
+				$title_label="Confirm ".$friend['ldisplay_name']." to your Connection &amp; Unfollow.";
 				$action_label="Confirm Request &amp; Unfollow";
 			}
 		}else{
@@ -1284,14 +1286,20 @@
 			
 		return $num=$db->num_rows($db->do_query($query));
 	}
-	function myfriends($user_id,$limit,$viewed,$bylist=0){
+	function myfriends($user_id,$limit,$viewed,$bylist=0,$random=false){
 		global $db;
 		$friends=array();
+		
+		if($random)
+			$random_order="RAND(),";
+		else 
+			$random_order="";
+			
 		if(empty($bylist))
 			$query=$db->prepare_query("SELECT a.lfriendship_id,a.lfriend_id,a.lstatus
 										FROM lumonata_friendship a, lumonata_users b
 										WHERE a.luser_id=%d AND (a.lstatus='connected' OR a.lstatus='unfollow') AND a.lfriend_id=b.luser_id
-										ORDER BY RAND(), b.ldlu DESC 
+										ORDER BY  $random_order b.ldlu DESC 
 										LIMIT %d,%d",$user_id,$limit,$viewed);
 		else 
 			$query=$db->prepare_query("SELECT a.lfriendship_id,a.lfriend_id,a.lstatus
@@ -1301,7 +1309,7 @@
 											   a.luser_id=%d AND 
 											   (a.lstatus='connected' OR a.lstatus='unfollow') AND 
 											   a.lfriend_id=c.luser_id
-										ORDER BY RAND(), c.ldlu DESC 
+										ORDER BY  $random_order c.ldlu DESC 
 										LIMIT %d,%d",$bylist,$user_id,$limit,$viewed);
 
 		
@@ -1321,6 +1329,7 @@
 		}
 		return $friends;
 	}
+	
 	function search_all_user($terms){
 		global $db;
 		$users=array();
@@ -1349,6 +1358,7 @@
 		
 		return $users;
 	}
+	
 	function friend_search($sterms='',$user_id){
 		global $db;
 		$friends=array();
@@ -1723,7 +1733,6 @@
 						    			<a href="'.user_url($friends['id'][$key]).'">'.$friends['name'][$key].'</a> '.$flist.'
 						    			<br /><span style="color:#CCC;">'.get_additional_field($friends['id'][$key], "one_liner", "user").'</span>
 						    		</p>
-						    		<div>'.$thetag.'</div>
 						    	</div>
 						    	<div class="edit_friends_list"><p style="display: none;" id="edit_list_'.$key.'"><a href="../lumonata-functions/friends.php?editlist=true&id='.$friends['fid'][$key].'&friend_id='.$friends['id'][$key].'&redirect='.urlencode(cur_pageURL()).'&key=#colorbox_'.$key.'" id="colorbox_'.$key.'" >Edit Lists</a></p></div>
 						    	<div class="follow_unfollow">'.$follow_label.'</div>';
@@ -1735,6 +1744,7 @@
 								}
 								
 					$html.='</div>';
+					$html.='<div class="friend_tag_area clearfix">'.$thetag.'</div>';
 					
 					$html.="<script type=\"text/javascript\">";
 					$html.="$(function(){";
@@ -1765,7 +1775,7 @@
 											});
 								   		</script>";
 					}else{
-						$follow_label="<p><a class=\"button_add_friend\" href=\"../lumonata-functions/friends.php?add_friend=true&type=add&friendship_id=0&friend_id=".$friends['id'][$key]."&redirect=".urlencode(cur_pageURL())."&key=#add_friend\" id=\"add_friend_".$key."\" >Add as friend</a></p>";
+						$follow_label="<p><a class=\"button_add_friend\" href=\"../lumonata-functions/friends.php?add_friend=true&type=add&friendship_id=0&friend_id=".$friends['id'][$key]."&redirect=".urlencode(cur_pageURL())."&key=#add_friend\" id=\"add_friend_".$key."\" >Add Connection</a></p>";
 						$follow_label.="<script type=\"text/javascript\">
 								   			$('#add_friend_".$key."').click(function(){
 								   				$('#add_friend_".$key."').colorbox();
@@ -1783,12 +1793,11 @@
 						    		<p><a href="'.user_url($friends['id'][$key]).'">'.$friends['name'][$key].'</a> '.$flist.'
 						    		<br /><span style="color:#CCC;">'.get_additional_field($friends['id'][$key], "one_liner", "user").'</span>
 						    		</p>
-						    		<div>'.$thetag.'</div>
 						    	</div>
 						    	<div class="fof_add_friend">'.$follow_label.'</div>';
 								
-								
 					$html.='</div>';
+					$html.='<div class="friend_tag_area clearfix">'.$thetag.'</div>';
 				}
 				
 			}
@@ -1981,9 +1990,9 @@
 	function add_friend_button($friend_id,$friendship_id,$type='add',$text=''){
 		if(empty($text)){
 			if($type=='add')
-				$text="Add as Friend";
+				$text="Add Connection";
 			elseif($type=='confirm') 
-				$text="Confirm Friend Request";
+				$text="Confirm Connection";
 			elseif($type=='follow'){
 				$text="Follow";
 			}elseif($type=='unfollow'){
@@ -2085,12 +2094,11 @@
 		$friends=myfriend_requests($_COOKIE['user_id']);
 		$html='';
 		if(count($friends)==0){
-			$html="<div class=\"alert_yellow_form\">You don't have any friend request.</div>";
+			$html="<div class=\"alert_yellow_form\">You don't have any connection request.</div>";
 			
 		}else{		
 			foreach ($friends['id'] as $key=>$value){
 				$user_tags=get_user_tags($friends['id'][$key]);
-				
 				$html.='<div class="friends_item clearfix"  id="friends_item_'.$key.'">
 					    	<div class="friends_avatar">
 					    		<a href="'.user_url($friends['id'][$key]).'">
@@ -2102,7 +2110,6 @@
 					    			<a href="'.user_url($friends['id'][$key]).'">'.$friends['name'][$key].'</a> 
 					    			<br /><span style="color:#CCC;">'.get_additional_field($friends['id'][$key], "one_liner", "user").'</span>
 					    		</p>
-					    		<div>'.$user_tags.'</div>
 					    	</div>
 					    	<div class="edit_friends_list_request">
 						    	<p id="edit_list_'.$key.'">
@@ -2119,8 +2126,9 @@
 						    	</p>
 					    	</div>
 					    	<div class="delete_friends_list"><p><a href="javascript:;" rel="delete_'.$friends['id'][$key].'">&nbsp;</a></p></div>
-					    </div>
-					    ';
+					    </div>';
+				$html.='<div class="friend_tag_area clearfix">'.$user_tags.'</div>';
+				
 				$delete_msg="Are you sure ".$friends['name'][$key]." is not your friend?";
 				add_actions('admin_tail','delete_confirmation_box',$friends['id'][$key],$delete_msg,'../lumonata-functions/friends.php','friends_item_'.$key,'friend_id='.$friends['id'][$key].'&user_id='.$_COOKIE['user_id'].'&frq=true');
 				$html.="<script type=\"text/javascript\">
@@ -2167,7 +2175,7 @@
 	}
 	function dashboard_invite_friends(){
 		$available_services=get_available_services();
-		$html="<div style='margin-bottom:10px;'>";
+		$html="<div style='margin-bottom:0px;'>";
 			$html.="<h2>Invite Your Friends</h2>";
 			$html.="<p>Get connected with your friends and invite them to join. Find your friends in your Gmail, Yahoo and Hotmail account.</p>";
 			$enc_available_services=base64_encode(json_encode($available_services));
@@ -2328,7 +2336,7 @@
 										   VALUES (%d,%d,%s)",$user_id,$friend_id,$status);
 				
 				$sf=search_friendship($user_id,$friend_id);
-				if(count($sf['friend_id']) < 1)
+				if(!isset($sf['friend_id']))
 				return $r=$db->do_query($query);
 			
 		}

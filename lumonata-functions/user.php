@@ -1694,6 +1694,11 @@
 	 * @return string Selected user Feeds   
 	 */
    	function user_updates(){
+   		$is_friend=false;
+   		$status_privacy=false;
+   		
+   		$content_left='';
+   		
    		if(!is_user_logged())
    		return;
    		global $db;
@@ -1701,7 +1706,7 @@
    		if(!empty($_GET['id'])){
    			$id=$_GET['id'];
    			$id=kses($id, array());
-	   		if(is_my_friend($_COOKIE['user_id'], $_GET['id']) || is_my_friend($_COOKIE['user_id'], $_GET['id'],'unfollow')){
+	   		if(is_my_friend($_COOKIE['user_id'], $id) || is_my_friend($_COOKIE['user_id'], $id,'unfollow')){
 				$query=$db->prepare_query("SELECT * FROM lumonata_articles 
 										 WHERE larticle_status='publish' AND
 										 lpost_by = %d AND
@@ -1711,17 +1716,21 @@
 												WHERE a.lfriendship_id=b.lfriendship_id AND b.lfriend_id=%d and lstatus='connected'
 										 	    )OR lshare_to=0
 										 	)
-										 ORDER BY lpost_date DESC",$_GET['id'],$_COOKIE['user_id']);
+										 ORDER BY lpost_date DESC",$id,$_COOKIE['user_id']);
 				
 				$feed_type='friend_feed';
+				$is_friend=true;
 			}else{
 				$query=$db->prepare_query("SELECT * FROM lumonata_articles 
 										 WHERE larticle_status='publish' AND
 										 lpost_by = %d AND
 										 lshare_to=0
-										 ORDER BY lpost_date DESC",$_GET['id']);
+										 ORDER BY lpost_date DESC",$id);
 				$feed_type='everyone_friend_feed';
+				
 			}
+			
+			
    			
    		}else{
    			
@@ -1731,12 +1740,25 @@
 										 lpost_by = %d
 										 ORDER BY lpost_date DESC",$id);
    			$feed_type='my_feeds';
+   			$is_friend=true;
    		}
 		
    		
 		$result=$db->do_query($query);
 		$data=$db->fetch_array($result);
-				
+
+		if(!$is_friend){ //IF Not Friend
+			if(status_privacy($id)=='public')
+				$status_privacy=true;
+		}else{
+			$status_privacy=true;
+		}
+		
+		if(is_administrator($_COOKIE['user_id']))
+			$status_privacy=true;
+			
+		
+		if($status_privacy)
 		$content_left=dashboard_latest_update($query,get_meta_data('comment_per_page'),false,$feed_type);
 		
 		$user=fetch_user($id);
@@ -1753,14 +1775,26 @@
 			$the_tabs=set_tabs($tabs,$selected_tab);
 			
 		}else{ 
+			$the_tabs='';
 			$id=kses($_GET['id'], array());
 			if(isset($_GET['tab']) && $_GET['tab']=='profile'){
 				$content_left=user_profile($id);
-				$the_tabs="<li><a href=\"".get_state_url('my-profile')."&id=".$id."\">".ucwords($user['ldisplay_name'])." Updates</a></li>";
-				$the_tabs.="<li class=\"active\"><a href=\"".get_state_url('my-profile')."&tab=profile&id=".$id."\">Profile</a></li>";
+				
+				if($status_privacy){
+					$the_tabs="<li><a href=\"".get_state_url('my-profile')."&id=".$id."\">".ucwords($user['ldisplay_name'])." Updates</a></li>";
+					$the_tabs.="<li class=\"active\"><a href=\"".get_state_url('my-profile')."&tab=profile&id=".$id."\">Profile</a></li>";
+				}else{
+					$the_tabs="<li class=\"active\"><a href=\"".get_state_url('my-profile')."&tab=profile&id=".$id."\">Profile</a></li>";
+				}
+				
 			}else{
-				$the_tabs="<li class=\"active\"><a href=\"".get_state_url('my-profile')."&id=".$id."\">".ucwords($user['ldisplay_name'])." Updates</a></li>";
-				$the_tabs.="<li><a href=\"".get_state_url('my-profile')."&tab=profile&id=".$id."\">Profile</a></li>";
+				if($status_privacy){
+					$the_tabs="<li class=\"active\"><a href=\"".get_state_url('my-profile')."&id=".$id."\">".ucwords($user['ldisplay_name'])." Updates</a></li>";
+					$the_tabs.="<li><a href=\"".get_state_url('my-profile')."&tab=profile&id=".$id."\">Profile</a></li>";
+				}else{
+					$content_left=user_profile($id);
+					$the_tabs.="<li class=\"active\"><a href=\"".get_state_url('my-profile')."&tab=profile&id=".$id."\">Profile</a></li>";
+				}
 			}
 			
 			if(!is_my_friend($_COOKIE['user_id'], $id,'connected')){
@@ -1816,6 +1850,11 @@
 				$content.="<div class=\"home_plug1\">".$content_left."</div>";
 				$content.="</div>";
 				$content.="<div id=\"profile_right\" >$img";
+				$content.="<div style=\"margin:10px 0;\" class=\"clearfix\">";
+				$content.="<h2>Tagged as</h2>";
+				$content.=get_user_tags($id);
+				$content.="</div>";
+				$content.="<div style=\"background:#f0f0f0;border-bottom:1px solid #ccc;margin-bottom:10px;padding:3px;text-align:right;\"></div>";
 				$content.=$add_friend_button;
 				$content.=$friends_html;
 				$content.=attemp_actions('user_updates_right');
@@ -2468,8 +2507,13 @@
 		
 		$i=1;
 		while($tags=$db->fetch_array($exprt_tags_result)){
-				$thetag.="<div class=\"expert_tag_list tag_index_0 clearfix\" >";
-					$thetag.="<a href=\"\" class=\"expert_tag_name\" style=\"width:auto;font-size:12px;display:block;color:#333;\">".trim($tags['lname'])."</a>";
+				$thetag.="<div class=\"people_tag_list_wrapper clearfix\">";
+					$thetag.="<div class=\"people_tag_list clearfix\" >";
+						$thetag.="<a href=\"".get_state_url('people')."&tag=".$tags['lsef']."\" class=\"expert_tag_name\" style=\"width:auto;font-size:12px;display:block;color:#333;\">".trim($tags['lname'])."</a>";
+					$thetag.="</div>";
+					$thetag.="<div class=\"numof_tag_list clearfix\" >
+								<a href=\"".get_state_url('people')."&tag=".$tags['lsef']."\" class=\"expert_tag_name\" style=\"width:auto;font-size:12px;display:block;color:#333;\">".$tags['lcount']."</a>
+							  </div>";
 				$thetag.="</div>";
 			
 			$i++;

@@ -41,16 +41,19 @@
 	font-size: 13px;
 	font-weight: bold;
 	cursor: pointer;
+	
 }
 
 .expert_tag_list{
-	margin:3px;
-	padding:5px;
+	margin:5px;
+	padding:2px;
 	border:1px solid #bbbbbb;
 	width:auto;
-	height:20px;
+	height:auto;
 	float:left;
+	background: #FFF;
 }
+
 .expert_tag_name{
 	float:left;
 	width:auto;
@@ -61,10 +64,11 @@
 
 .expert_tag_action{
 	float:left;
-	width:10px;
+	width:15px;
 	height:auto;
 	border-left:1px solid #ccc;
 	text-align:center;
+	
 }
 .expert_tag_action a{
 	display:block;

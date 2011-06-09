@@ -1,77 +1,40 @@
 /*Menu is here*/
-.lumonata_menu{
+.lumonata_menu, .connection_menu, .settings_menu{
 	width:152px;
 	height:auto;
 	background:url(../images/menu_bg.jpg) repeat-y top left;
 	border:1px solid #afafaf;
-	/*float:left;
-	margin-left:-152px !important;
-	margin-left:-76px;*/
+	margin: 10px 0;
 }
-.lumonata_menu ul{
+.lumonata_menu ul, .connection_menu ul, .settings_menu ul{
 	margin:5px 0 5px 0;
 	padding:0px 0 0 5px;
 }
-.lumonata_menu ul li{
+.lumonata_menu ul li, .connection_menu ul li, .settings_menu ul li{
 	margin:10px 0px;
 	list-style:none;
 	padding:0;
 	
 }
 
-.lumonata_menu ul li.dashboard{
-	background:url(../images/ico-dashboard.png) no-repeat left top;
-	
+.lumonata_menu ul li ul, .connection_menu ul li ul, .settings_menu ul li ul{
+	background:#fff;
+	margin:5px 0 0 0px;
+	border-top:1px solid #afafaf;
+	border-bottom:1px solid #afafaf;
+
 }
-.lumonata_menu ul li.global_settings{
-	background:url(../images/ico-globalsetting.png) no-repeat left top;
+.lumonata_menu ul li ul li, .connection_menu ul li ul li, .settings_menu ul li ul li{
+	list-style:none;
+	padding:4px 0;
+	margin:0px 0 0 0px;
+	display:block;
+}
+.lumonata_menu ul li ul li a, .connection_menu ul li ul li a, .settings_menu ul li ul li a{
+	padding:0px 0 3px 5px;
 }
 
-.lumonata_menu ul li.applications{
-	background:url(../images/ico-application.png) no-repeat left top;
-	padding:0;
-	margin:5px 0 2px 0;
-}
-.lumonata_menu ul li.plugins{
-	background:url(../images/ico-plugin.png) no-repeat left top;	
-	padding:0;
-	margin:5px 0 2px 0;
-}
-.lumonata_menu ul li.themes{
-	background-image:url(../images/themes.png); 
-	background-repeat:no-repeat; 
-	background-position: 0px 0;	
-	padding:0;
-	margin:5px 0 2px 0;
-}
-.lumonata_menu ul li.comments{
-	background:url(../images/ico-comment.png) no-repeat left top;	
-	padding:0 !important;
-	margin:5px 0 2px 0;
-}
-.lumonata_menu ul li.notifications{
-	background:url(../images/ico-comment.png) no-repeat left top;	
-	padding:0 !important;
-	margin:5px 0 2px 0;
-}
-.lumonata_menu ul li.articles{
-	background:url(../images/ico-article.png) no-repeat left top;	
-}
-.lumonata_menu ul li.menus{
-	background:url(../images/ico-menu.png) no-repeat left top;	
-}
-.lumonata_menu ul li.pages{
-	background:url(../images/ico-page.png) no-repeat left top;	
-}
-.lumonata_menu ul li.users,.lumonata_menu ul li.my-profile{
-	background:url(../images/ico-user.png) no-repeat left top;	
-}
-
-.lumonata_menu ul li.friends{
-	background:url(../images/friends.png) no-repeat left top;
-	
-}
-.lumonata_menu ul li a{
+.lumonata_menu ul li a, .connection_menu ul li a, .settings_menu ul li a{
  	display:block;
 	font-size:12px;
 	color:#4a4a4a;
@@ -79,6 +42,83 @@
 	padding:5px 0 5px 35px;
 	
 }
+
+/*CONNECTION MENU*/
+.connection_menu ul li.dashboard{
+	background:url(../images/ico-dashboard.png) no-repeat left top;
+}
+
+.connection_menu ul li.notifications{
+	background:url(../images/ico-comment.png) no-repeat left top;	
+	padding:0 !important;
+	margin:5px 0 2px 0;
+}
+
+.connection_menu ul li.friends{
+	background:url(../images/friends.png) no-repeat left top;
+	
+}
+.connection_menu ul li.people{
+	background:url(../images/friends.png) no-repeat left top;
+	
+}
+/*END OF CONNECTION MENU*/
+
+
+
+/*APPLICATION MENU*/
+.lumonata_menu ul li.applications{
+	background:url(../images/ico-application.png) no-repeat left top;
+	padding:0;
+	margin:5px 0 2px 0;
+}
+
+.lumonata_menu ul li.articles{
+	background:url(../images/ico-article.png) no-repeat left top;	
+}
+
+.lumonata_menu ul li.pages{
+	background:url(../images/ico-page.png) no-repeat left top;	
+}
+.lumonata_menu ul li.users,.lumonata_menu ul li.my-profile{
+	background:url(../images/ico-user.png) no-repeat left top;	
+}
+.lumonata_menu ul li.comments{
+	background:url(../images/ico-comment.png) no-repeat left top;	
+	padding:0 !important;
+	margin:5px 0 2px 0;
+}
+
+/*END OF APPLICATION MENU*/
+
+/*APPLICATION SETTINGS*/
+.settings_menu ul li.plugins{
+	background:url(../images/ico-plugin.png) no-repeat left top;	
+	padding:0;
+	margin:5px 0 2px 0;
+}
+.settings_menu ul li.themes{
+	background-image:url(../images/themes.png); 
+	background-repeat:no-repeat; 
+	background-position: 0px 0;	
+	padding:0;
+	margin:5px 0 2px 0;
+}
+
+.settings_menu ul li.menus{
+	background:url(../images/ico-menu.png) no-repeat left top;	
+}
+
+.settings_menu ul li.global_settings{
+	background:url(../images/ico-globalsetting.png) no-repeat left top;
+}
+
+.settings_menu ul li.personal-settings{
+	background:url(../images/ico-globalsetting.png) no-repeat left top;
+}
+/*END OF APPLICATION SETTINGS*/
+
+
 .theanav{
 	display:block;
 	cursor: pointer;
@@ -99,7 +139,7 @@
 	text-align:right;
 	margin: 8px 0 0 0;
 }
-a#applications,a#plugins{
+a#applications,a#plugins,a#people{
 	background:url(../images/ico-arrow.png) no-repeat right center;
 	margin:0 5px 0 0;
 }
@@ -118,20 +158,5 @@ a#application_list,a#plugin_list{
 	
 	
 }
-.lumonata_menu ul li ul{
-	background:#fff;
-	margin:0px 0 0 0px;
-	border-top:1px solid #afafaf;
-	border-bottom:1px solid #afafaf;
 
-}
-.lumonata_menu ul li ul li{
-	list-style:none;
-	padding:4px 0;
-	margin:0px 0 0 0px;
-	display:block;
-}
-.lumonata_menu ul li ul li a{
-	padding:0px 0 3px 5px;
-}
 /*End of Menu*/

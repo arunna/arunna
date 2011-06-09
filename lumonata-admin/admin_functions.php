@@ -1357,6 +1357,10 @@
 		if(!empty($_GET['state']) && $_GET['state']=='global_settings' && is_grant_app('global_settings')) return true;
 		else return false;
 	}
+	function is_personal_settings(){
+		if(!empty($_GET['state']) && $_GET['state']=='personal-settings' && is_grant_app('personal-settings')) return true;
+		else return false;
+	}
 	function is_admin_application(){
 		if(!empty($_GET['state']) && $_GET['state']=='applications' && is_grant_app('applications')) return true;
 		else return false;

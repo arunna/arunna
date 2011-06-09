@@ -28,10 +28,13 @@
 	require_once(ROOT_PATH."/lumonata-functions/notifications.php");
 	require_once(ROOT_PATH."/lumonata-functions/taxonomy.php");
 	require_once(ROOT_PATH."/lumonata-functions/plugins.php");
+	require_once(ROOT_PATH."/lumonata-functions/personal-settings.php");
 	require_once(ROOT_PATH."/lumonata-functions/comments.php");
 	require_once(ROOT_PATH."/lumonata-functions/feeds.php");
 	require_once(ROOT_PATH."/lumonata-functions/menus.php");
 	require_once(ROOT_PATH."/lumonata-functions/friends.php");
+	require_once(ROOT_PATH."/lumonata-functions/people.php");
+	
 	
 	if(!defined('SITE_URL'))
 		define('SITE_URL',get_meta_data('site_url'));

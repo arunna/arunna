@@ -10,6 +10,8 @@
 @import "themes.css";
 @import "friends.css";
 @import "profile.css";
+@import "people.css";
+
 body{
 	/*background:url(../images/bg-pattern.jpg);*/
 	background: #FFF;
@@ -223,6 +225,7 @@ th{
 	margin: 0 0 0 10px;
 }
 /*END Notifications*/
+
 .topnav{
 	width:500px;
 	height: 47px;
@@ -520,6 +523,19 @@ ul.pagging li a.selected{
 	padding: 5px;
 }
 .preview_website a{
+	display:block;
+	text-decoration: none;
+}
+.settings_website{
+	width:142px;
+	height:auto;
+	margin:10px 0;
+	overflow: hidden;
+	background:url(../images/menu_bg.jpg) repeat-y top left;
+	border:1px solid #afafaf;
+	padding: 5px;
+}
+.settings_website a{
 	display:block;
 	text-decoration: none;
 }

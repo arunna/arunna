@@ -11,6 +11,7 @@ require_once('lumonata-functions/mail.php');
 require_once("lumonata-functions/notifications.php");
 require_once('lumonata-functions/articles.php');
 require_once('lumonata-classes/post.php');
+require_once("lumonata-functions/personal-settings.php");
 require_once('lumonata-functions/comments.php');
 
 if(isset($_POST['lad'])){

@@ -85,6 +85,8 @@
 			$thecontent=get_dashboard();
 		}elseif(is_global_settings()){
 			$thecontent=get_global_settings();
+		}elseif(is_personal_settings()){
+			$thecontent=personal_settings();
 		}elseif(is_admin_themes()){
 			$thecontent=get_themes();
 		}elseif(is_admin_page()){
