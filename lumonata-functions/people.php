@@ -27,12 +27,15 @@
 		
 		add_actions('basic_people_right','dashboard_invite_friends');
 		
+		$viewed=10;
+		
 		if(isset($_GET['cat'])){
-			$people=all_people($_GET['cat'],true,10);
+			$people=all_people($_GET['cat'],true,$viewed);
 		}elseif(isset($_GET['tag'])){
-			$people=all_people($_GET['tag'],false,10);
+			$people=all_people($_GET['tag'],false,$viewed);
 		}else{
-			$people=all_people();
+			
+			$people=all_people('',false,$viewed);
 		}
 				
 		
@@ -88,7 +91,7 @@
 		if($db->num_rows($result)<1)
 		$people.="<div class=\"alert_green_form\">Result not found</div>";
 		
-		$people.=fetch_people($result);
+		$people.=fetch_people($result,$page);
 			
 		if(count_rows($query_cnt) > $viewed){
 					$page++;
@@ -159,7 +162,7 @@
 		
 		$result=$db->do_query($query);
 		
-		$people.=fetch_people($result);
+		$people.=fetch_people($result,$page);
 			
 		if(count_rows($query_cnt) > ($viewed * $page)){
 					$page++;
@@ -189,7 +192,7 @@
 		return $people;
 	}
 	
-	function fetch_people($result){
+	function fetch_people($result,$page){
 		global $db;
 		$people='';
 		while($data=$db->fetch_array($result)){
@@ -199,7 +202,7 @@
 			}elseif(is_my_friend($_COOKIE['user_id'], $data['luser_id'],'pending')){
 				$follow_label="<span style='color:#CCC;'>Request pending.</span>";
 			}else{
-				$follow_label="<p><a class=\"button_add_friend\" style=\"color:#333;\" href=\"../lumonata-functions/friends.php?add_friend=true&type=add&friendship_id=0&friend_id=".$data['luser_id']."&redirect=".urlencode(cur_pageURL())."&key=#add_friend\" id=\"add_friend_".$data['luser_id']."\" >Add Connection</a></p>";
+				$follow_label="<p><a class=\"button_add_friend\" style=\"color:#333;\" href=\"../lumonata-functions/friends.php?add_friend=true&type=add&friendship_id=0&friend_id=".$data['luser_id']."&redirect=".urlencode(get_state_url('people')."&page=".$page)."&key=#add_friend\" id=\"add_friend_".$data['luser_id']."\" >Add Connection</a></p>";
 				$follow_label.="<script type=\"text/javascript\">
 						   			$('#add_friend_".$data['luser_id']."').click(function(){
 						   				$('#add_friend_".$data['luser_id']."').colorbox();
