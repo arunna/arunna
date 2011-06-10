@@ -1809,7 +1809,7 @@
 		$box="<div class=\"top_search_wrapper\">
 				<div class=\"clearfix\">
 					<div class=\"input_search_wrapper\">
-						<input type=\"text\" name=\"s\" value=\"Search\" class=\"search_top_text\" />
+						<input type=\"text\" name=\"top_search\" value=\"Search\" class=\"search_top_text\" />
 					</div>
 					<div class=\"button_search_wrapper\">
 						<input type=\"button\" value=\" \" class=\"top_search_button\" id=\"top_search_button\" />
@@ -1839,25 +1839,25 @@
 				var selected_pro='';
 				
 				$(document).ready(function(){
-					$('input[name=s]').focus(function(){
-						$('input[name=s]').val('');
+					$('input[name=top_search]').focus(function(){
+						$('input[name=top_search]').val('');
 					});
 					
-					$('input[name=s]').blur(function(){
+					$('input[name=top_search]').blur(function(){
 						if($(this).val()=='')
-							$('input[name=s]').val('Search');
+							$('input[name=top_search]').val('Search');
 					});
 					
 					$('#top_search_button').click(function(){
-						if($('input[name=s]').val()!='Search'){
-							location='?state=friends&tab=search&s='+$('input[name=s]').val();
+						if($('input[name=top_search]').val()!='Search'){
+							location='?state=friends&tab=search&s='+$('input[name=top_search]').val();
 						}
 					});
 					
-					$('input[name=s]').keydown(function(event){
+					$('input[name=top_search]').keydown(function(event){
 					});
 					
-					$('input[name=s]').keyup(function(event){
+					$('input[name=top_search]').keyup(function(event){
 							var nItem = jQuery('.top_search_result').length;
 							
 							if(event.which=='38'){
@@ -1897,10 +1897,10 @@
 								$('#more_result_link').hide();
 								$('#top_search_loader').show();
 								
-								if($('input[name=s]').val()!='Search'){
-									 $('#more_result_link').attr('href','?state=friends&tab=search&s='+$('input[name=s]').val());
+								if($('input[name=top_search]').val()!='Search'){
+									 $('#more_result_link').attr('href','?state=friends&tab=search&s='+$('input[name=top_search]').val());
 								}
-								$.post('../lumonata-functions/friends.php','top_search=true&s='+$('input[name=s]').val(),function(data){
+								$.post('../lumonata-functions/friends.php','top_search=true&s='+$('input[name=top_search]').val(),function(data){
 									 $('#top_search_result').html(data);
 									 $('#top_search_loader').hide();
 									 $('#more_result_link').show();
