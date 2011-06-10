@@ -833,8 +833,13 @@
     function pages_list($result,$i=1){
         global $db;
         $list='';
-        if($db->num_rows($result)==0)
-        return "<div class=\"alert_yellow_form\">No result found for <em>".$_POST['s']."</em>. Check your spellling or try another terms</div>";
+        
+   		if($db->num_rows($result)==0){
+        	if(isset($_POST['s']))
+        		return "<div class=\"alert_yellow_form\">No result found for <em>".$_POST['s']."</em>. Check your spellling or try another terms</div>";
+        	else 
+        		return "<div class=\"alert_yellow_form\">No page found</div>";
+        }
         
         while($d=$db->fetch_array($result)){
                 if($d['larticle_status']!='publish')
@@ -892,9 +897,12 @@
         else
             $url=get_state_url($type);
             
-        if($db->num_rows($result)==0)
-        return "<div class=\"alert_yellow_form\">No result found for <em>".$_POST['s']."</em>. Check your spellling or try another terms</div>";
-        
+        if($db->num_rows($result)==0){
+        	if(isset($_POST['s']))
+        		return "<div class=\"alert_yellow_form\">No result found for <em>".$_POST['s']."</em>. Check your spellling or try another terms</div>";
+        	else 
+        		return "<div class=\"alert_yellow_form\">No article found</div>";
+        }
         while($d=$db->fetch_array($result)){
                 if($d['larticle_status']!='publish')
                     $status=" - <strong style=\"color:red;\">".ucfirst($d['larticle_status'])."</strong>";
