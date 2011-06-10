@@ -172,7 +172,7 @@
         			$liked="- <a href=\"".user_url($who_like[0]['luser_id'])."\" class=\"commentview\">".$who_like_name_1."</a> and <a href=\"".user_url($who_like[1]['luser_id'])."\" class=\"commentview\">".$who_like_name_2."</a> like this";
         		}
         	}else{
-        		if($who_like[0]['luser_id']==$_COOKIE['user_id']){
+        		if(isset($_COOKIE['user_id']) && $who_like[0]['luser_id']==$_COOKIE['user_id']){
         			$who_like_name_1="You";
         		}else{
         			$who_like_name_1=$who_like[0]['ldisplay_name'];
