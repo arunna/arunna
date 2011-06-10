@@ -173,8 +173,6 @@
             $this->add_privileges('author','articles','delete');
             $this->add_privileges('author','articles','upload');
             
-             //Comments
-            $this->add_privileges('editor','comments','approve');
             
             //Pages
             $this->add_privileges('author','pages','insert');
