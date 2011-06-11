@@ -2030,11 +2030,11 @@
 				$html.="<br /><label>".$val['from_period']." to ".$val['to_period']."</label><br />
 					    		<span style='font-size:10px;'>".$val['jobdes']."</span>
 				    		</div>";
-    				if($user_id==$_COOKIE['user_id'] && isset($_COOKIE['user_id']))
+    				if(isset($_COOKIE['user_id']) && $user_id==$_COOKIE['user_id'])
 				    $html.="<div class=\"action\"><a href=\"javascript:;\" id=\"work_edit_".$i."\">Edit</a> | <a href=\"javascript:;\" rel=\"delete_work_".$i."\">Delete</a></div>";
 				$html.="</div>";
 				
-    			if($user_id==$_COOKIE['user_id'] && isset($_COOKIE['user_id'])){
+    			if(isset($_COOKIE['user_id']) && $user_id==$_COOKIE['user_id']){
 	    			$html.="<script type='text/javascript'>
 	    						$(function(){
 	    							$('#the_work_".$i."').click(function(){
@@ -2088,11 +2088,11 @@
 					    		
 				    		$html.="</label></div>";
 					    		
-    				if($user_id==$_COOKIE['user_id'] && isset($_COOKIE['user_id']))
+    				if(isset($_COOKIE['user_id']) && $user_id==$_COOKIE['user_id'] )
 				    $html.="<div class=\"action\"><a href=\"javascript:;\">Edit</a> | <a href=\"javascript:;\" rel=\"delete_college_".$i."\">Delete</a></div>";
 				 $html.="</div>";
 				 
-				if($user_id==$_COOKIE['user_id'] && isset($_COOKIE['user_id'])){ 
+				if(isset($_COOKIE['user_id']) && $user_id==$_COOKIE['user_id']){ 
 	    			$html.="<script type='text/javascript'>
 	    					$(function(){
 	    						$('#college_".$i."').click(function(){
@@ -2115,11 +2115,11 @@
 					    		<strong>".$key."</strong><br />
 					    		<label>".$val."</label>
 				    		</div>";
-    			if($user_id==$_COOKIE['user_id'] && isset($_COOKIE['user_id']))
+    			if(isset($_COOKIE['user_id']) && $user_id==$_COOKIE['user_id'])
 				$html.="<div class=\"action\"><a href=\"javascript:;\">Edit</a> | <a href=\"javascript:;\" rel=\"delete_school_".$i."\">Delete</a></div>";
 				$html.="</div>";
 				
-				if($user_id==$_COOKIE['user_id'] && isset($_COOKIE['user_id'])){
+				if( isset($_COOKIE['user_id']) && $user_id==$_COOKIE['user_id']){
 	    			$html.="<script type='text/javascript'>
 	    					$(function(){
 	    						$('#the_school_".$i."').click(function(){
