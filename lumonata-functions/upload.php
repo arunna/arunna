@@ -22,6 +22,7 @@ function upload($source,$destination){
 
 	return false;
 }
+
 /**
  * To upload image and resize it using the given dimension 
  *     
@@ -199,7 +200,7 @@ function rename_file($original_file_name,$new_file_name){
  *  
  * @return boolean      
  */
-function is_allow_file_size($file_size,$allowed_size=2048){
+function is_allow_file_size($file_size,$allowed_size=2097152){
 	if($file_size<=$allowed_size || $file_size==0){
 		return true;
 	}
