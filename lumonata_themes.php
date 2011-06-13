@@ -2,33 +2,21 @@
 	//Check default template that set in database here
 	
 	if($LUMONATA_ADMIN==false){
-		if(is_preview())
-			$theme=$_GET['theme'];
-		else
-			$theme=get_meta_data('front_theme','themes');
-			
-		define('TEMPLATE_PATH',ROOT_PATH.'/lumonata-content/themes/'.$theme);
-		define('TEMPLATE_URL',SITE_URL.'/lumonata-content/themes/'.$theme);
-		
-		define('FRONT_TEMPLATE_PATH',ROOT_PATH.'/lumonata-content/themes');
-		define('FRONT_TEMPLATE_URL',SITE_URL.'/lumonata-content/themes');
-		
-		define('LUMONATA_ADMIN', FALSE);
+		$theme=set_front_end_themes();
+		/*
+			After the templates name is found, the next step then is to configure the templates
+			and set all variable that need to be set in the template
+		*/		
+		require_once(ROOT_PATH."/lumonata-functions/template.php");
+		$thecontent=set_front_end_content();
 	}else{
-		define('LUMONATA_ADMIN', TRUE);
-		if(is_preview())
-			$theme=$_GET['theme'];
-		else
-			$theme=get_meta_data('admin_theme','themes');
-			
-		define('TEMPLATE_PATH',ROOT_PATH.'/lumonata-admin/themes/'.$theme);
-		define('TEMPLATE_URL',SITE_URL.'/lumonata-admin/themes/'.$theme);
-		
-		define('FRONT_TEMPLATE_PATH',ROOT_PATH.'/lumonata-content/themes');
-		define('FRONT_TEMPLATE_URL',SITE_URL.'/lumonata-content/themes');
-		
-		define('ADMIN_TEMPLATE_PATH',ROOT_PATH.'/lumonata-admin/themes');
-		define('ADMIN_TEMPLATE_URL',SITE_URL.'/lumonata-admin/themes');
+		$theme=set_admin_themes();
+		/*
+			After the templates name is found, the next step then is to configure the templates
+			and set all variable that need to be set in the template
+		*/		
+		require_once(ROOT_PATH."/lumonata-functions/template.php");
+		$thecontent=set_admin_content();
 	}
 		
 	if(!empty( $theme ))
@@ -37,52 +25,10 @@
 		$theme='default';
 	
 		
-		
-	/*
-		After the templates name is found, the next step then is to configure the templates
-		and set all variable that need to be set in the template
-	*/		
-		
-	require_once(ROOT_PATH."/lumonata-functions/template.php");
 	
-	/*
-	 * Configure and get the content to put in content area
-	 * */
-	if($LUMONATA_ADMIN==false){
-		if(is_home()){
-			$thecontent=the_looping_articles();
-		}elseif(is_details()){
-			$thecontent=article_detail();
-		}elseif(is_category()){
-			$thecontent=the_looping_categories();
-		}elseif(is_tag()){
-			$thecontent=the_looping_tags();
-		}elseif(is_category('appname=register')){
-			$thecontent=signup_user();
-		}elseif(is_category('appname=login')){
-			$thecontent=sign_in_form();
-			add_actions('meta_title','Login');
-		}elseif(is_category('appname=verify')){
-			$thecontent=verify_account();
-		}elseif(is_page("page_name=register")){
-			$thecontent=signup_user();
-		}elseif(is_page("page_name=login")){
-			$thecontent=signup_user();
-		}elseif(is_page()){
-			if(get_appname()=="pages")
-				$thecontent=article_detail();
-			else 
-				$thecontent=run_actions(get_appname()."_page");
-		}else{
-		
-			$thecontent=run_actions("thecontent");
-			if(!empty($thecontent))
-				$thecontent=$thecontent;
-			else 
-				$thecontent="Data not found";
-		}
-		add_actions('header','get_custome_bg');
-	}else{
+	
+	
+	function set_admin_content(){
 		if(is_dashboard()){
 			add_actions('header_elements','get_javascript','dashboard');
 			$thecontent=get_dashboard();
@@ -126,7 +72,79 @@
 			else
 				$thecontent="<div class=\"alert_red_form\">You don't have an authorization to access this page</div>";
 		}
+		return $thecontent;
+	}
+	function set_front_end_content(){
+		if(is_home()){
+			$thecontent=the_looping_articles();
+		}elseif(is_details()){
+			$thecontent=article_detail();
+		}elseif(is_category()){
+			$thecontent=the_looping_categories();
+		}elseif(is_tag()){
+			$thecontent=the_looping_tags();
+		}elseif(is_category('appname=register')){
+			$thecontent=signup_user();
+		}elseif(is_category('appname=login')){
+			$thecontent=sign_in_form();
+			add_actions('meta_title','Login');
+		}elseif(is_category('appname=verify')){
+			$thecontent=verify_account();
+		}elseif(is_page("page_name=register")){
+			$thecontent=signup_user();
+		}elseif(is_page("page_name=login")){
+			$thecontent=signup_user();
+		}elseif(is_page()){
+			if(get_appname()=="pages")
+				$thecontent=article_detail();
+			else 
+				$thecontent=run_actions(get_appname()."_page");
+		}else{
 		
+			$thecontent=run_actions("thecontent");
+			if(!empty($thecontent))
+				$thecontent=$thecontent;
+			else 
+				$thecontent="Data not found";
+		}
+		add_actions('header','get_custome_bg');
+		return $thecontent;
+	}
+	
+	function set_admin_themes(){
+		define('LUMONATA_ADMIN', TRUE);
+		if(is_preview())
+			$theme=$_GET['theme'];
+		else
+			$theme=get_meta_data('admin_theme','themes');
+			
+		define('TEMPLATE_PATH',ROOT_PATH.'/lumonata-admin/themes/'.$theme);
+		define('TEMPLATE_URL',SITE_URL.'/lumonata-admin/themes/'.$theme);
+		
+		define('FRONT_TEMPLATE_PATH',ROOT_PATH.'/lumonata-content/themes');
+		define('FRONT_TEMPLATE_URL',SITE_URL.'/lumonata-content/themes');
+		
+		define('ADMIN_TEMPLATE_PATH',ROOT_PATH.'/lumonata-admin/themes');
+		define('ADMIN_TEMPLATE_URL',SITE_URL.'/lumonata-admin/themes');
+		
+		return $theme;
+	}
+	
+	function set_front_end_themes(){
+			if(is_preview())
+				$theme=$_GET['theme'];
+			else
+				$theme=get_meta_data('front_theme','themes');
+				
+			define('TEMPLATE_PATH',ROOT_PATH.'/lumonata-content/themes/'.$theme);
+			define('TEMPLATE_URL',SITE_URL.'/lumonata-content/themes/'.$theme);
+			
+			define('FRONT_TEMPLATE_PATH',ROOT_PATH.'/lumonata-content/themes');
+			define('FRONT_TEMPLATE_URL',SITE_URL.'/lumonata-content/themes');
+			
+			define('LUMONATA_ADMIN', FALSE);
+			
+			return $theme;
 	}
 	
 	function get_custome_bg(){
@@ -161,8 +179,6 @@
 				return $style="<style type=\"text/css\">body{ ".$style_ent." }</style>";
 		
 	}
-	
-	
 		
 	if( file_exists(TEMPLATE_PATH."/template.php")){
 		require_once(TEMPLATE_PATH."/template.php");
