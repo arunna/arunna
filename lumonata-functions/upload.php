@@ -164,7 +164,7 @@ function file_name_filter($file_name,$ext=false){
 	$filename=str_replace($fileext,'',$file_name);
 	
 	if($ext==true)
-		return $fileext;
+		return strtolower($fileext);
 	
 	return generateSefUrl($filename);
 }
