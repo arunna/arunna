@@ -54,33 +54,21 @@ function upload_resize($source,$destination,$file_type,$max_width,$max_height){
 
 	// Capture the original size of the uploaded image
 	list($width,$height)=getimagesize($source);
-	if ($height < $width && $width >= $max_width) { // width lebih besar height
-		$new_width=$max_width;
-		$new_height=($height/$width)*$max_width;
-		if ($new_height > $max_height){
-			$new_height = $max_height;
-			$new_width = ($width / $height) * $new_height;
-		}
-	}elseif($height < $width && $width < $max_width){
-		$new_width=$width;
-		$new_height=($height/$width)*$new_width;
-		if ($new_height > $max_height){
-			$new_height = $max_height;
-			$new_width = $width * $new_height / $height;
-		}
-	}elseif($height > $width && $height >= $max_height) {
-		$new_width=$max_width;
-		$new_height=($height/$width) * $max_width;
-	}elseif($height > $width && $height < $max_height) {
-		$new_height = $height;
-		$new_width = ($width / $height) * $new_height;
-		if ($new_width > $max_width){
-			$new_width = $max_width;
-			$new_height = ($height / $width) * $new_width;
-		}
-	}
 	
-		
+	if (!$width || !$height) {
+            return false;
+    }
+    $scale = min(
+            $max_width / $width,
+            $max_height / $height
+    );
+    if ($scale > 1) {
+          $scale = 1;
+    }
+    $new_width = $width * $scale;
+    $new_height = $height * $scale;
+    
+   		
 	$tmp=imagecreatetruecolor($new_width,$new_height);
 
 	/* this line actually does the image resizing, copying from the original
